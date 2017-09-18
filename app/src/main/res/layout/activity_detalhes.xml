@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_marginTop="10dp">
+
+    <TextView
+        android:id="@+id/detalhamentoValor"
+        android:text="Detalhamento do Custo"
+        android:textSize="23sp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TableLayout
+    android:stretchColumns="1"
+    android:layout_marginTop="15dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+        <View
+            android:layout_height="2dip"
+            android:background="#FF909090" />
+
+        <TableRow>
+            <TextView
+                android:text="Taxa de Câmbio:"
+                android:textSize="15sp"
+                android:padding="3dip"/>
+
+            <TextView
+                android:id="@+id/taxaTabela"
+                android:text="0"
+                android:textSize="15sp"
+                android:gravity="right"
+                android:padding="3dip" />
+        </TableRow>
+
+        <View
+            android:layout_height="2dip"
+            android:background="#FF909090" />
+        <TableRow>
+            <TextView
+                android:text="Valor:"
+                android:textSize="15sp"
+                android:padding="3dip"/>
+
+            <TextView
+                android:id="@+id/valorTabela"
+                android:text="0"
+                android:textSize="15sp"
+                android:gravity="right"
+                android:padding="3dip" />
+        </TableRow>
+
+        <View
+            android:layout_height="2dip"
+            android:background="#FF909090" />
+
+        <TableRow>
+            <TextView
+                android:id="@+id/txtSituacaoValor"
+                android:text="Situação():"
+                android:textSize="15sp"
+                android:padding="3dip" />
+
+            <TextView
+                android:id="@+id/situacaoValorTabela"
+                android:text="0"
+                android:textSize="15sp"
+                android:gravity="right"
+                android:padding="3dip" />
+        </TableRow>
+
+        <View
+            android:layout_height="2dip"
+            android:background="#FF909090" />
+        <TableRow>
+            <TextView
+                android:text="Total:"
+                android:textSize="15sp"
+                android:padding="3dip" />
+            <TextView
+                android:id="@+id/totalValorTabela"
+                android:text="0"
+                android:textSize="15sp"
+                android:gravity="right"
+                android:padding="3dip" />
+        </TableRow>
+
+        <View
+            android:layout_height="2dip"
+            android:background="#FF909090" />
+    </TableLayout>
+
+    <TextView
+        android:id="@+id/detalhamentoConvertido"
+        android:text="Detalhamento do Custo"
+        android:textSize="23sp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TableLayout
+        android:stretchColumns="1"
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <View
+            android:layout_height="2dip"
+            android:background="#FF909090" />
+
+        <TableRow>
+            <TextView
+                android:text="Valor:"
+                android:textSize="15sp"
+                android:padding="3dip" />
+            <TextView
+                android:id="@+id/valorConvertidoTabela"
+                android:text="0"
+                android:textSize="15sp"
+                android:gravity="right"
+                android:padding="3dip" />
+        </TableRow>
+
+        <View
+            android:layout_height="2dip"
+            android:background="#FF909090" />
+
+        <TableRow>
+            <TextView
+                android:id="@+id/txtPagamento"
+                android:text="Tipo de Pagamento():"
+                android:textSize="15sp"
+                android:padding="3dip" />
+            <TextView
+                android:id="@+id/pagamentoTabela"
+                android:text="0"
+                android:textSize="15sp"
+                android:gravity="right"
+                android:padding="3dip" />
+        </TableRow>
+
+        <View
+            android:layout_height="2dip"
+            android:background="#FF909090" />
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/txtSituacaoConvertido"
+                android:text="Situação():"
+                android:textSize="15sp"
+                android:padding="3dip" />
+
+            <TextView
+                android:id="@+id/situacaoConvertidaTabela"
+                android:text="0"
+                android:textSize="15sp"
+                android:gravity="right"
+                android:padding="3dip" />
+        </TableRow>
+
+        <View
+            android:layout_height="2dip"
+            android:background="#FF909090" />
+
+        <TableRow>
+
+            <TextView
+                android:text="Total:"
+                android:textSize="15sp"
+                android:padding="3dip"
+                android:id="@+id/textView" />
+
+            <TextView
+                android:id="@+id/totalConvertidoTabela"
+                android:text="0"
+                android:textSize="15sp"
+                android:gravity="right"
+                android:padding="3dip" />
+        </TableRow>
+
+        <View
+            android:layout_height="2dip"
+            android:background="#FF909090" />
+    </TableLayout>
+</LinearLayout>
