@@ -87,9 +87,7 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
         formato.setMinimumFractionDigits(2);
         formato.setMaximumFractionDigits(2);
 
-//        campoValor.setText("0");
         campoConvert.setText("0");
-//        campoTaxa.setText("0");
         campoTotalUS.setText("0");
         campoTotalBR.setText(campoConvert.getText());
 
