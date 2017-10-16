@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbarStyle="outsideOverlay"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="@dimen/margin_default">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/AppThemeDark.Currency"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/imageSwap"
+                android:text="U$"
+                tools:fontFamily="@font/roboto_thin"
+                tools:ignore="RtlHardcoded" />
+
+            <ImageView
+                android:id="@+id/imageSwap"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="@dimen/margin_default"
+                android:layout_marginRight="@dimen/margin_default"
+                android:background="@drawable/ic_swap_horiz_black_24dp" />
+
+            <TextView
+                style="@style/AppThemeDark.Currency"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/imageSwap"
+                android:text="R$"
+                tools:fontFamily="@font/roboto_thin"
+                tools:ignore="RtlHardcoded" />
+
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <studio.carbonylgroup.textfieldboxes.TextFieldBoxes
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/margin_middle"
+                android:layout_marginTop="@dimen/margin_default"
+                android:layout_weight="1"
+                app:labelText="Taxa de câmbio"
+                tools:ignore="RtlHardcoded">
+
+                <studio.carbonylgroup.textfieldboxes.ExtendedEditText
+                    android:id="@+id/text_field_boxes1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    app:prefix="U$ "
+                    style="@style/EditText" />
+
+            </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
+
+            <studio.carbonylgroup.textfieldboxes.TextFieldBoxes
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_middle"
+                android:layout_marginTop="@dimen/margin_default"
+                android:layout_weight="1"
+                app:isResponsiveIconColor="true"
+                app:labelText="Valor"
+                tools:ignore="RtlHardcoded">
+
+                <studio.carbonylgroup.textfieldboxes.ExtendedEditText
+                    android:id="@+id/text_field_boxes2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    app:prefix="R$ "
+                    style="@style/EditText" />
+
+            </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_default"
+            android:background="@drawable/bg_default"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/margin_middle"
+
+            android:visibility="visible">
+
+            <TextView
+                style="@style/AppThemeDark.Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tipo de pagamento"
+                tools:fontFamily="@font/roboto_medium" />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/margin_middle">
+
+                <RadioButton
+                    android:id="@+id/radioButton1"
+                    style="@style/AppThemeDark.RadioButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_thin"
+                    android:text="Dinheiro" />
+
+                <RadioButton
+                    android:id="@+id/radioButton2"
+                    style="@style/AppThemeDark.RadioButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_thin"
+                    android:text="Débito/Crédito" />
+
+            </RadioGroup>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_default"
+            android:background="@drawable/bg_default"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/margin_middle"
+
+            android:visibility="visible">
+
+            <TextView
+                style="@style/AppThemeDark.Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Situação da declaração"
+                tools:fontFamily="@font/roboto_medium" />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/margin_middle">
+
+                <RadioButton
+                    android:id="@+id/radioButton3"
+                    style="@style/AppThemeDark.RadioButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_thin"
+                    tools:fontFamily="@font/roboto_thin"
+                    android:text="Declarado" />
+
+                <RadioButton
+                    android:id="@+id/radioButton4"
+                    style="@style/AppThemeDark.RadioButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_thin"
+                    android:text="Não declarado" />
+
+                <RadioButton
+                    android:id="@+id/radioButton5"
+                    style="@style/AppThemeDark.RadioButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_thin"
+                    android:text="Multado" />
+
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            android:weightSum="2">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_middle"
+                android:layout_marginRight="@dimen/margin_middle"
+                android:layout_marginTop="@dimen/margin_default"
+                android:layout_weight="1"
+                android:background="@drawable/bg_default"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/AppThemeDark.Title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_middle"
+                    android:layout_marginTop="@dimen/margin_middle"
+                    android:text="Total em U$"
+
+                    tools:fontFamily="@font/roboto_medium" />
+
+                <TextView
+                    style="@style/AppThemeDark.Content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="U$ 3002.90"
+                    tools:fontFamily="@font/roboto_thin" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_middle"
+                android:layout_marginTop="@dimen/margin_default"
+
+                android:layout_weight="1"
+                android:background="@drawable/bg_default"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/AppThemeDark.Title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_middle"
+                    android:layout_marginTop="@dimen/margin_middle"
+                    android:text="Total em R$"
+                    tools:fontFamily="@font/roboto_medium" />
+
+                <TextView
+                    style="@style/AppThemeDark.Content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="R$ 6.500,32"
+                    tools:fontFamily="@font/roboto_thin" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="@dimen/margin_default"-->
+            <!--android:background="@drawable/bg_default"-->
+            <!--android:orientation="vertical"-->
+            <!--android:paddingBottom="@dimen/margin_middle"-->
+            <!--android:paddingLeft="@dimen/margin_default"-->
+            <!--android:paddingRight="@dimen/margin_default"-->
+            <!--android:paddingTop="@dimen/margin_middle">-->
+
+            <!--<TextView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginBottom="@dimen/margin_default"-->
+                <!--android:text="Detalhamento de valores em R$"-->
+                <!--android:textSize="@dimen/font_size_small"-->
+                <!--tools:fontFamily="@font/roboto_medium" />-->
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content">-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginBottom="@dimen/margin_middle"-->
+                    <!--android:maxLines="1"-->
+                    <!--android:text="Valor inicial.........................."-->
+                    <!--android:textSize="@dimen/font_size_large" />-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginBottom="@dimen/margin_middle"-->
+                    <!--android:gravity="end|right"-->
+                    <!--android:maxLines="1"-->
+                    <!--android:text="R$ 2.345,90"-->
+                    <!--android:textSize="@dimen/font_size_large"-->
+                    <!--tools:ignore="RtlHardcoded" />-->
+
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content">-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginBottom="@dimen/margin_middle"-->
+                    <!--android:maxLines="1"-->
+                    <!--android:text="Situação - Multado (100%).."-->
+                    <!--android:textSize="@dimen/font_size_large" />-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginBottom="@dimen/margin_middle"-->
+                    <!--android:gravity="end|right"-->
+                    <!--android:maxLines="1"-->
+                    <!--android:text="R$ 2.345,90"-->
+                    <!--android:textSize="@dimen/font_size_large"-->
+                    <!--tools:ignore="RtlHardcoded" />-->
+
+            <!--</LinearLayout>-->
+
+
+        <!--</LinearLayout>-->
+
+        <Button
+            android:id="@+id/dark_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_default"
+            android:fontFamily="@font/roboto_medium"
+            android:textSize="@dimen/font_size_xlarge"
+            android:text="VER RESUMO" />
+
+    </LinearLayout>
+
+</ScrollView>
