@@ -37,11 +37,11 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
     ImageButton changeMoeda;
     private MoedaAPI moedaAPI;
     private TextView campoTaxa;
-    private NumberFormat formato;
+//    private NumberFormat formato;
     private Spinner spinnerMoedaConvert;
     private RadioGroup.OnCheckedChangeListener onCheckedChangeListener;
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
+//    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         final Handler handler = new Handler();
@@ -83,9 +83,9 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
         builder.setMessage("Só há acréscimo se exceder em 500 o valor dos produtos.");
         builder.setTitle("Alerta");
 
-        formato = NumberFormat.getInstance();
-        formato.setMinimumFractionDigits(2);
-        formato.setMaximumFractionDigits(2);
+//        formato = NumberFormat.getInstance();
+//        formato.setMinimumFractionDigits(2);
+//        formato.setMaximumFractionDigits(2);
 
         campoConvert.setText("0");
         campoTotalUS.setText("0");
@@ -107,8 +107,8 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
                 else {
                     viagem.atualizaValorConvertido(0, 0);
                 }
-                campoConvert.setText(formato.format(viagem.getValorConvertido()));
-                campoTotalBR.setText(formato.format(viagem.getTotalBR()));
+                campoConvert.setText(String.format("%.2f", viagem.getValorConvertido()));
+                campoTotalBR.setText(String.format("%.2f",viagem.getTotalBR()));
             }
 
             @Override
@@ -130,9 +130,9 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
                 else {
                     viagem.atualizaValorConvertido(0, 0);
                 }
-                campoConvert.setText(formato.format(viagem.getValorConvertido()));
-                campoTotalBR.setText(formato.format(viagem.getTotalBR()));
-                campoTotalUS.setText(formato.format(viagem.getTotalUS()));
+                campoConvert.setText(String.format("%.2f",viagem.getValorConvertido()));
+                campoTotalBR.setText(String.format("%.2f",viagem.getTotalBR()));
+                campoTotalUS.setText(String.format("%.2f",viagem.getTotalUS()));
             }
 
             @Override
@@ -153,7 +153,7 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
                     } else {
                         viagem.atualizaPagamento(2);
                     }
-                    campoTotalBR.setText(formato.format(viagem.getTotalBR()));
+                    campoTotalBR.setText(String.format("%.2f",viagem.getTotalBR()));
                 }
             }
         });
@@ -180,8 +180,8 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
                         dialog.show();
                     }
 
-                    campoTotalUS.setText(formato.format(viagem.getTotalUS()));
-                    campoTotalBR.setText(formato.format(viagem.getTotalBR()));
+                    campoTotalUS.setText(String.format("%.2f",viagem.getTotalUS()));
+                    campoTotalBR.setText(String.format("%.2f",viagem.getTotalBR()));
                 }
             }
         };
@@ -225,17 +225,17 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
                 if (position == 0) {
                     campoSimboloConvertida.setText("$");
                     if(moedaAPI != null) {
-                        campoTaxa.setText(formato.format(moedaAPI.getRates().getUSD()));
+                        campoTaxa.setText(String.format("%.2f",moedaAPI.getRates().getUSD()));
                     }
                 } else if (position == 1) {
                     campoSimboloConvertida.setText("R$");
                     if(moedaAPI != null) {
-                        campoTaxa.setText(formato.format(moedaAPI.getRates().getBRL()));
+                        campoTaxa.setText(String.format("%.2f",moedaAPI.getRates().getBRL()));
                     }
                 } else if (position == 2) {
                     campoSimboloConvertida.setText("€");
                     if(moedaAPI != null) {
-                        campoTaxa.setText(formato.format(moedaAPI.getRates().getEur()));
+                        campoTaxa.setText(String.format("%.2f",moedaAPI.getRates().getEur()));
                     }
                 }
             }
@@ -286,13 +286,13 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
 
         switch((int) spinnerMoedaConvert.getSelectedItemId()){
             case 0:
-                campoTaxa.setText(formato.format(moedaAPI.getRates().getUSD()));
+                campoTaxa.setText(String.format("%.2f",moedaAPI.getRates().getUSD()));
                 break;
             case 1:
-                campoTaxa.setText(formato.format(moedaAPI.getRates().getBRL()));
+                campoTaxa.setText(String.format("%.2f",moedaAPI.getRates().getBRL()));
                 break;
             case 2:
-                campoTaxa.setText(formato.format(moedaAPI.getRates().getEur()));
+                campoTaxa.setText(String.format("%.2f",moedaAPI.getRates().getEur()));
                 break;
         }
     }
