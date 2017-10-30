@@ -1,1 +1,2 @@
-include ':app'
+include ':app', ':textfieldboxe'
+project(':textfieldboxe').projectDir = new File('textfieldboxes')
