@@ -3,4 +3,10 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="windowBackgroundColor">#293244</color>
+    <color name="titleDetail">#00cc66</color>
+
+    <color name="per70white">#46ffffff</color>
+    <color name="per50white">#32ffffff</color>
+    <color name="per10white">#0affffff</color>
 </resources>

@@ -1,189 +1,333 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_marginTop="10dp">
+    android:scrollbarStyle="outsideOverlay">
 
-    <TextView
-        android:id="@+id/detalhamentoValor"
-        android:text="Detalhamento do Custo"
-        android:textSize="23sp"
-        android:gravity="center"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="@dimen/margin_default">
 
-    <TableLayout
-    android:stretchColumns="1"
-    android:layout_marginTop="15dp"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-        <View
-            android:layout_height="2dip"
-            android:background="#FF909090" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_default"
+            android:background="@drawable/bg_default"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/margin_middle">
 
-        <TableRow>
+            <TableLayout
+                android:stretchColumns="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TableRow>
+                    <TextView
+                        android:text="Cotação"
+                        android:textSize="@dimen/font_size_large"
+                        android:padding="3dip"
+                        android:layout_marginLeft="@dimen/margin_middle"
+                        android:fontFamily="@font/roboto_medium"
+                        android:textColor="@color/titleDetail"/>
+
+                    <TextView
+                        android:id="@+id/txtTaxa"
+                        android:text="teste"
+                        android:fontFamily="@font/roboto_thin"
+                        android:textSize="@dimen/font_size_medium"
+                        android:layout_marginRight="@dimen/margin_middle"
+                        android:gravity="right"/>
+                </TableRow>
+                <TableRow>
+                    <TextView android:text=""/>
+                    <TextView
+                        android:id="@+id/taxaTabela"
+                        android:text="0"
+                        android:textSize="15sp"
+                        android:gravity="right"
+                        android:layout_marginRight="@dimen/margin_middle"
+                        android:padding="3dip" />
+                </TableRow>
+
+            </TableLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_default"
+            android:background="@drawable/bg_default"
+            android:orientation="vertical"
+
+            android:paddingTop="@dimen/margin_middle">
+
             <TextView
-                android:text="Taxa de Câmbio:"
-                android:textSize="15sp"
-                android:padding="3dip"/>
+                android:id="@+id/detalhamentoValor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_middle"
+                android:fontFamily="@font/roboto_medium"
+                android:text="Resumo dos Custos em"
+                android:textColor="@color/titleDetail"
+                android:textSize="@dimen/font_size_large" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="0.6dp"
+                android:layout_marginTop="@dimen/margin_middle"
+                android:layout_marginLeft="@dimen/margin_middle"
+                android:layout_marginRight="@dimen/margin_middle"
+                android:background="#FF909090" />
 
             <TextView
-                android:id="@+id/taxaTabela"
-                android:text="0"
-                android:textSize="15sp"
-                android:gravity="right"
-                android:padding="3dip" />
-        </TableRow>
-
-        <View
-            android:layout_height="2dip"
-            android:background="#FF909090" />
-        <TableRow>
-            <TextView
-                android:text="Valor:"
-                android:textSize="15sp"
-                android:padding="3dip"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_default"
+                android:layout_marginTop="@dimen/margin_middle"
+                android:fontFamily="@font/roboto_thin"
+                android:padding="3dip"
+                android:text="Valor Inicial" />
 
             <TextView
                 android:id="@+id/valorTabela"
-                android:text="0"
-                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_default"
                 android:gravity="right"
-                android:padding="3dip" />
-        </TableRow>
+                android:padding="3dip"
+                android:text="0"
+                android:textSize="@dimen/font_size_xlarge" />
 
-        <View
-            android:layout_height="2dip"
-            android:background="#FF909090" />
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="0.6dp"
+                android:layout_marginTop="@dimen/margin_middle"
+                android:layout_marginLeft="@dimen/margin_middle"
+                android:layout_marginRight="@dimen/margin_middle"
+                android:background="#FF909090" />
 
-        <TableRow>
+            <TextView
+                android:id="@+id/txtPagamentoLocal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_default"
+                android:layout_marginTop="@dimen/margin_middle"
+                android:fontFamily="@font/roboto_thin"
+                android:padding="3dip"
+                android:text="Tipo de Pagamento ()"/>
+
+            <TextView
+                android:id="@+id/pagamentoTabelaLocal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_default"
+                android:gravity="right"
+                android:padding="3dip"
+                android:text="0"
+                android:textSize="@dimen/font_size_xlarge" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="0.6dp"
+                android:layout_marginTop="@dimen/margin_middle"
+                android:layout_marginLeft="@dimen/margin_middle"
+                android:layout_marginRight="@dimen/margin_middle"
+                android:background="#FF909090" />
+
             <TextView
                 android:id="@+id/txtSituacaoValor"
-                android:text="Situação():"
-                android:textSize="15sp"
-                android:padding="3dip" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_default"
+                android:layout_marginTop="@dimen/margin_middle"
+                android:fontFamily="@font/roboto_thin"
+                android:padding="3dip"
+                android:text="Situação de declaração () - 0%"/>
 
             <TextView
                 android:id="@+id/situacaoValorTabela"
-                android:text="0"
-                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_default"
                 android:gravity="right"
-                android:padding="3dip" />
-        </TableRow>
+                android:padding="3dip"
+                android:text="0"
+                android:textSize="@dimen/font_size_xlarge" />
 
-        <View
-            android:layout_height="2dip"
-            android:background="#FF909090" />
-        <TableRow>
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="0.6dp"
+                android:layout_marginTop="@dimen/margin_middle"
+                android:layout_marginLeft="@dimen/margin_middle"
+                android:layout_marginRight="@dimen/margin_middle"
+                android:background="#FF909090" />
+
             <TextView
-                android:text="Total:"
-                android:textSize="15sp"
-                android:padding="3dip" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginRight="@dimen/margin_default"
+                android:layout_marginTop="@dimen/margin_middle"
+                android:fontFamily="@font/roboto_thin"
+                android:padding="3dip"
+                android:text="Custo Total"
+                android:textSize="@dimen/font_size_medium" />
+
             <TextView
                 android:id="@+id/totalValorTabela"
-                android:text="0"
-                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginRight="@dimen/margin_default"
                 android:gravity="right"
-                android:padding="3dip" />
-        </TableRow>
+                android:padding="3dip"
+                android:text="0"
+                android:textSize="@dimen/font_size_xlarge" />
 
-        <View
-            android:layout_height="2dip"
-            android:background="#FF909090" />
-    </TableLayout>
+        </LinearLayout>
 
-    <TextView
-        android:id="@+id/detalhamentoConvertido"
-        android:text="Detalhamento do Custo"
-        android:textSize="23sp"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_default"
+            android:background="@drawable/bg_default"
+            android:orientation="vertical"
 
-    <TableLayout
-        android:stretchColumns="1"
-        android:layout_marginTop="15dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <View
-            android:layout_height="2dip"
-            android:background="#FF909090" />
+            android:paddingTop="@dimen/margin_middle">
 
-        <TableRow>
             <TextView
-                android:text="Valor:"
-                android:textSize="15sp"
-                android:padding="3dip" />
+                android:id="@+id/detalhamentoConvertido"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_middle"
+                android:fontFamily="@font/roboto_medium"
+                android:text="Resumo dos Custos em"
+                android:textColor="@color/titleDetail"
+                android:textSize="@dimen/font_size_large" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="0.6dp"
+                android:layout_marginTop="@dimen/margin_middle"
+                android:layout_marginLeft="@dimen/margin_middle"
+                android:layout_marginRight="@dimen/margin_middle"
+                android:background="#FF909090" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_default"
+                android:layout_marginTop="@dimen/margin_middle"
+                android:fontFamily="@font/roboto_thin"
+                android:padding="3dip"
+                android:text="Valor Inicial"
+                android:textSize="@dimen/font_size_medium" />
+
             <TextView
                 android:id="@+id/valorConvertidoTabela"
-                android:text="0"
-                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_default"
                 android:gravity="right"
-                android:padding="3dip" />
-        </TableRow>
+                android:padding="3dip"
+                android:text="0"
+                android:textSize="@dimen/font_size_xlarge" />
 
-        <View
-            android:layout_height="2dip"
-            android:background="#FF909090" />
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="0.6dp"
+                android:layout_marginTop="@dimen/margin_middle"
+                android:layout_marginLeft="@dimen/margin_middle"
+                android:layout_marginRight="@dimen/margin_middle"
+                android:background="#FF909090" />
 
-        <TableRow>
             <TextView
                 android:id="@+id/txtPagamento"
-                android:text="Tipo de Pagamento():"
-                android:textSize="15sp"
-                android:padding="3dip" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_default"
+                android:layout_marginTop="@dimen/margin_middle"
+                android:fontFamily="@font/roboto_thin"
+                android:padding="3dip"
+                android:text="Tipo de Pagamento ()"
+                android:textSize="@dimen/font_size_medium" />
+
             <TextView
                 android:id="@+id/pagamentoTabela"
-                android:text="0"
-                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_default"
                 android:gravity="right"
-                android:padding="3dip" />
-        </TableRow>
+                android:padding="3dip"
+                android:text="0"
+                android:textSize="@dimen/font_size_xlarge" />
 
-        <View
-            android:layout_height="2dip"
-            android:background="#FF909090" />
-
-        <TableRow>
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="0.6dp"
+                android:layout_marginTop="@dimen/margin_middle"
+                android:layout_marginLeft="@dimen/margin_middle"
+                android:layout_marginRight="@dimen/margin_middle"
+                android:background="#FF909090" />
 
             <TextView
                 android:id="@+id/txtSituacaoConvertido"
-                android:text="Situação():"
-                android:textSize="15sp"
-                android:padding="3dip" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_default"
+                android:layout_marginTop="@dimen/margin_middle"
+                android:fontFamily="@font/roboto_thin"
+                android:padding="3dip"
+                android:text="Situação () - 0%"
+                android:textSize="@dimen/font_size_medium" />
 
             <TextView
                 android:id="@+id/situacaoConvertidaTabela"
-                android:text="0"
-                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_default"
                 android:gravity="right"
-                android:padding="3dip" />
-        </TableRow>
+                android:padding="3dip"
+                android:text="0"
+                android:textSize="@dimen/font_size_xlarge" />
 
-        <View
-            android:layout_height="2dip"
-            android:background="#FF909090" />
-
-        <TableRow>
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="0.6dp"
+                android:layout_marginTop="@dimen/margin_middle"
+                android:layout_marginLeft="@dimen/margin_middle"
+                android:layout_marginRight="@dimen/margin_middle"
+                android:background="#FF909090" />
 
             <TextView
-                android:text="Total:"
-                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginRight="@dimen/margin_default"
+                android:layout_marginTop="@dimen/margin_middle"
+                android:fontFamily="@font/roboto_thin"
                 android:padding="3dip"
-                android:id="@+id/textView" />
+                android:text="Custo Total"
+                android:textSize="@dimen/font_size_medium" />
 
             <TextView
                 android:id="@+id/totalConvertidoTabela"
-                android:text="0"
-                android:textSize="15sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginRight="@dimen/margin_default"
                 android:gravity="right"
-                android:padding="3dip" />
-        </TableRow>
+                android:padding="3dip"
+                android:text="0"
+                android:textSize="@dimen/font_size_xlarge" />
 
-        <View
-            android:layout_height="2dip"
-            android:background="#FF909090" />
-    </TableLayout>
-</LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

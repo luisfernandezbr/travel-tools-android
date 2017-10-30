@@ -8,4 +8,53 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppThemeDark" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/windowBackgroundColor</item>
+        <item name="panelBackgroundColor">#384257</item>
+    </style>
+
+    <style name="AppThemeDark.RadioButton">
+        <item name="android:paddingLeft">@dimen/margin_middle</item>
+        <item name="android:layout_marginBottom">@dimen/margin_small</item>
+        <item name="android:textSize">@dimen/font_size_large</item>
+    </style>
+
+    <style name="AppThemeDark.Title">
+        <item name="android:layout_marginLeft">@dimen/margin_default</item>
+        <item name="android:layout_marginRight">@dimen/margin_default</item>
+        <item name="fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">@dimen/font_size_small</item>
+        <item name="android:textColor">#C4C7CC</item>
+    </style>
+
+    <style name="AppThemeDark.Content">
+        <item name="android:layout_marginBottom">@dimen/margin_middle</item>
+        <item name="android:layout_marginLeft">@dimen/margin_default</item>
+        <item name="android:layout_marginRight">@dimen/margin_default</item>
+        <item name="android:gravity">left</item>
+        <item name="fontFamily">@font/roboto_thin</item>
+        <item name="android:textSize">@dimen/font_size_large</item>
+    </style>
+
+    <style name="AppThemeDark.Currency">
+        <item name="android:background">@drawable/bg_default</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="android:gravity">center</item>
+        <item name="fontFamily">@font/roboto_thin</item>
+        <item name="android:textSize">@dimen/font_size_xxlarge</item>
+    </style>
+
+    <style name="EditText">
+        <!--<item name="fontFamily">@font/roboto_thin</item>-->
+        <item name="android:inputType">numberDecimal</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textSize">@dimen/font_size_large</item>
+    </style>
+
+
 </resources>
