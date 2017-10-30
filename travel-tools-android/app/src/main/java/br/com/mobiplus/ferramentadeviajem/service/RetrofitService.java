@@ -54,7 +54,7 @@ public class RetrofitService {
         this.retrofit = retroBuilder.build();
     }
 
-    public void getCurrency(String moedaLocal, String moedasEstrangeiras, final int position, final Context contexto, Callback<MoedaAPI> callback){
+    public void getCurrency(String moedaLocal, String moedasEstrangeiras, final Context contexto, Callback<MoedaAPI> callback){
 
         FreeCurrencyService currency = retrofit.create(FreeCurrencyService.class);
         Call<MoedaAPI> call = currency.getCurrency(moedaLocal, moedasEstrangeiras);

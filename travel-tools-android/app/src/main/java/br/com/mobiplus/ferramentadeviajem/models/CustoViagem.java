@@ -15,8 +15,13 @@ public class CustoViagem implements Serializable{
     private int situacao;
     private int pagamento;
     private double valorSituacao=0;
-    private double valorPagamento=0;
+    private double valorPagamentoConvertido =0;
+    private double valorPagamentoLocal =0;
     private double taxa;
+
+    public double getValorPagamentoLocal() {
+        return valorPagamentoLocal;
+    }
 
     public double getValor() {
         return valor;
@@ -50,8 +55,8 @@ public class CustoViagem implements Serializable{
         return valorSituacao;
     }
 
-    public double getValorPagamento() {
-        return valorPagamento;
+    public double getValorPagamentoConvertido() {
+        return valorPagamentoConvertido;
     }
 
     public double getTotalUS() {
@@ -93,26 +98,29 @@ public class CustoViagem implements Serializable{
     }
 
     public void atualizaValorTotal(){
-        this.totalBR = this.valorConvertido+this.valorSituacao+this.valorPagamento;
+        this.totalBR = this.valorConvertido+this.valorSituacao+this.valorPagamentoConvertido;
     }
 
     public void atualizaValorUS(){
-        this.totalUS = this.valor+this.valorSituacao;
+        this.totalUS = this.valor+this.valorSituacao+this.valorPagamentoLocal;
     }
 
     public void atualizaPagamento(int position) {
         this.pagamento = position;
         if(position==1){
-            this.valorPagamento = (this.valor*1.32)/100;
+            this.valorPagamentoLocal = (this.valor*1.32)/100;
+            this.valorPagamentoConvertido = (this.valorConvertido*1.32)/100;
         }else if(position==2){
-            this.valorPagamento = (this.valor*6.34)/100;
+            this.valorPagamentoLocal = (this.valor*6.34)/100;
+            this.valorPagamentoConvertido = (this.valorConvertido*6.34)/100;
         }
         this.atualizaValorTotal();
+        this.atualizaValorUS();
     }
 
     public void limpaValores() {
         this.valor=0; this.valorConvertido=0; this.totalBR=0; this.totalUS=0; this.situacao=0;
-        this.pagamento=0; this.valorSituacao=0; this.valorPagamento=0;
+        this.pagamento=0; this.valorSituacao=0; this.valorPagamentoConvertido =0; this.valorPagamentoLocal =0;
     }
 
 
