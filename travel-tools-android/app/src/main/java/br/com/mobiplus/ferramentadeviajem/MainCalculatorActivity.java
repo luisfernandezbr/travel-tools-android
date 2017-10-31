@@ -6,16 +6,17 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.icu.text.NumberFormat;
 import android.net.sip.SipAudioCall;
 import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.IdRes;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
@@ -30,6 +31,9 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 import br.com.concretesolutions.canarinho.watcher.ValorMonetarioWatcher;
 import br.com.mobiplus.ferramentadeviajem.models.MoedaAPI;
@@ -200,7 +204,7 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                 if (campoTaxa.getText().length() > 0 && campoValor.getText().length() > 0)
-                    viagem.atualizaValorConvertido(Double.parseDouble(campoValor.getText().toString()), Double.parseDouble(s.toString()));
+                    viagem.atualizaValorConvertido(getDoubleValueFrom(campoValor), getDoubleValueFrom(s.toString()));
                 else {
                     viagem.atualizaValorConvertido(0, 0);
                 }
@@ -231,7 +235,7 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (campoValor.getText().length() > 0 && campoTaxa.getText().length() > 0) {
-                    viagem.atualizaValorConvertido(Double.parseDouble(charSequence.toString()), Double.parseDouble(campoTaxa.getText().toString()));
+                    viagem.atualizaValorConvertido(getDoubleValueFrom(charSequence.toString()), getDoubleValueFrom(campoTaxa));
                 }
                 else {
                     viagem.atualizaValorConvertido(0, 0);
