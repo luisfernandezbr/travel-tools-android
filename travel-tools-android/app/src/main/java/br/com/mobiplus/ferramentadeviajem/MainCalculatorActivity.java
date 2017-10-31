@@ -505,4 +505,19 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
         textView.setTypeface(face);
     }
 
+    private double getDoubleValueFrom(@NonNull final EditText editText) {
+        String editTextValue = editText.getText().toString();
+        return this.getDoubleValueFrom(editTextValue);
+    }
+
+    private double getDoubleValueFrom(@NonNull final String textValue) {
+        double result = 0.0d;
+
+        if (!TextUtils.isEmpty(textValue.trim())) {
+            result = Double.parseDouble(textValue.replace(",","."));
+
+        }
+
+        return result;
+    }
 }
