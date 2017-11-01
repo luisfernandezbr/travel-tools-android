@@ -14,6 +14,7 @@
         android:orientation="vertical"
         android:padding="@dimen/margin_default">
 
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -37,7 +38,6 @@
                 android:layout_centerInParent="true"
                 android:layout_marginLeft="@dimen/margin_default"
                 android:layout_marginRight="@dimen/margin_default"
-                android:clickable="true"
                 android:background="@drawable/ic_swap_horiz_black_24dp" />
 
             <TextView
@@ -74,7 +74,7 @@
                     android:layout_height="wrap_content"
                     android:selectAllOnFocus="true"
                     android:text=""
-                    app:prefix="U$ "
+                    app:prefix="R$ "
                     style="@style/EditText" />
 
             </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
@@ -94,7 +94,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:selectAllOnFocus="true"
-                    app:prefix="R$ "
+                    app:prefix="U$ "
                     style="@style/EditText" />
 
             </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
@@ -215,6 +215,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/txtTotal"
                     style="@style/AppThemeDark.Title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

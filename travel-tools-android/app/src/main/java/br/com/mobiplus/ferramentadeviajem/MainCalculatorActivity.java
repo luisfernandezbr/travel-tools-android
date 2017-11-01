@@ -93,19 +93,19 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
 //        final TextView campoSimboloConvertida = (TextView) findViewById(R.id.simboloMoedaConvertida);
         final TextView moedaValor = findViewById(R.id.moedaValor);
         final TextView moedaConvert = findViewById(R.id.moedaConvert);
+        final TextView txtTotal = findViewById(R.id.txtTotal);
         final Button detalhes = (Button) findViewById(R.id.btnDetalhes);
         final Button limpar = (Button) findViewById(R.id.btnLimpar);
         final RadioGroup campoPagamento = (RadioGroup) findViewById(R.id.rgPagamento);
         final RadioGroup campoSituacao = (RadioGroup) findViewById(R.id.rgSituacao);
         final LinearLayout moedaEuro = (LinearLayout) findViewById(R.id.moedaEuro);
-        imageSwap = findViewById(R.id.imageSwap);
+//        imageSwap = findViewById(R.id.imageSwap);
 //        changeMoeda = (ImageButton) findViewById(R.id.imagem_change);
         campoTaxa = (ExtendedEditText) findViewById(R.id.taxa);
 
-        array_moeda = new String[3];
+        array_moeda = new String[2];
         array_moeda[0] = "USD $";
-        array_moeda[1] = "BRL R$";
-        array_moeda[2] = "EUR €";
+        array_moeda[1] = "EUR €";
 
 
 
@@ -133,16 +133,13 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
                         idLocal = i;
                         if (i == 0) {
                             moedaValor.setText("U$");
-                            campoTaxa.setPrefix("U$ ");
+                            campoValor.setPrefix("U$ ");
+                            txtTotal.setText("Total em U$");
                             retrofitService.getCurrency("USD", "USD,BRL,EUR",  getApplicationContext(), MainCalculatorActivity.this);
                         } else if (i == 1) {
-                            moedaValor.setText("R$");
-                            campoTaxa.setPrefix("R$ ");
-                            retrofitService.getCurrency("BRL", "BRL,USD,EUR",  getApplicationContext(), MainCalculatorActivity.this);
-
-                        } else if (i == 2) {
                             moedaValor.setText("€");
-                            campoTaxa.setPrefix("€ ");
+                            campoValor.setPrefix("€ ");
+                            txtTotal.setText("Total em €");
                             retrofitService.getCurrency("EUR", "USD,BRL,EUR", getApplicationContext(), MainCalculatorActivity.this);
                         }
                     }
@@ -150,7 +147,7 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
 
         final Dialog dialogMoedalocal = builderMoeda.create();
 
-        builderMoeda = new AlertDialog.Builder(MainCalculatorActivity.this);
+/*        builderMoeda = new AlertDialog.Builder(MainCalculatorActivity.this);
         builderMoeda.setTitle("Moeda para conversão")
                 .setItems(array_moeda, new DialogInterface.OnClickListener() {
                     @Override
@@ -178,16 +175,16 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
                 });
 
         final Dialog dialogMoedaConvert = builderMoeda.create();
-
+*/
 
 //        formato = NumberFormat.getInstance();
 //        formato.setMinimumFractionDigits(2);
 //        formato.setMaximumFractionDigits(2);
 
 //        campoConvert.setText("0");
-        campoValor.setText("0");
-        campoTotalUS.setText("0");
-        campoTotalBR.setText("0");
+//        campoValor.setText("0");
+        campoTotalUS.setText("0,00");
+        campoTotalBR.setText("0,00");
 
         final CustoViagem viagem = new CustoViagem();
 
@@ -363,7 +360,7 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
             }
         });
 
-        moedaConvert.setOnClickListener(new View.OnClickListener() {
+/*        moedaConvert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialogMoedaConvert.show();
@@ -397,11 +394,9 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
             }
         });
 
+*/
     }
 
-    private void testando(View view){
-        view.getId();
-    }
 
         /*
         spinnerMoedaConvert.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
