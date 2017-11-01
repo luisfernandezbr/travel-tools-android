@@ -6,12 +6,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.net.sip.SipAudioCall;
-import android.os.Build;
-import android.os.Handler;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,8 +15,6 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -30,10 +24,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 
 import br.com.concretesolutions.canarinho.watcher.ValorMonetarioWatcher;
 import br.com.mobiplus.ferramentadeviajem.models.MoedaAPI;
@@ -54,11 +44,9 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
     private ExtendedEditText campoTaxa;
     private int idLocal = 0;
     private int idConvert = 1;
-    //    private NumberFormat formato;
     private Spinner spinnerMoedaConvert;
     private RadioGroup.OnCheckedChangeListener onCheckedChangeListener;
 
-//    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -84,13 +72,9 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
         final RetrofitService retrofitService = new RetrofitService("http://api.fixer.io/");
         retrofitService.getCurrency("USD", "BRL,EUR", getApplicationContext(), this);
 
-
         final ExtendedEditText campoValor = (ExtendedEditText) findViewById(R.id.valor);
-//        final TextView campoConvert = (TextView) findViewById(R.id.convert);
-        final TextView campoTotalBR = (TextView) findViewById(R.id.totalBR);
-        final TextView campoTotalUS = (TextView) findViewById(R.id.totalUS);
-//        final TextView campoSimboloValor = (TextView) findViewById(R.id.simboloMoedaValor);
-//        final TextView campoSimboloConvertida = (TextView) findViewById(R.id.simboloMoedaConvertida);
+        final TextView campoTotalConvertido = (TextView) findViewById(R.id.totalConvertido);
+        final TextView campoTotalLocal = (TextView) findViewById(R.id.totalLocal);
         final TextView moedaValor = findViewById(R.id.moedaValor);
         final TextView moedaConvert = findViewById(R.id.moedaConvert);
         final TextView txtTotal = findViewById(R.id.txtTotal);
@@ -98,28 +82,11 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
         final Button limpar = (Button) findViewById(R.id.btnLimpar);
         final RadioGroup campoPagamento = (RadioGroup) findViewById(R.id.rgPagamento);
         final RadioGroup campoSituacao = (RadioGroup) findViewById(R.id.rgSituacao);
-        final LinearLayout moedaEuro = (LinearLayout) findViewById(R.id.moedaEuro);
-//        imageSwap = findViewById(R.id.imageSwap);
-//        changeMoeda = (ImageButton) findViewById(R.id.imagem_change);
         campoTaxa = (ExtendedEditText) findViewById(R.id.taxa);
 
         array_moeda = new String[2];
         array_moeda[0] = "USD $";
         array_moeda[1] = "EUR €";
-
-
-
-
-/*
-        final Spinner spinnerMoedaValor = (Spinner) findViewById(R.id.moedaValor);
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, array_moeda);
-        spinnerMoedaValor.setAdapter(adapter);
-
-        spinnerMoedaConvert = (Spinner) findViewById(R.id.moedaConvert);
-        adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, array_moeda);
-        spinnerMoedaConvert.setAdapter(adapter);
-        spinnerMoedaConvert.setSelection(1);
-        */
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(MainCalculatorActivity.this);
         builder.setMessage("Só há acréscimo se exceder em 500 o valor dos produtos.");
@@ -147,49 +114,13 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
 
         final Dialog dialogMoedalocal = builderMoeda.create();
 
-/*        builderMoeda = new AlertDialog.Builder(MainCalculatorActivity.this);
-        builderMoeda.setTitle("Moeda para conversão")
-                .setItems(array_moeda, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        if (i == 0) {
-                            moedaConvert.setText("U$");
-                            campoValor.setPrefix("U$ ");
-                            if (moedaAPI != null) {
-                                campoTaxa.setText(String.format("%.2f", moedaAPI.getRates().getUSD()));
-                            }
-                        } else if (i == 1) {
-                            moedaConvert.setText("R$");
-                            campoValor.setPrefix("R$ ");
-                            if (moedaAPI != null) {
-                                campoTaxa.setText(String.format("%.2f", moedaAPI.getRates().getBRL()));
-                            }
-                        } else if (i == 2) {
-                            moedaConvert.setText("€");
-                            campoValor.setPrefix("€ ");
-                            if (moedaAPI != null) {
-                                campoTaxa.setText(String.format("%.2f", moedaAPI.getRates().getEur()));
-                            }
-                        }
-                    }
-                });
-
-        final Dialog dialogMoedaConvert = builderMoeda.create();
-*/
-
-//        formato = NumberFormat.getInstance();
-//        formato.setMinimumFractionDigits(2);
-//        formato.setMaximumFractionDigits(2);
-
-//        campoConvert.setText("0");
-//        campoValor.setText("0");
-        campoTotalUS.setText("0,00");
-        campoTotalBR.setText("0,00");
+        campoTotalLocal.setText("0,00");
+        campoTotalConvertido.setText("0,00");
 
         final CustoViagem viagem = new CustoViagem();
 
-        campoTotalBR.addTextChangedListener(new ValorMonetarioWatcher());
-        campoTotalUS.addTextChangedListener(new ValorMonetarioWatcher());
+        campoTotalConvertido.addTextChangedListener(new ValorMonetarioWatcher());
+        campoTotalLocal.addTextChangedListener(new ValorMonetarioWatcher());
 
         campoTaxa.addTextChangedListener((new TextWatcher() {
             @Override
@@ -205,8 +136,7 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
                 else {
                     viagem.atualizaValorConvertido(0, 0);
                 }
-//                campoConvert.setText(String.format("%.2f", viagem.getValorConvertido()));
-                campoTotalBR.setText(String.format("%.2f", viagem.getTotalBR()));
+                campoTotalConvertido.setText(String.format("%.2f", viagem.getTotalConvertido()));
             }
 
             @Override
@@ -222,7 +152,6 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
             }
         });
 
-
         campoValor.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -237,9 +166,8 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
                 else {
                     viagem.atualizaValorConvertido(0, 0);
                 }
-//                campoConvert.setText(String.format("%.2f", viagem.getValorConvertido()));
-                campoTotalBR.setText(String.format("%.2f", viagem.getTotalBR()));
-                campoTotalUS.setText(String.format("%.2f", viagem.getTotalUS()));
+                campoTotalConvertido.setText(String.format("%.2f", viagem.getTotalConvertido()));
+                campoTotalLocal.setText(String.format("%.2f", viagem.getTotalLocal()));
 
             }
 
@@ -248,30 +176,6 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
 
             }
         });
-
-/*        campoValor.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if ((campoValor.getText().length() > 0 && campoTaxa.getText().length() > 0) &&
-                        (campoValor.getText() != null && campoTaxa.getText() != null))
-                    viagem.atualizaValorConvertido(Double.parseDouble(s.toString()), Double.parseDouble(campoTaxa.getText().toString()));
-                else {
-                    viagem.atualizaValorConvertido(0, 0);
-                }
-//                campoConvert.setText(String.format("%.2f", viagem.getValorConvertido()));
-                campoTotalBR.setText(String.format("%.2f", viagem.getTotalBR()));
-                campoTotalUS.setText(String.format("%.2f", viagem.getTotalUS()));
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });*/
 
         campoPagamento.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -286,8 +190,8 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
                     } else {
                         viagem.atualizaPagamento(2);
                     }
-                    campoTotalUS.setText(String.format("%.2f",viagem.getTotalUS()));
-                    campoTotalBR.setText(String.format("%.2f", viagem.getTotalBR()));
+                    campoTotalLocal.setText(String.format("%.2f",viagem.getTotalLocal()));
+                    campoTotalConvertido.setText(String.format("%.2f", viagem.getTotalConvertido()));
                 }
             }
         });
@@ -314,8 +218,8 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
                         dialog.show();
                     }
 
-                    campoTotalUS.setText(String.format("%.2f", viagem.getTotalUS()));
-                    campoTotalBR.setText(String.format("%.2f", viagem.getTotalBR()));
+                    campoTotalLocal.setText(String.format("%.2f", viagem.getTotalLocal()));
+                    campoTotalConvertido.setText(String.format("%.2f", viagem.getTotalConvertido()));
                 }
             }
         };
@@ -340,10 +244,9 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
 
                 viagem.limpaValores();
 
-                campoValor.setText("0");
-  //              campoConvert.setText("0");
-                campoTotalBR.setText("0");
-                campoTotalUS.setText("0");
+                campoValor.setText("0,00");
+                campoTotalConvertido.setText("0,00");
+                campoTotalLocal.setText("0,00");
 
                 campoPagamento.clearCheck();
                 campoSituacao.setOnCheckedChangeListener(null);
@@ -359,107 +262,7 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
                 dialogMoedalocal.show();
             }
         });
-
-/*        moedaConvert.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialogMoedaConvert.show();
-            }
-        });
-
-        imageSwap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                int idAux = idConvert;
-                idConvert = idLocal;
-                idLocal = idAux;
-
-
-                String textAux = moedaValor.getText().toString();
-                moedaValor.setText(moedaConvert.getText());
-                moedaConvert.setText(textAux);
-
-                campoTaxa.setPrefix(moedaValor.getText().toString()+" ");
-                campoValor.setPrefix(moedaConvert.getText().toString()+" ");
-
-                if (idAux == 0) {
-                    retrofitService.getCurrency("USD", "USD,BRL,EUR",  getApplicationContext(), MainCalculatorActivity.this);
-                } else if (idAux == 1) {
-                    retrofitService.getCurrency("BRL", "BRL,USD,EUR",  getApplicationContext(), MainCalculatorActivity.this);
-                } else if (idAux == 2) {
-                    retrofitService.getCurrency("EUR", "USD,BRL,EUR", getApplicationContext(), MainCalculatorActivity.this);
-                }
-
-            }
-        });
-
-*/
     }
-
-
-        /*
-        spinnerMoedaConvert.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) {
-                    campoSimboloConvertida.setText("$");
-                    if(moedaAPI != null) {
-                        campoTaxa.setText(String.format("%.2f",moedaAPI.getRates().getUSD()));
-                    }
-                } else if (position == 1) {
-                    campoSimboloConvertida.setText("R$");
-                    if(moedaAPI != null) {
-                        campoTaxa.setText(String.format("%.2f",moedaAPI.getRates().getBRL()));
-                    }
-                } else if (position == 2) {
-                    campoSimboloConvertida.setText("€");
-                    if(moedaAPI != null) {
-                        campoTaxa.setText(String.format("%.2f",moedaAPI.getRates().getEur()));
-                    }
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        spinnerMoedaValor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) {
-                    campoSimboloValor.setText("$");
-                    retrofitService.getCurrency("USD", "USD,BRL,EUR", spinnerMoedaConvert.getSelectedItemPosition(), getApplicationContext(), MainCalculatorActivity.this);
-                } else if (position == 1) {
-                    campoSimboloValor.setText("R$");
-                    retrofitService.getCurrency("BRL", "BRL,USD,EUR", spinnerMoedaConvert.getSelectedItemPosition(), getApplicationContext(), MainCalculatorActivity.this);
-
-                } else if (position == 2) {
-                    campoSimboloValor.setText("€");
-                    retrofitService.getCurrency("EUR", "USD,BRL,EUR", spinnerMoedaConvert.getSelectedItemPosition(), getApplicationContext(), MainCalculatorActivity.this);
-                    }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });*/
-
-/*
-        changeMoeda.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int moeda1 = spinnerMoedaConvert.getSelectedItemPosition();
-                int moeda2 = spinnerMoedaValor.getSelectedItemPosition();
-                spinnerMoedaConvert.setSelection(moeda2);
-                spinnerMoedaValor.setSelection(moeda1);
-            }
-        });
-    }
-    */
 
     private void onGetCurrencySuccess(MoedaAPI moedaAPI){
         this.moedaAPI = moedaAPI;

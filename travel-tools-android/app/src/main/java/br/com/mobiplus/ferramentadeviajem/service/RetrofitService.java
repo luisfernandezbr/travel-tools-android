@@ -12,34 +12,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitService {
-//    private double[] valor = new double[3];
     private Retrofit retrofit;
-//    private boolean conexão=false;
-
-/*    public boolean isConexão() {
-        return conexão;
-    }
-
-    public void setConexão(boolean conexão) {
-        this.conexão = conexão;
-    }
-*/
-
- /*   public double getValor(int position) {
-        if (position == 0) {
-            return valor[0];
-        } else if (position == 1) {
-            return valor[1];
-        } else if (position == 2) {
-            return valor[2];
-        }else
-            return 0;
-    }
-
-    public void setValor(double[] valor){
-        this.valor = valor;
-    }
-*/
 
     public RetrofitService(String baseURL) {
 

@@ -10,8 +10,8 @@ public class CustoViagem implements Serializable{
 
     private double valor=0;
     private double valorConvertido=0;
-    private double totalBR=0;
-    private double totalUS=0;
+    private double totalConvertido =0;
+    private double totalLocal =0;
     private int situacao;
     private int pagamento;
     private double valorSituacao=0;
@@ -39,8 +39,8 @@ public class CustoViagem implements Serializable{
         this.valorConvertido = valorConvertido;
     }
 
-    public double getTotalBR() {
-        return totalBR;
+    public double getTotalConvertido() {
+        return totalConvertido;
     }
 
     public int getSituacao() {
@@ -59,8 +59,8 @@ public class CustoViagem implements Serializable{
         return valorPagamentoConvertido;
     }
 
-    public double getTotalUS() {
-        return totalUS;
+    public double getTotalLocal() {
+        return totalLocal;
     }
 
     public double getTaxa() {
@@ -98,11 +98,11 @@ public class CustoViagem implements Serializable{
     }
 
     public void atualizaValorTotal(){
-        this.totalBR = this.valorConvertido+this.valorSituacao+this.valorPagamentoConvertido;
+        this.totalConvertido = this.valorConvertido+this.valorSituacao+this.valorPagamentoConvertido;
     }
 
     public void atualizaValorUS(){
-        this.totalUS = this.valor+this.valorSituacao+this.valorPagamentoLocal;
+        this.totalLocal = this.valor+this.valorSituacao+this.valorPagamentoLocal;
     }
 
     public void atualizaPagamento(int position) {
@@ -119,7 +119,7 @@ public class CustoViagem implements Serializable{
     }
 
     public void limpaValores() {
-        this.valor=0; this.valorConvertido=0; this.totalBR=0; this.totalUS=0; this.situacao=0;
+        this.valor=0; this.valorConvertido=0; this.totalConvertido =0; this.totalLocal =0; this.situacao=0;
         this.pagamento=0; this.valorSituacao=0; this.valorPagamentoConvertido =0; this.valorPagamentoLocal =0;
     }
 

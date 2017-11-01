@@ -10,7 +10,6 @@ import br.com.mobiplus.ferramentadeviajem.models.CustoViagem;
 
 public class DetalhesActivity extends AppCompatActivity {
 
-//     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -22,11 +21,6 @@ public class DetalhesActivity extends AppCompatActivity {
         CustoViagem viagem = (CustoViagem) getIntent().getSerializableExtra("viagem");
         String moedaValor = getIntent().getStringExtra("moedaValor");
         String moedaConvertida = getIntent().getStringExtra("moedaConvert");
-/*
-        NumberFormat formato = NumberFormat.getInstance();
-        formato.setMinimumFractionDigits(2);
-        formato.setMaximumFractionDigits(2);
-*/
         TextView campoValor = (TextView) findViewById(R.id.valorTabela);
         TextView campoValorConvertido = (TextView) findViewById(R.id.valorConvertidoTabela);
         TextView campoSituacaoConvertido = (TextView) findViewById(R.id.situacaoConvertidaTabela);
@@ -53,8 +47,8 @@ public class DetalhesActivity extends AppCompatActivity {
         campoTaxa.setText(moedaValor+" "+format(viagem.getTaxa()));
         campoValor.setText(moedaValor+" "+format(viagem.getValor()));
         campoValorConvertido.setText(moedaConvertida+" "+format(viagem.getValorConvertido()));
-        campoTotalBR.setText(moedaConvertida+" "+format(viagem.getTotalBR()));
-        campoTotalUS.setText(moedaValor+" "+format(viagem.getTotalUS()));
+        campoTotalBR.setText(moedaConvertida+" "+format(viagem.getTotalConvertido()));
+        campoTotalUS.setText(moedaValor+" "+format(viagem.getTotalLocal()));
         campoSituacaoConvertido.setText(moedaConvertida+" "+format(viagem.getValorSituacao()));
         campoPagamentoConvertido.setText(moedaConvertida+" "+format(viagem.getValorPagamentoConvertido()));
         campoPagamentoLocal.setText(moedaValor+" "+format(viagem.getValorPagamentoLocal()));
