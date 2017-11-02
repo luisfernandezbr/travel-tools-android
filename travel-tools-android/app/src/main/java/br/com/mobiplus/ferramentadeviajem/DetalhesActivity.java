@@ -11,13 +11,15 @@ import br.com.mobiplus.ferramentadeviajem.models.CustoViagem;
 
 public class DetalhesActivity extends AppCompatActivity
 {
-
+    public static final String EXTRA_MOEDA_CONVERT = "moedaConvert";
+    public static final String EXTRA_MOEDA_VALOR = "moedaValor";
+    public static final String EXTRA_CUSTO_VIAGEM = "custoViagem";
 
     public static void start(Context context, CustoViagem custoViagem, String moedaValor, String moedaConvertida) {
         Intent intent = new Intent(context, DetalhesActivity.class);
-        intent.putExtra("custoViagem", custoViagem);
-        intent.putExtra("moedaValor", moedaValor);
-        intent.putExtra("moedaConvert", moedaConvertida);
+        intent.putExtra(EXTRA_CUSTO_VIAGEM, custoViagem);
+        intent.putExtra(EXTRA_MOEDA_VALOR, moedaValor);
+        intent.putExtra(EXTRA_MOEDA_CONVERT, moedaConvertida);
         context.startActivity(intent);
     }
 
@@ -26,9 +28,9 @@ public class DetalhesActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalhes);
-        CustoViagem viagem = (CustoViagem) getIntent().getSerializableExtra("viagem");
-        String moedaValor = getIntent().getStringExtra("moedaValor");
-        String moedaConvertida = getIntent().getStringExtra("moedaConvert");
+        CustoViagem viagem = (CustoViagem) getIntent().getSerializableExtra(EXTRA_CUSTO_VIAGEM);
+        String moedaValor = getIntent().getStringExtra(EXTRA_MOEDA_VALOR);
+        String moedaConvertida = getIntent().getStringExtra(EXTRA_MOEDA_CONVERT);
         TextView campoValor = (TextView) findViewById(R.id.valorTabela);
         TextView campoValorConvertido = (TextView) findViewById(R.id.valorConvertidoTabela);
         TextView campoSituacaoConvertido = (TextView) findViewById(R.id.situacaoConvertidaTabela);
