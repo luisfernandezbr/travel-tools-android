@@ -264,6 +264,7 @@ public class MainCalculatorActivity extends AppCompatActivity implements DataCal
             {
                 String moedaValorString = textCurrencySymbolFrom.getText().toString();
                 String moedaConvertidaString = textCurrencySymbolTo.getText().toString();
+
                 DetalhesActivity.start(MainCalculatorActivity.this, custoViagem, moedaValorString, moedaConvertidaString);
             }
         });

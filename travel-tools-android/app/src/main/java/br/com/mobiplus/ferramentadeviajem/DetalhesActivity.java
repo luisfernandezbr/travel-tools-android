@@ -1,36 +1,38 @@
 package br.com.mobiplus.ferramentadeviajem;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.Extra;
+
 import br.com.mobiplus.ferramentadeviajem.models.CustoViagem;
 
+@EActivity(R.layout.activity_detalhes)
 public class DetalhesActivity extends AppCompatActivity
 {
-    public static final String EXTRA_MOEDA_CONVERT = "moedaConvert";
-    public static final String EXTRA_MOEDA_VALOR = "moedaValor";
-    public static final String EXTRA_CUSTO_VIAGEM = "custoViagem";
+    @Extra
+    CustoViagem custoViagem;
 
-    public static void start(Context context, CustoViagem custoViagem, String moedaValor, String moedaConvertida) {
-        Intent intent = new Intent(context, DetalhesActivity.class);
-        intent.putExtra(EXTRA_CUSTO_VIAGEM, custoViagem);
-        intent.putExtra(EXTRA_MOEDA_VALOR, moedaValor);
-        intent.putExtra(EXTRA_MOEDA_CONVERT, moedaConvertida);
-        context.startActivity(intent);
+    @Extra
+    String moedaValor;
+
+    @Extra
+    String moedaConvertida;
+
+    public static void start(Context context, CustoViagem custoViagem, String moedaValor, String moedaConvertida)
+    {
+        DetalhesActivity_.intent(context)
+                .custoViagem(custoViagem)
+                .moedaConvertida(moedaConvertida)
+                .moedaValor(moedaValor)
+                .start();
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detalhes);
-        CustoViagem viagem = (CustoViagem) getIntent().getSerializableExtra(EXTRA_CUSTO_VIAGEM);
-        String moedaValor = getIntent().getStringExtra(EXTRA_MOEDA_VALOR);
-        String moedaConvertida = getIntent().getStringExtra(EXTRA_MOEDA_CONVERT);
+    @AfterViews
+    public void afterViews() {
         TextView campoValor = (TextView) findViewById(R.id.valorTabela);
         TextView campoValorConvertido = (TextView) findViewById(R.id.valorConvertidoTabela);
         TextView campoSituacaoConvertido = (TextView) findViewById(R.id.situacaoConvertidaTabela);
@@ -54,42 +56,42 @@ public class DetalhesActivity extends AppCompatActivity
         txtTaxa.setText("De (" + moedaValor + ") Para (" + moedaConvertida + ")");
 
 
-        campoTaxa.setText(moedaValor + " " + format(viagem.getTaxa()));
-        campoValor.setText(moedaValor + " " + format(viagem.getValor()));
-        campoValorConvertido.setText(moedaConvertida + " " + format(viagem.getValorConvertido()));
-        campoTotalBR.setText(moedaConvertida + " " + format(viagem.getTotalConvertido()));
-        campoTotalUS.setText(moedaValor + " " + format(viagem.getTotalLocal()));
-        campoSituacaoConvertido.setText(moedaConvertida + " " + format(viagem.getValorSituacao()));
-        campoPagamentoConvertido.setText(moedaConvertida + " " + format(viagem.getValorPagamentoConvertido()));
-        campoPagamentoLocal.setText(moedaValor + " " + format(viagem.getValorPagamentoLocal()));
+        campoTaxa.setText(moedaValor + " " + format(custoViagem.getTaxa()));
+        campoValor.setText(moedaValor + " " + format(custoViagem.getValor()));
+        campoValorConvertido.setText(moedaConvertida + " " + format(custoViagem.getValorConvertido()));
+        campoTotalBR.setText(moedaConvertida + " " + format(custoViagem.getTotalConvertido()));
+        campoTotalUS.setText(moedaValor + " " + format(custoViagem.getTotalLocal()));
+        campoSituacaoConvertido.setText(moedaConvertida + " " + format(custoViagem.getValorSituacao()));
+        campoPagamentoConvertido.setText(moedaConvertida + " " + format(custoViagem.getValorPagamentoConvertido()));
+        campoPagamentoLocal.setText(moedaValor + " " + format(custoViagem.getValorPagamentoLocal()));
 
-        if (viagem.getSituacao() == 1)
+        if (custoViagem.getSituacao() == 1)
         {
             txtSituacaoValor.setText("Situação de Declaração (Declarado) - 50%");
             txtSituacaoConvertido.setText("Situação de Declaração (Declarado) - 50%");
-            if (viagem.getValor() > 500)
+            if (custoViagem.getValor() > 500)
             {
-                campoSituacaoValor.setText(moedaValor + " " + format(((viagem.getValor() - 500) * 50) / 100));
+                campoSituacaoValor.setText(moedaValor + " " + format(((custoViagem.getValor() - 500) * 50) / 100));
             }
-        } else if (viagem.getSituacao() == 2)
+        } else if (custoViagem.getSituacao() == 2)
         {
             txtSituacaoValor.setText("Situação de Declaração (Não declarado) - 0%");
             txtSituacaoConvertido.setText("Situação de Declaração (Não declarado) - 0%");
-        } else if (viagem.getSituacao() == 3)
+        } else if (custoViagem.getSituacao() == 3)
         {
             txtSituacaoValor.setText("Situação de Declaração (Multado) - 100%");
             txtSituacaoConvertido.setText("Situação de Declaração (Multado) - 100%");
-            if (viagem.getValor() > 500)
+            if (custoViagem.getValor() > 500)
             {
-                campoSituacaoValor.setText(moedaValor + " " + format(((viagem.getValor() - 500) * 100) / 100));
+                campoSituacaoValor.setText(moedaValor + " " + format(((custoViagem.getValor() - 500) * 100) / 100));
             }
         }
 
-        if (viagem.getPagamento() == 1)
+        if (custoViagem.getPagamento() == 1)
         {
             txtPagamento.setText("Tipo de Pagamento (Dinheiro)");
             txtPagamentoLocal.setText("Tipo de Pagamento (Dinheiro)");
-        } else if (viagem.getPagamento() == 2)
+        } else if (custoViagem.getPagamento() == 2)
         {
             txtPagamento.setText("Tipo de Pagamento (Cartão)");
             txtPagamentoLocal.setText("Tipo de Pagamento (Cartão)");
