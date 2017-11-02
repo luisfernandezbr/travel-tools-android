@@ -80,6 +80,7 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
         final TextView txtTotal = findViewById(R.id.txtTotal);
         final Button detalhes = (Button) findViewById(R.id.btnDetalhes);
         final Button limpar = (Button) findViewById(R.id.btnLimpar);
+        final Button infoPagamento = (Button) findViewById(R.id.infoPagamento);
         final RadioGroup campoPagamento = (RadioGroup) findViewById(R.id.rgPagamento);
         final RadioGroup campoSituacao = (RadioGroup) findViewById(R.id.rgSituacao);
         campoTaxa = (ExtendedEditText) findViewById(R.id.taxa);
@@ -87,10 +88,6 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
         array_moeda = new String[2];
         array_moeda[0] = "USD $";
         array_moeda[1] = "EUR €";
-
-        final AlertDialog.Builder builder = new AlertDialog.Builder(MainCalculatorActivity.this);
-        builder.setMessage("Só há acréscimo se exceder em 500 o valor dos produtos.");
-        builder.setTitle("Alerta");
 
         AlertDialog.Builder builderMoeda = new AlertDialog.Builder(MainCalculatorActivity.this);
         builderMoeda.setTitle("Moeda Local")
@@ -102,7 +99,7 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
                             moedaValor.setText("U$");
                             campoValor.setPrefix("U$ ");
                             txtTotal.setText("Total em U$");
-                            retrofitService.getCurrency("USD", "USD,BRL,EUR",  getApplicationContext(), MainCalculatorActivity.this);
+                            retrofitService.getCurrency("USD", "USD,BRL,EUR", getApplicationContext(), MainCalculatorActivity.this);
                         } else if (i == 1) {
                             moedaValor.setText("€");
                             campoValor.setPrefix("€ ");
@@ -111,8 +108,6 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
                         }
                     }
                 });
-
-        final Dialog dialogMoedalocal = builderMoeda.create();
 
         campoTotalLocal.setText("0,00");
         campoTotalConvertido.setText("0,00");
@@ -145,13 +140,6 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
             }
         }));
 
-        campoValor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                view.setFocusable(true);
-            }
-        });
-
         campoValor.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -162,8 +150,7 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (campoValor.getText().length() > 0 && campoTaxa.getText().length() > 0) {
                     viagem.atualizaValorConvertido(getDoubleValueFrom(charSequence.toString()), getDoubleValueFrom(campoTaxa));
-                }
-                else {
+                } else {
                     viagem.atualizaValorConvertido(0, 0);
                 }
                 campoTotalConvertido.setText(String.format("%.2f", viagem.getTotalConvertido()));
@@ -190,7 +177,7 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
                     } else {
                         viagem.atualizaPagamento(2);
                     }
-                    campoTotalLocal.setText(String.format("%.2f",viagem.getTotalLocal()));
+                    campoTotalLocal.setText(String.format("%.2f", viagem.getTotalLocal()));
                     campoTotalConvertido.setText(String.format("%.2f", viagem.getTotalConvertido()));
                 }
             }
@@ -214,8 +201,7 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
                     }
 
                     if (!situacaoChecked && button != null) {
-                        AlertDialog dialog = builder.create();
-                        dialog.show();
+                        createDialog("Alerta","Só há acréscimo se exceder em 500 o valor dos produtos.").show();
                     }
 
                     campoTotalLocal.setText(String.format("%.2f", viagem.getTotalLocal()));
@@ -224,7 +210,11 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
             }
         };
 
+
         campoSituacao.setOnCheckedChangeListener(onCheckedChangeListener);
+
+
+        infoPagamento.setOnClickListener(getOnClickListener(createDialog("Informação", "Opções relacionadas ao pagamento realizado na casa de câmbio.\n Dinheiro : %\n Débito/Crédito: %")));
 
         detalhes.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -232,7 +222,7 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
                 Intent intent = new Intent(MainCalculatorActivity.this, DetalhesActivity.class);
                 intent.putExtra("viagem", viagem);
                 intent.putExtra("moedaValor", moedaValor.getText());
-              intent.putExtra("moedaConvert", moedaConvert.getText());
+                intent.putExtra("moedaConvert", moedaConvert.getText());
                 startActivity(intent);
 
             }
@@ -255,13 +245,8 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
             }
         });
 
+        moedaValor.setOnClickListener(getOnClickListener(builderMoeda.create()));
 
-        moedaValor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialogMoedalocal.show();
-            }
-        });
     }
 
     private void onGetCurrencySuccess(MoedaAPI moedaAPI){
@@ -278,6 +263,16 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
                 campoTaxa.setText(String.format("%.2f",moedaAPI.getRates().getEur()));
                 break;
         }
+    }
+
+    public View.OnClickListener getOnClickListener(final Dialog dialog) {
+        View.OnClickListener onClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.show();
+            }
+        };
+        return onClickListener;
     }
 
     private Interceptor getLoggingInterceptor() {
@@ -321,5 +316,13 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
         }
 
         return result;
+    }
+
+    private Dialog createDialog(String title, String message){
+        final AlertDialog.Builder builder = new AlertDialog.Builder(MainCalculatorActivity.this);
+        builder.setMessage(message);
+        builder.setTitle(title);
+
+        return builder.create();
     }
 }
