@@ -2,7 +2,7 @@ package br.com.mobiplus.ferramentadeviajem.service;
 
 import android.content.Context;
 
-import br.com.mobiplus.ferramentadeviajem.models.MoedaAPI;
+import br.com.mobiplus.ferramentadeviajem.models.CurrencyExchange;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -28,10 +28,10 @@ public class RetrofitService
         this.retrofit = retroBuilder.build();
     }
 
-    public void getCurrency(String moedaLocal, String moedasEstrangeiras, final Context contexto, Callback<MoedaAPI> callback)
+    public void getCurrency(String moedaLocal, String moedasEstrangeiras, final Context contexto, Callback<CurrencyExchange> callback)
     {
         FreeCurrencyService currency = retrofit.create(FreeCurrencyService.class);
-        Call<MoedaAPI> call = currency.getCurrency(moedaLocal, moedasEstrangeiras);
+        Call<CurrencyExchange> call = currency.getCurrency(moedaLocal, moedasEstrangeiras);
 
         call.enqueue(callback);
     }

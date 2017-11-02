@@ -1,6 +1,6 @@
 package br.com.mobiplus.ferramentadeviajem.service;
 
-import br.com.mobiplus.ferramentadeviajem.models.MoedaAPI;
+import br.com.mobiplus.ferramentadeviajem.models.CurrencyExchange;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -12,5 +12,5 @@ import retrofit2.http.Query;
 public interface FreeCurrencyService
 {
     @GET("/latest")
-    Call<MoedaAPI> getCurrency(@Query("base") String valor, @Query("symbols") String symbols);
+    Call<CurrencyExchange> getCurrency(@Query("base") String valor, @Query("symbols") String symbols);
 }

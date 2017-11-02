@@ -69,7 +69,7 @@
                 tools:ignore="RtlHardcoded">
 
                 <studio.carbonylgroup.textfieldboxes.ExtendedEditText
-                    android:id="@+id/taxa"
+                    android:id="@+id/editCurrencyExchange"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:selectAllOnFocus="true"
@@ -90,7 +90,7 @@
                 tools:ignore="RtlHardcoded">
 
                 <studio.carbonylgroup.textfieldboxes.ExtendedEditText
-                    android:id="@+id/valor"
+                    android:id="@+id/editAmout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:selectAllOnFocus="true"
@@ -125,7 +125,7 @@
                 tools:fontFamily="@font/roboto_medium" />
 
                 <Button
-                    android:id="@+id/infoPagamento"
+                    android:id="@+id/buttonInfoPayment"
                     android:layout_width="18dp"
                     android:layout_height="18dp"
                     android:layout_marginRight="@dimen/margin_middle"
@@ -140,7 +140,7 @@
 
             </LinearLayout>
             <RadioGroup
-                android:id="@+id/rgPagamento"
+                android:id="@+id/radioPaymentType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/margin_middle">
@@ -184,7 +184,7 @@
                 tools:fontFamily="@font/roboto_medium" />
 
             <RadioGroup
-                android:id="@+id/rgSituacao"
+                android:id="@+id/radioSituationType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/margin_middle">
@@ -364,7 +364,7 @@
             android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btnDetalhes"
+            android:id="@+id/buttonGoToDetails"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="#55678c"
@@ -374,7 +374,7 @@
             android:text="Resumo" />
 
         <Button
-            android:id="@+id/btnLimpar"
+            android:id="@+id/buttonCleanForm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="#55678c"
