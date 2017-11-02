@@ -20,7 +20,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/moedaValor"
+                android:id="@+id/textCurrencySimbolFrom"
                 style="@style/AppThemeDark.Currency"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
                 android:background="@drawable/ic_swap_horiz_black_24dp" />
 
             <TextView
-                android:id="@+id/moedaConvert"
+                android:id="@+id/textCurrencySimbolTo"
                 style="@style/AppThemeDark.Currency"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -247,7 +247,7 @@
                     tools:fontFamily="@font/roboto_medium" />
 
                 <TextView
-                    android:id="@+id/totalLocal"
+                    android:id="@+id/textAmountFrom"
                     style="@style/AppThemeDark.Content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -276,7 +276,7 @@
                     tools:fontFamily="@font/roboto_medium" />
 
                 <TextView
-                    android:id="@+id/totalConvertido"
+                    android:id="@+id/textAmountTo"
                     style="@style/AppThemeDark.Content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

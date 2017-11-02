@@ -60,10 +60,10 @@ public class MainCalculatorActivity extends AppCompatActivity implements DataCal
         currencyRepository.loadCurrencyExchange("USD", new String[]{"BRL","EUR"}, this);
 
         final ExtendedEditText editAmount = (ExtendedEditText) findViewById(R.id.editAmout);
-        final TextView campoTotalConvertido = (TextView) findViewById(R.id.totalConvertido);
-        final TextView campoTotalLocal = (TextView) findViewById(R.id.totalLocal);
-        final TextView moedaValor = findViewById(R.id.moedaValor);
-        final TextView moedaConvert = findViewById(R.id.moedaConvert);
+        final TextView textAmountTo = (TextView) findViewById(R.id.textAmountTo);
+        final TextView textAmountFrom = (TextView) findViewById(R.id.textAmountFrom);
+        final TextView moedaValor = findViewById(R.id.textCurrencySimbolFrom);
+        final TextView moedaConvert = findViewById(R.id.textCurrencySimbolTo);
         final TextView txtTotal = findViewById(R.id.txtTotal);
         final Button buttonGoToDetails = (Button) findViewById(R.id.buttonGoToDetails);
         final Button buttonCleanForm = (Button) findViewById(R.id.buttonCleanForm);
@@ -103,13 +103,13 @@ public class MainCalculatorActivity extends AppCompatActivity implements DataCal
                     }
                 });
 
-        campoTotalLocal.setText("0,00");
-        campoTotalConvertido.setText("0,00");
+        textAmountFrom.setText("0,00");
+        textAmountTo.setText("0,00");
 
         final CustoViagem custoViagem = new CustoViagem();
 
-        campoTotalConvertido.addTextChangedListener(new ValorMonetarioWatcher());
-        campoTotalLocal.addTextChangedListener(new ValorMonetarioWatcher());
+        textAmountTo.addTextChangedListener(new ValorMonetarioWatcher());
+        textAmountFrom.addTextChangedListener(new ValorMonetarioWatcher());
 
         editCurrencyExchange.addTextChangedListener((new TextWatcher()
         {
@@ -129,7 +129,7 @@ public class MainCalculatorActivity extends AppCompatActivity implements DataCal
                 {
                     custoViagem.atualizaValorConvertido(0, 0);
                 }
-                campoTotalConvertido.setText(String.format("%.2f", custoViagem.getTotalConvertido()));
+                textAmountTo.setText(String.format("%.2f", custoViagem.getTotalConvertido()));
             }
 
             @Override
@@ -157,8 +157,8 @@ public class MainCalculatorActivity extends AppCompatActivity implements DataCal
                 {
                     custoViagem.atualizaValorConvertido(0, 0);
                 }
-                campoTotalConvertido.setText(String.format("%.2f", custoViagem.getTotalConvertido()));
-                campoTotalLocal.setText(String.format("%.2f", custoViagem.getTotalLocal()));
+                textAmountTo.setText(String.format("%.2f", custoViagem.getTotalConvertido()));
+                textAmountFrom.setText(String.format("%.2f", custoViagem.getTotalLocal()));
 
             }
 
@@ -187,8 +187,8 @@ public class MainCalculatorActivity extends AppCompatActivity implements DataCal
                     {
                         custoViagem.atualizaPagamento(2);
                     }
-                    campoTotalLocal.setText(String.format("%.2f", custoViagem.getTotalLocal()));
-                    campoTotalConvertido.setText(String.format("%.2f", custoViagem.getTotalConvertido()));
+                    textAmountFrom.setText(String.format("%.2f", custoViagem.getTotalLocal()));
+                    textAmountTo.setText(String.format("%.2f", custoViagem.getTotalConvertido()));
                 }
             }
         });
@@ -223,8 +223,8 @@ public class MainCalculatorActivity extends AppCompatActivity implements DataCal
                         showDialog(dialogTitle, message);
                     }
 
-                    campoTotalLocal.setText(String.format("%.2f", custoViagem.getTotalLocal()));
-                    campoTotalConvertido.setText(String.format("%.2f", custoViagem.getTotalConvertido()));
+                    textAmountFrom.setText(String.format("%.2f", custoViagem.getTotalLocal()));
+                    textAmountTo.setText(String.format("%.2f", custoViagem.getTotalConvertido()));
                 }
             }
         };
@@ -258,8 +258,8 @@ public class MainCalculatorActivity extends AppCompatActivity implements DataCal
                 custoViagem.limpaValores();
 
                 editAmount.setText("0,00");
-                campoTotalConvertido.setText("0,00");
-                campoTotalLocal.setText("0,00");
+                textAmountTo.setText("0,00");
+                textAmountFrom.setText("0,00");
 
                 radioPaymentType.clearCheck();
                 radioSituationType.setOnCheckedChangeListener(null);
