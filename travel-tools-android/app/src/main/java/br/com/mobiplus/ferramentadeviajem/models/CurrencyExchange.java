@@ -1,7 +1,7 @@
 package br.com.mobiplus.ferramentadeviajem.models;
 
 
-public class MoedaAPI
+public class CurrencyExchange
 {
     private String base;
     private String date;
