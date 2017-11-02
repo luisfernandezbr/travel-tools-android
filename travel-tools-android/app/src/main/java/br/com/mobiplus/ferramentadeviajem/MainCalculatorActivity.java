@@ -2,7 +2,6 @@ package br.com.mobiplus.ferramentadeviajem;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
@@ -23,6 +22,10 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.ViewById;
+
 import br.com.concretesolutions.canarinho.watcher.ValorMonetarioWatcher;
 import br.com.mobiplus.ferramentadeviajem.models.CustoViagem;
 import br.com.mobiplus.ferramentadeviajem.models.CurrencyExchange;
@@ -31,6 +34,7 @@ import br.com.mobiplus.ferramentadeviajem.repository.CurrencyRepositoryImpl;
 import br.com.mobiplus.ferramentadeviajem.repository.DataCallback;
 import studio.carbonylgroup.textfieldboxes.ExtendedEditText;
 
+@EActivity(R.layout.activity_main)
 public class MainCalculatorActivity extends AppCompatActivity implements DataCallback<CurrencyExchange, String>
 {
     public static final String TAG = "MainCalculatorActivity";
@@ -38,7 +42,6 @@ public class MainCalculatorActivity extends AppCompatActivity implements DataCal
     private ImageButton changeMoeda;
     private ImageView imageSwap;
     private CurrencyExchange moedaAPI;
-    private ExtendedEditText editCurrencyExchange;
     private int idLocal = 0;
     private int idConvert = 1;
     private Spinner spinnerMoedaConvert;
@@ -48,29 +51,49 @@ public class MainCalculatorActivity extends AppCompatActivity implements DataCal
 
     private CurrencyRepository currencyRepository;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    @ViewById(R.id.editAmout)
+    ExtendedEditText editAmount;
 
+    @ViewById(R.id.editCurrencyExchange)
+    ExtendedEditText editCurrencyExchange;
+
+    @ViewById
+    TextView textCurrencySymbolFrom;
+
+    @ViewById
+    TextView textCurrencySymbolTo;
+
+    @ViewById
+    TextView textAmountFromLabel;
+
+    @ViewById
+    TextView textAmountFromValue;
+
+    @ViewById
+    TextView textAmountToValue;
+
+    @ViewById
+    Button buttonGoToDetails;
+
+    @ViewById
+    Button buttonCleanForm;
+
+    @ViewById
+    Button buttonInfoPayment;
+
+    @ViewById
+    RadioGroup radioPaymentType;
+
+    @ViewById
+    RadioGroup radioSituationType;
+
+
+    @AfterViews
+    public void afterViews() {
         this.configTypefaces();
 
         currencyRepository = new CurrencyRepositoryImpl(this);
         currencyRepository.loadCurrencyExchange("USD", new String[]{"BRL","EUR"}, this);
-
-        final ExtendedEditText editAmount = (ExtendedEditText) findViewById(R.id.editAmout);
-        final TextView textAmountTo = (TextView) findViewById(R.id.textAmountTo);
-        final TextView textAmountFrom = (TextView) findViewById(R.id.textAmountFrom);
-        final TextView moedaValor = findViewById(R.id.textCurrencySimbolFrom);
-        final TextView moedaConvert = findViewById(R.id.textCurrencySimbolTo);
-        final TextView txtTotal = findViewById(R.id.txtTotal);
-        final Button buttonGoToDetails = (Button) findViewById(R.id.buttonGoToDetails);
-        final Button buttonCleanForm = (Button) findViewById(R.id.buttonCleanForm);
-        final Button buttonInfoPayment = (Button) findViewById(R.id.buttonInfoPayment);
-        final RadioGroup radioPaymentType = (RadioGroup) findViewById(R.id.radioPaymentType);
-        final RadioGroup radioSituationType = (RadioGroup) findViewById(R.id.radioSituationType);
-        editCurrencyExchange = (ExtendedEditText) findViewById(R.id.editCurrencyExchange);
 
         array_moeda = new String[2];
         array_moeda[0] = "USD $";
@@ -86,30 +109,30 @@ public class MainCalculatorActivity extends AppCompatActivity implements DataCal
                         idLocal = i;
                         if (i == 0)
                         {
-                            moedaValor.setText("U$");
+                            textCurrencySymbolFrom.setText("U$");
                             editAmount.setPrefix("U$ ");
-                            txtTotal.setText("Total em U$");
+                            textAmountFromLabel.setText("Total em U$");
 
                             //retrofitService.getCurrency("USD", "USD,BRL,EUR", getApplicationContext(), MainCalculatorActivity.this);
                             currencyRepository.loadCurrencyExchange("USD", new String[]{"EUR", "BRL"}, MainCalculatorActivity.this);
                         } else if (i == 1)
                         {
-                            moedaValor.setText("€");
+                            textCurrencySymbolFrom.setText("€");
                             editAmount.setPrefix("€ ");
-                            txtTotal.setText("Total em €");
+                            textAmountFromLabel.setText("Total em €");
                             //retrofitService.getCurrency("EUR", "USD,BRL,EUR", getApplicationContext(), MainCalculatorActivity.this);
                             currencyRepository.loadCurrencyExchange("EUR", new String[]{"USD", "BRL"}, MainCalculatorActivity.this);
                         }
                     }
                 });
 
-        textAmountFrom.setText("0,00");
-        textAmountTo.setText("0,00");
+        textAmountFromValue.setText("0,00");
+        textAmountToValue.setText("0,00");
 
         final CustoViagem custoViagem = new CustoViagem();
 
-        textAmountTo.addTextChangedListener(new ValorMonetarioWatcher());
-        textAmountFrom.addTextChangedListener(new ValorMonetarioWatcher());
+        textAmountToValue.addTextChangedListener(new ValorMonetarioWatcher());
+        textAmountFromValue.addTextChangedListener(new ValorMonetarioWatcher());
 
         editCurrencyExchange.addTextChangedListener((new TextWatcher()
         {
@@ -129,7 +152,7 @@ public class MainCalculatorActivity extends AppCompatActivity implements DataCal
                 {
                     custoViagem.atualizaValorConvertido(0, 0);
                 }
-                textAmountTo.setText(String.format("%.2f", custoViagem.getTotalConvertido()));
+                textAmountToValue.setText(String.format("%.2f", custoViagem.getTotalConvertido()));
             }
 
             @Override
@@ -157,8 +180,8 @@ public class MainCalculatorActivity extends AppCompatActivity implements DataCal
                 {
                     custoViagem.atualizaValorConvertido(0, 0);
                 }
-                textAmountTo.setText(String.format("%.2f", custoViagem.getTotalConvertido()));
-                textAmountFrom.setText(String.format("%.2f", custoViagem.getTotalLocal()));
+                textAmountToValue.setText(String.format("%.2f", custoViagem.getTotalConvertido()));
+                textAmountFromValue.setText(String.format("%.2f", custoViagem.getTotalLocal()));
 
             }
 
@@ -187,8 +210,8 @@ public class MainCalculatorActivity extends AppCompatActivity implements DataCal
                     {
                         custoViagem.atualizaPagamento(2);
                     }
-                    textAmountFrom.setText(String.format("%.2f", custoViagem.getTotalLocal()));
-                    textAmountTo.setText(String.format("%.2f", custoViagem.getTotalConvertido()));
+                    textAmountFromValue.setText(String.format("%.2f", custoViagem.getTotalLocal()));
+                    textAmountToValue.setText(String.format("%.2f", custoViagem.getTotalConvertido()));
                 }
             }
         });
@@ -223,12 +246,11 @@ public class MainCalculatorActivity extends AppCompatActivity implements DataCal
                         showDialog(dialogTitle, message);
                     }
 
-                    textAmountFrom.setText(String.format("%.2f", custoViagem.getTotalLocal()));
-                    textAmountTo.setText(String.format("%.2f", custoViagem.getTotalConvertido()));
+                    textAmountFromValue.setText(String.format("%.2f", custoViagem.getTotalLocal()));
+                    textAmountToValue.setText(String.format("%.2f", custoViagem.getTotalConvertido()));
                 }
             }
         };
-
 
         radioSituationType.setOnCheckedChangeListener(onCheckedChangeListener);
 
@@ -240,8 +262,8 @@ public class MainCalculatorActivity extends AppCompatActivity implements DataCal
             @Override
             public void onClick(View v)
             {
-                String moedaValorString = moedaValor.getText().toString();
-                String moedaConvertidaString = moedaConvert.getText().toString();
+                String moedaValorString = textCurrencySymbolFrom.getText().toString();
+                String moedaConvertidaString = textCurrencySymbolTo.getText().toString();
                 DetalhesActivity.start(MainCalculatorActivity.this, custoViagem, moedaValorString, moedaConvertidaString);
             }
         });
@@ -255,8 +277,8 @@ public class MainCalculatorActivity extends AppCompatActivity implements DataCal
                 custoViagem.limpaValores();
 
                 editAmount.setText("0,00");
-                textAmountTo.setText("0,00");
-                textAmountFrom.setText("0,00");
+                textAmountToValue.setText("0,00");
+                textAmountFromValue.setText("0,00");
 
                 radioPaymentType.clearCheck();
                 radioSituationType.setOnCheckedChangeListener(null);
@@ -267,7 +289,7 @@ public class MainCalculatorActivity extends AppCompatActivity implements DataCal
 
         AlertDialog alertDialog = dialogBuilderMoeda.create();
         View.OnClickListener onClickListener = this.getOnClickListener(alertDialog);
-        moedaValor.setOnClickListener(onClickListener);
+        textCurrencySymbolFrom.setOnClickListener(onClickListener);
     }
 
     private void configTypefaces()

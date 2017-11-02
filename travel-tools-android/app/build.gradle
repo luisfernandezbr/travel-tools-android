@@ -19,16 +19,20 @@ android {
     }
 }
 
+
+def AAVersion = "4.4.0" // change this to your desired version, for example the latest stable: 4.3.1
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:26.0.1'
-
-
+    compile 'com.android.support:appcompat-v7:26.1.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.android.support:design:26.0.1'
+    compile 'com.android.support:design:26.1.0'
+
+    annotationProcessor "org.androidannotations:androidannotations:$AAVersion"
+    implementation "org.androidannotations:androidannotations-api:$AAVersion"
 
     compile 'com.squareup.okhttp3:okhttp:3.8.1'
     compile 'com.squareup.okhttp3:logging-interceptor:3.8.1'
