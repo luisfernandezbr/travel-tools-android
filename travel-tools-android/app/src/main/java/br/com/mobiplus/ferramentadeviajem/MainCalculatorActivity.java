@@ -240,12 +240,9 @@ public class MainCalculatorActivity extends AppCompatActivity implements DataCal
             @Override
             public void onClick(View v)
             {
-                Intent intent = new Intent(MainCalculatorActivity.this, DetalhesActivity.class);
-                intent.putExtra("custoViagem", custoViagem);
-                intent.putExtra("moedaValor", moedaValor.getText());
-                intent.putExtra("moedaConvert", moedaConvert.getText());
-                startActivity(intent);
-
+                String moedaValorString = moedaValor.getText().toString();
+                String moedaConvertidaString = moedaConvert.getText().toString();
+                DetalhesActivity.start(MainCalculatorActivity.this, custoViagem, moedaValorString, moedaConvertidaString);
             }
         });
 

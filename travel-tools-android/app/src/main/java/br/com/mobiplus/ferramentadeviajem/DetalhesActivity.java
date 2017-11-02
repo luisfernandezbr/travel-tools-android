@@ -1,6 +1,7 @@
 package br.com.mobiplus.ferramentadeviajem;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,16 @@ import br.com.mobiplus.ferramentadeviajem.models.CustoViagem;
 
 public class DetalhesActivity extends AppCompatActivity
 {
+
+
+    public static void start(Context context, CustoViagem custoViagem, String moedaValor, String moedaConvertida) {
+        Intent intent = new Intent(context, DetalhesActivity.class);
+        intent.putExtra("custoViagem", custoViagem);
+        intent.putExtra("moedaValor", moedaValor);
+        intent.putExtra("moedaConvert", moedaConvertida);
+        context.startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
