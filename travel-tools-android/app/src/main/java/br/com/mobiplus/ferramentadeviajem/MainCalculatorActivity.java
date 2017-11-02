@@ -6,11 +6,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -19,16 +19,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import br.com.concretesolutions.canarinho.watcher.ValorMonetarioWatcher;
+import br.com.mobiplus.ferramentadeviajem.models.CustoViagem;
 import br.com.mobiplus.ferramentadeviajem.models.MoedaAPI;
 import br.com.mobiplus.ferramentadeviajem.service.RetrofitService;
-import br.com.mobiplus.ferramentadeviajem.models.CustoViagem;
 import okhttp3.Interceptor;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -36,7 +35,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import studio.carbonylgroup.textfieldboxes.ExtendedEditText;
 
-public class MainCalculatorActivity extends AppCompatActivity implements Callback<MoedaAPI> {
+public class MainCalculatorActivity extends AppCompatActivity implements Callback<MoedaAPI>
+{
     private String array_moeda[];
     private ImageButton changeMoeda;
     private ImageView imageSwap;
@@ -48,7 +48,8 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
     private RadioGroup.OnCheckedChangeListener onCheckedChangeListener;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
 
         final SharedPreferences sharedPreferences = this.getSharedPreferences("theme", Context.MODE_PRIVATE);
         setTheme(R.style.AppThemeDark);
@@ -91,16 +92,20 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
 
         AlertDialog.Builder builderMoeda = new AlertDialog.Builder(MainCalculatorActivity.this);
         builderMoeda.setTitle("Moeda Local")
-                .setItems(array_moeda, new DialogInterface.OnClickListener() {
+                .setItems(array_moeda, new DialogInterface.OnClickListener()
+                {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                    public void onClick(DialogInterface dialogInterface, int i)
+                    {
                         idLocal = i;
-                        if (i == 0) {
+                        if (i == 0)
+                        {
                             moedaValor.setText("U$");
                             campoValor.setPrefix("U$ ");
                             txtTotal.setText("Total em U$");
                             retrofitService.getCurrency("USD", "USD,BRL,EUR", getApplicationContext(), MainCalculatorActivity.this);
-                        } else if (i == 1) {
+                        } else if (i == 1)
+                        {
                             moedaValor.setText("€");
                             campoValor.setPrefix("€ ");
                             txtTotal.setText("Total em €");
@@ -117,40 +122,50 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
         campoTotalConvertido.addTextChangedListener(new ValorMonetarioWatcher());
         campoTotalLocal.addTextChangedListener(new ValorMonetarioWatcher());
 
-        campoTaxa.addTextChangedListener((new TextWatcher() {
+        campoTaxa.addTextChangedListener((new TextWatcher()
+        {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after)
+            {
 
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+            {
 
                 if (campoTaxa.getText().length() > 0 && campoValor.getText().length() > 0)
                     viagem.atualizaValorConvertido(getDoubleValueFrom(campoValor), getDoubleValueFrom(s.toString()));
-                else {
+                else
+                {
                     viagem.atualizaValorConvertido(0, 0);
                 }
                 campoTotalConvertido.setText(String.format("%.2f", viagem.getTotalConvertido()));
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
+            public void afterTextChanged(Editable s)
+            {
 
             }
         }));
 
-        campoValor.addTextChangedListener(new TextWatcher() {
+        campoValor.addTextChangedListener(new TextWatcher()
+        {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2)
+            {
 
             }
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (campoValor.getText().length() > 0 && campoTaxa.getText().length() > 0) {
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
+            {
+                if (campoValor.getText().length() > 0 && campoTaxa.getText().length() > 0)
+                {
                     viagem.atualizaValorConvertido(getDoubleValueFrom(charSequence.toString()), getDoubleValueFrom(campoTaxa));
-                } else {
+                } else
+                {
                     viagem.atualizaValorConvertido(0, 0);
                 }
                 campoTotalConvertido.setText(String.format("%.2f", viagem.getTotalConvertido()));
@@ -159,22 +174,28 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
             }
 
             @Override
-            public void afterTextChanged(Editable editable) {
+            public void afterTextChanged(Editable editable)
+            {
 
             }
         });
 
-        campoPagamento.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        campoPagamento.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
             @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
+            public void onCheckedChanged(RadioGroup group, int checkedId)
+            {
 
                 RadioButton button = (RadioButton) group.findViewById(checkedId);
-                if (button != null) {
+                if (button != null)
+                {
                     String nomeBtn = button.getText().toString();
 
-                    if (nomeBtn.equals("Dinheiro")) {
+                    if (nomeBtn.equals("Dinheiro"))
+                    {
                         viagem.atualizaPagamento(1);
-                    } else {
+                    } else
+                    {
                         viagem.atualizaPagamento(2);
                     }
                     campoTotalLocal.setText(String.format("%.2f", viagem.getTotalLocal()));
@@ -183,25 +204,32 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
             }
         });
 
-        onCheckedChangeListener = new RadioGroup.OnCheckedChangeListener() {
+        onCheckedChangeListener = new RadioGroup.OnCheckedChangeListener()
+        {
             @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
+            public void onCheckedChanged(RadioGroup group, int checkedId)
+            {
                 RadioButton button = (RadioButton) group.findViewById(checkedId);
 
-                if (button != null) {
+                if (button != null)
+                {
                     int nomeBtn = button.getId();
                     boolean situacaoChecked = false;
 
-                    if (nomeBtn == R.id.declarado) {
+                    if (nomeBtn == R.id.declarado)
+                    {
                         situacaoChecked = viagem.atualizaSituacao(1);
-                    } else if (nomeBtn == R.id.nDeclarado) {
+                    } else if (nomeBtn == R.id.nDeclarado)
+                    {
                         situacaoChecked = viagem.atualizaSituacao(2);
-                    } else if (nomeBtn == R.id.multado) {
+                    } else if (nomeBtn == R.id.multado)
+                    {
                         situacaoChecked = viagem.atualizaSituacao(3);
                     }
 
-                    if (!situacaoChecked && button != null) {
-                        createDialog("Alerta","Só há acréscimo se exceder em 500 o valor dos produtos.").show();
+                    if (!situacaoChecked && button != null)
+                    {
+                        createDialog("Alerta", "Só há acréscimo se exceder em 500 o valor dos produtos.").show();
                     }
 
                     campoTotalLocal.setText(String.format("%.2f", viagem.getTotalLocal()));
@@ -216,9 +244,11 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
 
         infoPagamento.setOnClickListener(getOnClickListener(createDialog("Informação", "Opções relacionadas ao pagamento realizado na casa de câmbio.\n Dinheiro : %\n Débito/Crédito: %")));
 
-        detalhes.setOnClickListener(new View.OnClickListener() {
+        detalhes.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 Intent intent = new Intent(MainCalculatorActivity.this, DetalhesActivity.class);
                 intent.putExtra("viagem", viagem);
                 intent.putExtra("moedaValor", moedaValor.getText());
@@ -228,9 +258,11 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
             }
         });
 
-        limpar.setOnClickListener(new View.OnClickListener() {
+        limpar.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
 
                 viagem.limpaValores();
 
@@ -249,33 +281,39 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
 
     }
 
-    private void onGetCurrencySuccess(MoedaAPI moedaAPI){
+    private void onGetCurrencySuccess(MoedaAPI moedaAPI)
+    {
         this.moedaAPI = moedaAPI;
 
-        switch(idConvert){
+        switch (idConvert)
+        {
             case 0:
-                campoTaxa.setText(String.format("%.2f",moedaAPI.getRates().getUSD()));
+                campoTaxa.setText(String.format("%.2f", moedaAPI.getRates().getUSD()));
                 break;
             case 1:
-                campoTaxa.setText(String.format("%.2f",moedaAPI.getRates().getBRL()));
+                campoTaxa.setText(String.format("%.2f", moedaAPI.getRates().getBRL()));
                 break;
             case 2:
-                campoTaxa.setText(String.format("%.2f",moedaAPI.getRates().getEur()));
+                campoTaxa.setText(String.format("%.2f", moedaAPI.getRates().getEur()));
                 break;
         }
     }
 
-    public View.OnClickListener getOnClickListener(final Dialog dialog) {
-        View.OnClickListener onClickListener = new View.OnClickListener() {
+    public View.OnClickListener getOnClickListener(final Dialog dialog)
+    {
+        View.OnClickListener onClickListener = new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 dialog.show();
             }
         };
         return onClickListener;
     }
 
-    private Interceptor getLoggingInterceptor() {
+    private Interceptor getLoggingInterceptor()
+    {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         return interceptor;
@@ -283,42 +321,51 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
     }
 
     @Override
-    public void onResponse(Call<MoedaAPI> call, Response<MoedaAPI> response) {
+    public void onResponse(Call<MoedaAPI> call, Response<MoedaAPI> response)
+    {
         MoedaAPI moedaAPI = response.body();
         onGetCurrencySuccess(moedaAPI);
     }
+
     @Override
-    public void onFailure(Call<MoedaAPI> call, Throwable t) {
+    public void onFailure(Call<MoedaAPI> call, Throwable t)
+    {
     }
 
     Typeface face;
 
-    private void setTypeface (@IdRes int resid) {
+    private void setTypeface(@IdRes int resid)
+    {
         TextView textView = findViewById(resid);
 
-        if (face == null) {
-            face=Typeface.createFromAsset(getAssets(),"fonts/roboto_thin.ttf");
+        if (face == null)
+        {
+            face = Typeface.createFromAsset(getAssets(), "fonts/roboto_thin.ttf");
         }
         textView.setTypeface(face);
     }
 
-    private double getDoubleValueFrom(@NonNull final EditText editText) {
+    private double getDoubleValueFrom(@NonNull final EditText editText)
+    {
         String editTextValue = editText.getText().toString();
         return this.getDoubleValueFrom(editTextValue);
     }
 
-    private double getDoubleValueFrom(@NonNull final String textValue) {
+    private double getDoubleValueFrom(@NonNull final String textValue)
+    {
         double result = 0.0d;
 
-        if (!TextUtils.isEmpty(textValue.trim())) {
-            result = Double.parseDouble(textValue.replace(",","."));
+        if (!TextUtils.isEmpty(textValue.trim()))
+        {
+            result = Double.parseDouble(textValue.replace(",", "."));
 
         }
 
         return result;
     }
 
-    private Dialog createDialog(String title, String message){
+    private Dialog createDialog(String title, String message)
+    {
         final AlertDialog.Builder builder = new AlertDialog.Builder(MainCalculatorActivity.this);
         builder.setMessage(message);
         builder.setTitle(title);

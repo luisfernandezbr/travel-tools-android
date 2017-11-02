@@ -11,13 +11,14 @@ import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class RetrofitService {
+public class RetrofitService
+{
     private Retrofit retrofit;
 
-    public RetrofitService(String baseURL) {
-
+    public RetrofitService(String baseURL)
+    {
         OkHttpClient httpClient = new OkHttpClient.Builder()
-                .addInterceptor( getLoggingInterceptor()).build();
+                .addInterceptor(getLoggingInterceptor()).build();
 
         Retrofit.Builder retroBuilder = new Retrofit.Builder()
                 .baseUrl(baseURL)
@@ -27,19 +28,18 @@ public class RetrofitService {
         this.retrofit = retroBuilder.build();
     }
 
-    public void getCurrency(String moedaLocal, String moedasEstrangeiras, final Context contexto, Callback<MoedaAPI> callback){
-
+    public void getCurrency(String moedaLocal, String moedasEstrangeiras, final Context contexto, Callback<MoedaAPI> callback)
+    {
         FreeCurrencyService currency = retrofit.create(FreeCurrencyService.class);
         Call<MoedaAPI> call = currency.getCurrency(moedaLocal, moedasEstrangeiras);
 
         call.enqueue(callback);
     }
 
-    private Interceptor getLoggingInterceptor() {
+    private Interceptor getLoggingInterceptor()
+    {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         return interceptor;
-
     }
-
 }

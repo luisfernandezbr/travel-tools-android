@@ -2,17 +2,17 @@ package br.com.mobiplus.ferramentadeviajem;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import br.com.mobiplus.ferramentadeviajem.models.CustoViagem;
 
-public class DetalhesActivity extends AppCompatActivity {
-
+public class DetalhesActivity extends AppCompatActivity
+{
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-
+    protected void onCreate(Bundle savedInstanceState)
+    {
         final SharedPreferences sharedPreferences = this.getSharedPreferences("theme", Context.MODE_PRIVATE);
         setTheme(R.style.AppThemeDark);
 
@@ -39,58 +39,67 @@ public class DetalhesActivity extends AppCompatActivity {
         TextView txtDetalhamentoConvertido = (TextView) findViewById(R.id.detalhamentoConvertido);
 
 
-        txtDetalhamentoConvertido.setText("Resumo do Custo em ("+moedaConvertida+")");
-        txtDetalhamentoValor.setText("Resumo do Custo em ("+moedaValor+")");
-        txtTaxa.setText("De ("+moedaValor+") Para ("+moedaConvertida+")");
+        txtDetalhamentoConvertido.setText("Resumo do Custo em (" + moedaConvertida + ")");
+        txtDetalhamentoValor.setText("Resumo do Custo em (" + moedaValor + ")");
+        txtTaxa.setText("De (" + moedaValor + ") Para (" + moedaConvertida + ")");
 
 
-        campoTaxa.setText(moedaValor+" "+format(viagem.getTaxa()));
-        campoValor.setText(moedaValor+" "+format(viagem.getValor()));
-        campoValorConvertido.setText(moedaConvertida+" "+format(viagem.getValorConvertido()));
-        campoTotalBR.setText(moedaConvertida+" "+format(viagem.getTotalConvertido()));
-        campoTotalUS.setText(moedaValor+" "+format(viagem.getTotalLocal()));
-        campoSituacaoConvertido.setText(moedaConvertida+" "+format(viagem.getValorSituacao()));
-        campoPagamentoConvertido.setText(moedaConvertida+" "+format(viagem.getValorPagamentoConvertido()));
-        campoPagamentoLocal.setText(moedaValor+" "+format(viagem.getValorPagamentoLocal()));
+        campoTaxa.setText(moedaValor + " " + format(viagem.getTaxa()));
+        campoValor.setText(moedaValor + " " + format(viagem.getValor()));
+        campoValorConvertido.setText(moedaConvertida + " " + format(viagem.getValorConvertido()));
+        campoTotalBR.setText(moedaConvertida + " " + format(viagem.getTotalConvertido()));
+        campoTotalUS.setText(moedaValor + " " + format(viagem.getTotalLocal()));
+        campoSituacaoConvertido.setText(moedaConvertida + " " + format(viagem.getValorSituacao()));
+        campoPagamentoConvertido.setText(moedaConvertida + " " + format(viagem.getValorPagamentoConvertido()));
+        campoPagamentoLocal.setText(moedaValor + " " + format(viagem.getValorPagamentoLocal()));
 
-        if (viagem.getSituacao() == 1) {
+        if (viagem.getSituacao() == 1)
+        {
             txtSituacaoValor.setText("Situação de Declaração (Declarado) - 50%");
             txtSituacaoConvertido.setText("Situação de Declaração (Declarado) - 50%");
-            if(viagem.getValor()>500) {
+            if (viagem.getValor() > 500)
+            {
                 campoSituacaoValor.setText(moedaValor + " " + format(((viagem.getValor() - 500) * 50) / 100));
             }
-        } else if (viagem.getSituacao() == 2) {
+        } else if (viagem.getSituacao() == 2)
+        {
             txtSituacaoValor.setText("Situação de Declaração (Não declarado) - 0%");
             txtSituacaoConvertido.setText("Situação de Declaração (Não declarado) - 0%");
-        } else if (viagem.getSituacao() == 3) {
+        } else if (viagem.getSituacao() == 3)
+        {
             txtSituacaoValor.setText("Situação de Declaração (Multado) - 100%");
             txtSituacaoConvertido.setText("Situação de Declaração (Multado) - 100%");
-            if(viagem.getValor()>500) {
+            if (viagem.getValor() > 500)
+            {
                 campoSituacaoValor.setText(moedaValor + " " + format(((viagem.getValor() - 500) * 100) / 100));
             }
         }
 
-        if (viagem.getPagamento() == 1) {
+        if (viagem.getPagamento() == 1)
+        {
             txtPagamento.setText("Tipo de Pagamento (Dinheiro)");
             txtPagamentoLocal.setText("Tipo de Pagamento (Dinheiro)");
-        } else if (viagem.getPagamento() == 2) {
+        } else if (viagem.getPagamento() == 2)
+        {
             txtPagamento.setText("Tipo de Pagamento (Cartão)");
             txtPagamentoLocal.setText("Tipo de Pagamento (Cartão)");
         }
     }
 
-    private String format(Double text){
-        String aux = String.format("%.2f",text);
+    private String format(Double text)
+    {
+        String aux = String.format("%.2f", text);
 
-        aux = aux.replace(".",",");
+        aux = aux.replace(".", ",");
         StringBuilder stringBuilder = new StringBuilder(aux);
-        if(aux.length()<=9 && aux.length()>6)
-            stringBuilder.insert(aux.length()-6,".");
-        else if(aux.length()<=12 && aux.length()>9){
-            stringBuilder.insert(aux.length()-6,".");
-            stringBuilder.insert(aux.length()-9,".");
-        }
-        else if(aux.length()<=15 && aux.length()>12) {
+        if (aux.length() <= 9 && aux.length() > 6)
+            stringBuilder.insert(aux.length() - 6, ".");
+        else if (aux.length() <= 12 && aux.length() > 9)
+        {
+            stringBuilder.insert(aux.length() - 6, ".");
+            stringBuilder.insert(aux.length() - 9, ".");
+        } else if (aux.length() <= 15 && aux.length() > 12)
+        {
             stringBuilder.insert(aux.length() - 6, ".");
             stringBuilder.insert(aux.length() - 9, ".");
             stringBuilder.insert(aux.length() - 12, ".");
@@ -98,6 +107,5 @@ public class DetalhesActivity extends AppCompatActivity {
         }
 
         return stringBuilder.toString();
-
     }
 }
