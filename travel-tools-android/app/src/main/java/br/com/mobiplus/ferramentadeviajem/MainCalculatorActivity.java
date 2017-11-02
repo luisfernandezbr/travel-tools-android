@@ -50,10 +50,6 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-
-        final SharedPreferences sharedPreferences = this.getSharedPreferences("theme", Context.MODE_PRIVATE);
-        setTheme(R.style.AppThemeDark);
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
