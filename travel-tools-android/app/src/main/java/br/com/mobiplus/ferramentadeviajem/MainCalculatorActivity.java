@@ -53,13 +53,7 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setTypeface(R.id.dinheiro);
-        setTypeface(R.id.cartao);
-        setTypeface(R.id.declarado);
-        setTypeface(R.id.nDeclarado);
-        setTypeface(R.id.multado);
-        setTypeface(R.id.taxa);
-        setTypeface(R.id.valor);
+        this.configTypefaces();
 
         array_moeda = new String[3];
         array_moeda[0] = "USD $";
@@ -275,6 +269,17 @@ public class MainCalculatorActivity extends AppCompatActivity implements Callbac
 
         moedaValor.setOnClickListener(getOnClickListener(builderMoeda.create()));
 
+    }
+
+    private void configTypefaces()
+    {
+        setTypeface(R.id.dinheiro);
+        setTypeface(R.id.cartao);
+        setTypeface(R.id.declarado);
+        setTypeface(R.id.nDeclarado);
+        setTypeface(R.id.multado);
+        setTypeface(R.id.taxa);
+        setTypeface(R.id.valor);
     }
 
     private void onGetCurrencySuccess(MoedaAPI moedaAPI)
