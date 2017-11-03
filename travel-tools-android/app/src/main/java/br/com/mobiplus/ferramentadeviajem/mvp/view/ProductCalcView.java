@@ -1,5 +1,6 @@
 package br.com.mobiplus.ferramentadeviajem.mvp.view;
 
+import br.com.mobiplus.ferramentadeviajem.models.CurrencyExchange;
 import br.com.mobiplus.ferramentadeviajem.mvp.repository.pojo.CalculatedCurrency;
 
 /**
@@ -9,4 +10,6 @@ import br.com.mobiplus.ferramentadeviajem.mvp.repository.pojo.CalculatedCurrency
 public interface ProductCalcView
 {
     void updateAmounts(CalculatedCurrency calculatedCurrency);
+
+    void onCurrencyExchangeLoaded(CurrencyExchange currencyExchange);
 }

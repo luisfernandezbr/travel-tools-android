@@ -20,7 +20,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -30,11 +29,10 @@ import br.com.concretesolutions.canarinho.watcher.ValorMonetarioWatcher;
 import br.com.mobiplus.ferramentadeviajem.models.CustoViagem;
 import br.com.mobiplus.ferramentadeviajem.models.CurrencyExchange;
 import br.com.mobiplus.ferramentadeviajem.mvp.event.OnFireCurrencyDetailsUpdateEvent;
+import br.com.mobiplus.ferramentadeviajem.mvp.event.OnFireLoadExchangeRatesEvent;
 import br.com.mobiplus.ferramentadeviajem.mvp.presenter.ProductCalcPresenter;
 import br.com.mobiplus.ferramentadeviajem.mvp.presenter.ProductCalcPresenterImpl;
-import br.com.mobiplus.ferramentadeviajem.mvp.repository.CurrencyRepository;
-import br.com.mobiplus.ferramentadeviajem.mvp.repository.CurrencyRepositoryImpl;
-import br.com.mobiplus.ferramentadeviajem.mvp.repository.DataCallback;
+import br.com.mobiplus.ferramentadeviajem.mvp.repository.ExchangeRatesRepository;
 import br.com.mobiplus.ferramentadeviajem.mvp.repository.pojo.CalculatedCurrency;
 import br.com.mobiplus.ferramentadeviajem.mvp.repository.pojo.CurrencyDetails;
 import br.com.mobiplus.ferramentadeviajem.mvp.repository.pojo.PaymentType;
@@ -43,7 +41,7 @@ import br.com.mobiplus.ferramentadeviajem.mvp.view.ProductCalcView;
 import studio.carbonylgroup.textfieldboxes.ExtendedEditText;
 
 @EActivity(R.layout.activity_main)
-public class ProductCalcActivity extends AppCompatActivity implements ProductCalcView, DataCallback<CurrencyExchange, String>
+public class ProductCalcActivity extends AppCompatActivity implements ProductCalcView
 {
     public static final String TAG = "ProductCalcActivity";
 
@@ -58,7 +56,7 @@ public class ProductCalcActivity extends AppCompatActivity implements ProductCal
 
     private Typeface face;
 
-    private CurrencyRepository currencyRepository;
+    private ExchangeRatesRepository exchangeRatesRepository;
 
     @ViewById(R.id.editAmout)
     ExtendedEditText editAmount;
@@ -102,8 +100,8 @@ public class ProductCalcActivity extends AppCompatActivity implements ProductCal
     public void afterViews() {
         this.configTypefaces();
 
-        currencyRepository = new CurrencyRepositoryImpl(this);
-        currencyRepository.loadCurrencyExchange("USD", new String[]{"BRL","EUR"}, this);
+//        exchangeRatesRepository = new ExchangeRatesRepositoryImpl(this);
+//        exchangeRatesRepository.loadExchangeRates("USD", new String[]{"BRL","EUR"}, this);
 
         array_moeda = new String[2];
         array_moeda[0] = "USD $";
@@ -123,15 +121,14 @@ public class ProductCalcActivity extends AppCompatActivity implements ProductCal
                             editAmount.setPrefix("U$ ");
                             textAmountFromLabel.setText("Total em U$");
 
-                            //retrofitService.getCurrency("USD", "USD,BRL,EUR", getApplicationContext(), ProductCalcActivity.this);
-                            currencyRepository.loadCurrencyExchange("USD", new String[]{"EUR", "BRL"}, ProductCalcActivity.this);
+                            ProductCalcActivity.this.fireLoadExchangeRatesEvent();
                         } else if (i == 1)
                         {
                             textCurrencySymbolFrom.setText("€");
                             editAmount.setPrefix("€ ");
                             textAmountFromLabel.setText("Total em €");
-                            //retrofitService.getCurrency("EUR", "USD,BRL,EUR", getApplicationContext(), ProductCalcActivity.this);
-                            currencyRepository.loadCurrencyExchange("EUR", new String[]{"USD", "BRL"}, ProductCalcActivity.this);
+
+                            ProductCalcActivity.this.fireLoadExchangeRatesEvent();
                         }
                     }
                 });
@@ -303,6 +300,12 @@ public class ProductCalcActivity extends AppCompatActivity implements ProductCal
         textCurrencySymbolFrom.setOnClickListener(onClickListener);
 
         this.presenter = new ProductCalcPresenterImpl(this);
+        this.fireLoadExchangeRatesEvent();
+    }
+
+    private void fireLoadExchangeRatesEvent()
+    {
+        this.presenter.onFireLoadExchangeRatesEvent(new OnFireLoadExchangeRatesEvent("USD", new String[]{"BRL","EUR"}));
     }
 
     @Override
@@ -317,6 +320,31 @@ public class ProductCalcActivity extends AppCompatActivity implements ProductCal
     {
         super.onStop();
         this.presenter.onStop();
+    }
+
+    @Override
+    public void updateAmounts(CalculatedCurrency calculatedCurrency)
+    {
+        Log.d(TAG, String.format("USD: %f, BRL: %f", calculatedCurrency.getAmountFrom(), calculatedCurrency.getAmountTo()));
+    }
+
+    @Override
+    public void onCurrencyExchangeLoaded(CurrencyExchange currencyExchange)
+    {
+        this.moedaAPI = currencyExchange;
+
+        switch (idConvert)
+        {
+            case 0:
+                editCurrencyExchange.setText(String.format("%.2f", moedaAPI.getRates().getUSD()));
+                break;
+            case 1:
+                editCurrencyExchange.setText(String.format("%.2f", moedaAPI.getRates().getBRL()));
+                break;
+            case 2:
+                editCurrencyExchange.setText(String.format("%.2f", moedaAPI.getRates().getEur()));
+                break;
+        }
     }
 
     private void fireCurrencyDetailsUpdateEvent() {
@@ -344,24 +372,6 @@ public class ProductCalcActivity extends AppCompatActivity implements ProductCal
         setTypeface(R.id.editAmout);
     }
 
-    private void onGetCurrencySuccess(CurrencyExchange moedaAPI)
-    {
-        this.moedaAPI = moedaAPI;
-
-        switch (idConvert)
-        {
-            case 0:
-                editCurrencyExchange.setText(String.format("%.2f", moedaAPI.getRates().getUSD()));
-                break;
-            case 1:
-                editCurrencyExchange.setText(String.format("%.2f", moedaAPI.getRates().getBRL()));
-                break;
-            case 2:
-                editCurrencyExchange.setText(String.format("%.2f", moedaAPI.getRates().getEur()));
-                break;
-        }
-    }
-
     public View.OnClickListener getOnClickListener(final Dialog dialog)
     {
         View.OnClickListener onClickListener = new View.OnClickListener()
@@ -373,18 +383,6 @@ public class ProductCalcActivity extends AppCompatActivity implements ProductCal
             }
         };
         return onClickListener;
-    }
-
-    @Override
-    public void onSuccess(CurrencyExchange currencyExchange)
-    {
-        onGetCurrencySuccess(currencyExchange);
-    }
-
-    @Override
-    public void onError(String s)
-    {
-        Log.e(TAG, "Error when loading currency exchanges");
     }
 
     private void setTypeface(@IdRes int resid)
@@ -429,12 +427,5 @@ public class ProductCalcActivity extends AppCompatActivity implements ProductCal
     private void showDialog(String dialogTitle, String message)
     {
         createDialog(dialogTitle, message).show();
-    }
-
-    @Override
-    public void updateAmounts(CalculatedCurrency calculatedCurrency)
-    {
-        Log.d(TAG, String.format("USD: %f, BRL: %f", calculatedCurrency.getAmountFrom(), calculatedCurrency.getAmountTo()));
-        //this.textAmountFromValue.setText(String.valueOf(calculatedCurrency.getAmountFrom()));
     }
 }

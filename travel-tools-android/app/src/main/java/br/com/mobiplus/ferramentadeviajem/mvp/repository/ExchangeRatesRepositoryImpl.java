@@ -1,9 +1,12 @@
 package br.com.mobiplus.ferramentadeviajem.mvp.repository;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
+
+import org.greenrobot.eventbus.EventBus;
 
 import br.com.mobiplus.ferramentadeviajem.models.CurrencyExchange;
+import br.com.mobiplus.ferramentadeviajem.mvp.event.OnLoadExchangeRatesSuccessEvent;
 import br.com.mobiplus.ferramentadeviajem.service.RetrofitService;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -13,28 +16,27 @@ import retrofit2.Response;
  * Created by luisfernandez on 02/11/17.
  */
 
-public class CurrencyRepositoryImpl implements CurrencyRepository
+public class ExchangeRatesRepositoryImpl implements ExchangeRatesRepository
 {
 
     private RetrofitService retrofitService;
-    Context context;
 
-    public CurrencyRepositoryImpl(Context context)
+    public ExchangeRatesRepositoryImpl()
     {
-        this.context = context;
         this.retrofitService = new RetrofitService("http://api.fixer.io/");
     }
 
     @Override
-    public void loadCurrencyExchange(String currencyFrom, String[] currencyTo, final DataCallback<CurrencyExchange, String> dataCallback)
+    public void loadExchangeRates(String currencyFrom, String[] currencyTo)
     {
         String currenciesString = this.getCurrenciesString(currencyTo);
-        Callback<CurrencyExchange> callback = this.getRetrofitCallback(dataCallback);
-        this.retrofitService.getCurrency(currencyFrom, currenciesString, context, callback);
+        Callback<CurrencyExchange> callback = this.getRetrofitCallback();
+        this.retrofitService.getCurrency(currencyFrom, currenciesString, callback);
     }
 
+
     @NonNull
-    private Callback<CurrencyExchange> getRetrofitCallback(final DataCallback<CurrencyExchange, String> dataCallback)
+    private Callback<CurrencyExchange> getRetrofitCallback()
     {
         return new Callback<CurrencyExchange>()
         {
@@ -47,7 +49,7 @@ public class CurrencyRepositoryImpl implements CurrencyRepository
             @Override
             public void onFailure(Call<CurrencyExchange> call, Throwable t)
             {
-                dataCallback.onError(t.getMessage());
+                Log.e("TAG", "Error loading exchange rates.", t);
             }
 
             private void handleResponse(Response<CurrencyExchange> response)
@@ -57,16 +59,21 @@ public class CurrencyRepositoryImpl implements CurrencyRepository
                     this.handleSuccessResponse(response);
                 } else
                 {
-                    dataCallback.onError(response.message());
+                    Log.e("TAG", "Error loading exchange rates. " + response.message());
                 }
             }
 
             private void handleSuccessResponse(Response<CurrencyExchange> response)
             {
                 CurrencyExchange currencyExchange = response.body();
-                dataCallback.onSuccess(currencyExchange);
+                sendOnLoadExchangeRatesSuccessEvent(currencyExchange);
             }
         };
+    }
+
+    private void sendOnLoadExchangeRatesSuccessEvent(CurrencyExchange currencyExchange)
+    {
+        EventBus.getDefault().post(new OnLoadExchangeRatesSuccessEvent(currencyExchange));
     }
 
     private String getCurrenciesString(String[] currencyTo)
