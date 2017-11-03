@@ -15,8 +15,10 @@ public class ProductCalcModelImpl implements ProductCalcModel
     @Override
     public void doCalculateCurrencyDetails(CurrencyDetails currencyDetails)
     {
-
         CalculatedCurrency calculatedCurrency = new CalculatedCurrency();
+        calculatedCurrency.setAmountFrom(200.00d);
+        calculatedCurrency.setAmountTo(300.00d);
+
         this.sendOnCurrencyCalculatedEvent(calculatedCurrency);
     }
 

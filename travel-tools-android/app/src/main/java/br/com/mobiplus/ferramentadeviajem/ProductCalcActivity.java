@@ -20,6 +20,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -28,10 +29,16 @@ import org.androidannotations.annotations.ViewById;
 import br.com.concretesolutions.canarinho.watcher.ValorMonetarioWatcher;
 import br.com.mobiplus.ferramentadeviajem.models.CustoViagem;
 import br.com.mobiplus.ferramentadeviajem.models.CurrencyExchange;
+import br.com.mobiplus.ferramentadeviajem.mvp.event.OnFireCurrencyDetailsUpdateEvent;
+import br.com.mobiplus.ferramentadeviajem.mvp.presenter.ProductCalcPresenter;
+import br.com.mobiplus.ferramentadeviajem.mvp.presenter.ProductCalcPresenterImpl;
 import br.com.mobiplus.ferramentadeviajem.mvp.repository.CurrencyRepository;
 import br.com.mobiplus.ferramentadeviajem.mvp.repository.CurrencyRepositoryImpl;
 import br.com.mobiplus.ferramentadeviajem.mvp.repository.DataCallback;
 import br.com.mobiplus.ferramentadeviajem.mvp.repository.pojo.CalculatedCurrency;
+import br.com.mobiplus.ferramentadeviajem.mvp.repository.pojo.CurrencyDetails;
+import br.com.mobiplus.ferramentadeviajem.mvp.repository.pojo.PaymentType;
+import br.com.mobiplus.ferramentadeviajem.mvp.repository.pojo.SituationType;
 import br.com.mobiplus.ferramentadeviajem.mvp.view.ProductCalcView;
 import studio.carbonylgroup.textfieldboxes.ExtendedEditText;
 
@@ -88,6 +95,7 @@ public class ProductCalcActivity extends AppCompatActivity implements ProductCal
     @ViewById
     RadioGroup radioSituationType;
 
+    private ProductCalcPresenter presenter;
 
     @AfterViews
     public void afterViews() {
@@ -183,7 +191,7 @@ public class ProductCalcActivity extends AppCompatActivity implements ProductCal
                 }
                 textAmountToValue.setText(String.format("%.2f", custoViagem.getTotalConvertido()));
                 textAmountFromValue.setText(String.format("%.2f", custoViagem.getTotalLocal()));
-
+                fireCurrencyDetailsUpdateEvent();
             }
 
             @Override
@@ -292,6 +300,36 @@ public class ProductCalcActivity extends AppCompatActivity implements ProductCal
         AlertDialog alertDialog = dialogBuilderMoeda.create();
         View.OnClickListener onClickListener = this.getOnClickListener(alertDialog);
         textCurrencySymbolFrom.setOnClickListener(onClickListener);
+
+        this.presenter = new ProductCalcPresenterImpl(this);
+    }
+
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+        this.presenter.onStart();
+    }
+
+    @Override
+    protected void onStop()
+    {
+        super.onStop();
+        this.presenter.onStop();
+    }
+
+    private void fireCurrencyDetailsUpdateEvent() {
+        CurrencyDetails currencyDetails = new CurrencyDetails();
+
+        currencyDetails.setExchangeRate(this.moedaAPI.getRates().getBRL());
+        currencyDetails.setAmountFrom(this.getDoubleValueFrom(editAmount));
+        currencyDetails.setCurrencyFrom("USD");
+        currencyDetails.setCurrencyTo("BRL");
+        currencyDetails.setPaymentType(PaymentType.DEBIT_CREDIT_CARD);
+        currencyDetails.setSituationType(SituationType.DECLARED);
+
+        OnFireCurrencyDetailsUpdateEvent event = new OnFireCurrencyDetailsUpdateEvent(currencyDetails);
+        this.presenter.onFireCurrencyDetailsUpdate(event);
     }
 
     private void configTypefaces()
@@ -395,6 +433,8 @@ public class ProductCalcActivity extends AppCompatActivity implements ProductCal
     @Override
     public void updateAmounts(CalculatedCurrency calculatedCurrency)
     {
-        this.textAmountFromValue.setText(String.valueOf(calculatedCurrency.getAmountFrom()));
+
+        Toast.makeText(this, "Valores recebidos: " + calculatedCurrency.getAmountFrom(), Toast.LENGTH_SHORT).show();
+        //this.textAmountFromValue.setText(String.valueOf(calculatedCurrency.getAmountFrom()));
     }
 }
