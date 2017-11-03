@@ -46,6 +46,7 @@ import studio.carbonylgroup.textfieldboxes.ExtendedEditText;
 public class ProductCalcActivity extends AppCompatActivity implements ProductCalcView, DataCallback<CurrencyExchange, String>
 {
     public static final String TAG = "ProductCalcActivity";
+
     private String array_moeda[];
     private ImageButton changeMoeda;
     private ImageView imageSwap;
@@ -325,8 +326,8 @@ public class ProductCalcActivity extends AppCompatActivity implements ProductCal
         currencyDetails.setAmountFrom(this.getDoubleValueFrom(editAmount));
         currencyDetails.setCurrencyFrom("USD");
         currencyDetails.setCurrencyTo("BRL");
-        currencyDetails.setPaymentType(PaymentType.DEBIT_CREDIT_CARD);
-        currencyDetails.setSituationType(SituationType.DECLARED);
+        currencyDetails.setPaymentType(PaymentType.NONE);
+        currencyDetails.setSituationType(SituationType.NONE);
 
         OnFireCurrencyDetailsUpdateEvent event = new OnFireCurrencyDetailsUpdateEvent(currencyDetails);
         this.presenter.onFireCurrencyDetailsUpdate(event);
@@ -433,8 +434,7 @@ public class ProductCalcActivity extends AppCompatActivity implements ProductCal
     @Override
     public void updateAmounts(CalculatedCurrency calculatedCurrency)
     {
-
-        Toast.makeText(this, "Valores recebidos: " + calculatedCurrency.getAmountFrom(), Toast.LENGTH_SHORT).show();
+        Log.d(TAG, String.format("USD: %f, BRL: %f", calculatedCurrency.getAmountFrom(), calculatedCurrency.getAmountTo()));
         //this.textAmountFromValue.setText(String.valueOf(calculatedCurrency.getAmountFrom()));
     }
 }
