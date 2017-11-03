@@ -1,4 +1,4 @@
-package br.com.mobiplus.ferramentadeviajem.repository;
+package br.com.mobiplus.ferramentadeviajem.mvp.repository;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

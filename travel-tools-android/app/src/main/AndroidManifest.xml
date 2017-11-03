@@ -11,7 +11,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppThemeDark">
-        <activity android:name=".MainCalculatorActivity_">
+        <activity android:name=".ProductCalcActivity_">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,4 +1,4 @@
-package br.com.mobiplus.ferramentadeviajem.repository;
+package br.com.mobiplus.ferramentadeviajem.mvp.repository;
 
 import br.com.mobiplus.ferramentadeviajem.models.CurrencyExchange;
 

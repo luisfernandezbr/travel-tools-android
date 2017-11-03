@@ -3,7 +3,6 @@ package br.com.mobiplus.ferramentadeviajem;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
-import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -29,15 +28,17 @@ import org.androidannotations.annotations.ViewById;
 import br.com.concretesolutions.canarinho.watcher.ValorMonetarioWatcher;
 import br.com.mobiplus.ferramentadeviajem.models.CustoViagem;
 import br.com.mobiplus.ferramentadeviajem.models.CurrencyExchange;
-import br.com.mobiplus.ferramentadeviajem.repository.CurrencyRepository;
-import br.com.mobiplus.ferramentadeviajem.repository.CurrencyRepositoryImpl;
-import br.com.mobiplus.ferramentadeviajem.repository.DataCallback;
+import br.com.mobiplus.ferramentadeviajem.mvp.repository.CurrencyRepository;
+import br.com.mobiplus.ferramentadeviajem.mvp.repository.CurrencyRepositoryImpl;
+import br.com.mobiplus.ferramentadeviajem.mvp.repository.DataCallback;
+import br.com.mobiplus.ferramentadeviajem.mvp.repository.pojo.CalculatedCurrency;
+import br.com.mobiplus.ferramentadeviajem.mvp.view.ProductCalcView;
 import studio.carbonylgroup.textfieldboxes.ExtendedEditText;
 
 @EActivity(R.layout.activity_main)
-public class MainCalculatorActivity extends AppCompatActivity implements DataCallback<CurrencyExchange, String>
+public class ProductCalcActivity extends AppCompatActivity implements ProductCalcView, DataCallback<CurrencyExchange, String>
 {
-    public static final String TAG = "MainCalculatorActivity";
+    public static final String TAG = "ProductCalcActivity";
     private String array_moeda[];
     private ImageButton changeMoeda;
     private ImageView imageSwap;
@@ -99,7 +100,7 @@ public class MainCalculatorActivity extends AppCompatActivity implements DataCal
         array_moeda[0] = "USD $";
         array_moeda[1] = "EUR €";
 
-        AlertDialog.Builder dialogBuilderMoeda = new AlertDialog.Builder(MainCalculatorActivity.this);
+        AlertDialog.Builder dialogBuilderMoeda = new AlertDialog.Builder(ProductCalcActivity.this);
         dialogBuilderMoeda.setTitle("Moeda Local")
                 .setItems(array_moeda, new DialogInterface.OnClickListener()
                 {
@@ -113,15 +114,15 @@ public class MainCalculatorActivity extends AppCompatActivity implements DataCal
                             editAmount.setPrefix("U$ ");
                             textAmountFromLabel.setText("Total em U$");
 
-                            //retrofitService.getCurrency("USD", "USD,BRL,EUR", getApplicationContext(), MainCalculatorActivity.this);
-                            currencyRepository.loadCurrencyExchange("USD", new String[]{"EUR", "BRL"}, MainCalculatorActivity.this);
+                            //retrofitService.getCurrency("USD", "USD,BRL,EUR", getApplicationContext(), ProductCalcActivity.this);
+                            currencyRepository.loadCurrencyExchange("USD", new String[]{"EUR", "BRL"}, ProductCalcActivity.this);
                         } else if (i == 1)
                         {
                             textCurrencySymbolFrom.setText("€");
                             editAmount.setPrefix("€ ");
                             textAmountFromLabel.setText("Total em €");
-                            //retrofitService.getCurrency("EUR", "USD,BRL,EUR", getApplicationContext(), MainCalculatorActivity.this);
-                            currencyRepository.loadCurrencyExchange("EUR", new String[]{"USD", "BRL"}, MainCalculatorActivity.this);
+                            //retrofitService.getCurrency("EUR", "USD,BRL,EUR", getApplicationContext(), ProductCalcActivity.this);
+                            currencyRepository.loadCurrencyExchange("EUR", new String[]{"USD", "BRL"}, ProductCalcActivity.this);
                         }
                     }
                 });
@@ -265,7 +266,7 @@ public class MainCalculatorActivity extends AppCompatActivity implements DataCal
                 String moedaValorString = textCurrencySymbolFrom.getText().toString();
                 String moedaConvertidaString = textCurrencySymbolTo.getText().toString();
 
-                DetalhesActivity.start(MainCalculatorActivity.this, custoViagem, moedaValorString, moedaConvertidaString);
+                DetalhesActivity.start(ProductCalcActivity.this, custoViagem, moedaValorString, moedaConvertidaString);
             }
         });
 
@@ -379,7 +380,7 @@ public class MainCalculatorActivity extends AppCompatActivity implements DataCal
 
     private Dialog createDialog(String title, String message)
     {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(MainCalculatorActivity.this);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(ProductCalcActivity.this);
         builder.setMessage(message);
         builder.setTitle(title);
 
@@ -389,5 +390,11 @@ public class MainCalculatorActivity extends AppCompatActivity implements DataCal
     private void showDialog(String dialogTitle, String message)
     {
         createDialog(dialogTitle, message).show();
+    }
+
+    @Override
+    public void updateAmounts(CalculatedCurrency calculatedCurrency)
+    {
+        this.textAmountFromValue.setText(String.valueOf(calculatedCurrency.getAmountFrom()));
     }
 }

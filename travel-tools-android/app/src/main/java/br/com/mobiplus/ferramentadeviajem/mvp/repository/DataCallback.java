@@ -1,4 +1,4 @@
-package br.com.mobiplus.ferramentadeviajem.repository;
+package br.com.mobiplus.ferramentadeviajem.mvp.repository;
 
 /**
  * Created by luisfernandez on 02/11/17.
