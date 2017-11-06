@@ -1,6 +1,6 @@
 package br.com.mobiplus.ferramentadeviajem.mvp.event;
 
-import br.com.mobiplus.ferramentadeviajem.mvp.repository.pojo.CurrencyDetails;
+import br.com.mobiplus.ferramentadeviajem.mvp.repository.pojo.ExchangeInfos;
 
 /**
  * Created by luisfernandez on 03/11/17.
@@ -8,15 +8,15 @@ import br.com.mobiplus.ferramentadeviajem.mvp.repository.pojo.CurrencyDetails;
 
 public class OnFireCurrencyDetailsUpdateEvent
 {
-    private CurrencyDetails currencyDetails;
+    private ExchangeInfos exchangeInfos;
 
-    public OnFireCurrencyDetailsUpdateEvent(CurrencyDetails currencyDetails)
+    public OnFireCurrencyDetailsUpdateEvent(ExchangeInfos exchangeInfos)
     {
-        this.currencyDetails = currencyDetails;
+        this.exchangeInfos = exchangeInfos;
     }
 
-    public CurrencyDetails getCurrencyDetails()
+    public ExchangeInfos getExchangeInfos()
     {
-        return currencyDetails;
+        return exchangeInfos;
     }
 }

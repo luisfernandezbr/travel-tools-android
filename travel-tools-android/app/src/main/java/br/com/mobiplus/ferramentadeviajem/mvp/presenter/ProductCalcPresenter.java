@@ -9,12 +9,10 @@ import br.com.mobiplus.ferramentadeviajem.mvp.event.OnLoadExchangeRatesSuccessEv
  * Created by luisfernandez on 03/11/17.
  */
 
-public interface ProductCalcPresenter
+public interface ProductCalcPresenter extends BasePresenter
 {
     void onFireLoadExchangeRatesEvent(OnFireLoadExchangeRatesEvent event);
     void onLoadExchangeRatesSuccessEvent(OnLoadExchangeRatesSuccessEvent event);
     void onFireCurrencyDetailsUpdate(OnFireCurrencyDetailsUpdateEvent event);
     void onCurrencyCalculated(OnCurrencyCalculatedEvent event);
-    void onStart();
-    void onStop();
 }

@@ -1,20 +1,15 @@
 package br.com.mobiplus.ferramentadeviajem.mvp.presenter;
 
-import android.annotation.SuppressLint;
-import android.util.Log;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import br.com.mobiplus.ferramentadeviajem.models.CurrencyExchange;
 import br.com.mobiplus.ferramentadeviajem.mvp.event.OnCurrencyCalculatedEvent;
 import br.com.mobiplus.ferramentadeviajem.mvp.event.OnFireCurrencyDetailsUpdateEvent;
 import br.com.mobiplus.ferramentadeviajem.mvp.event.OnFireLoadExchangeRatesEvent;
 import br.com.mobiplus.ferramentadeviajem.mvp.event.OnLoadExchangeRatesSuccessEvent;
 import br.com.mobiplus.ferramentadeviajem.mvp.model.ProductCalcModel;
 import br.com.mobiplus.ferramentadeviajem.mvp.model.ProductCalcModelImpl;
-import br.com.mobiplus.ferramentadeviajem.mvp.repository.DataCallback;
 import br.com.mobiplus.ferramentadeviajem.mvp.repository.ExchangeRatesRepository;
 import br.com.mobiplus.ferramentadeviajem.mvp.repository.ExchangeRatesRepositoryImpl;
 import br.com.mobiplus.ferramentadeviajem.mvp.view.ProductCalcView;
@@ -55,7 +50,7 @@ public class ProductCalcPresenterImpl implements ProductCalcPresenter
     @Subscribe
     public void onFireCurrencyDetailsUpdate(OnFireCurrencyDetailsUpdateEvent event)
     {
-        this.model.doCalculateCurrencyDetails(event.getCurrencyDetails());
+        this.model.doCalculateCurrencyDetails(event.getExchangeInfos());
     }
 
     @Override

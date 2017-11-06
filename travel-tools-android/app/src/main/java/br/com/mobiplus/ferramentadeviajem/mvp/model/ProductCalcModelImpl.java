@@ -3,8 +3,10 @@ package br.com.mobiplus.ferramentadeviajem.mvp.model;
 import org.greenrobot.eventbus.EventBus;
 
 import br.com.mobiplus.ferramentadeviajem.mvp.event.OnCurrencyCalculatedEvent;
+import br.com.mobiplus.ferramentadeviajem.mvp.event.OnExchangeResultInfoCalculatedEvent;
 import br.com.mobiplus.ferramentadeviajem.mvp.repository.pojo.CalculatedCurrency;
-import br.com.mobiplus.ferramentadeviajem.mvp.repository.pojo.CurrencyDetails;
+import br.com.mobiplus.ferramentadeviajem.mvp.repository.pojo.ExchangeInfos;
+import br.com.mobiplus.ferramentadeviajem.mvp.repository.pojo.ExchangeResultInfos;
 import br.com.mobiplus.ferramentadeviajem.mvp.repository.pojo.PaymentType;
 import br.com.mobiplus.ferramentadeviajem.mvp.repository.pojo.SituationType;
 
@@ -20,15 +22,42 @@ public class ProductCalcModelImpl implements ProductCalcModel
     public static final double TAX_IOF_DEBIT_CREDIT_CARD = 6.34;
 
     @Override
-    public void doCalculateCurrencyDetails(CurrencyDetails currencyDetails)
+    public void doCalculateExchangeInfos(ExchangeInfos exchangeInfos)
     {
-        double exchangeRate = currencyDetails.getExchangeRate();
-        double amountFrom = currencyDetails.getAmountFrom();
-        PaymentType paymentType = currencyDetails.getPaymentType();
-        SituationType situationType = currencyDetails.getSituationType();
+        ExchangeResultInfos exchangeResultInfos = new ExchangeResultInfos();
+        double exchangeRate = exchangeInfos.getExchangeRate();
+        double amountFrom = exchangeInfos.getAmountFrom();
+        PaymentType paymentType = exchangeInfos.getPaymentType();
+        SituationType situationType = exchangeInfos.getSituationType();
+        double amountTo = amountFrom * exchangeRate;
 
-        amountFrom = this.handleSituationType(amountFrom, situationType);
-        amountFrom = this.handlePaymentType(amountFrom, paymentType);
+        exchangeResultInfos.setPaymentTaxAmountFrom(this.calculatePaymentType(amountFrom, paymentType));
+        exchangeResultInfos.setPaymentTaxAmountTo(this.calculatePaymentType(amountTo, paymentType));
+
+        exchangeResultInfos.setSituationTaxAmountFrom(this.calculateSituationType(amountFrom, situationType));
+        exchangeResultInfos.setSituationTaxAmountTo(this.calculateSituationType(amountTo, situationType));
+
+        exchangeResultInfos.setCurrencyFrom(exchangeInfos.getCurrencyFrom());
+        exchangeResultInfos.setCurrencyTo(exchangeInfos.getCurrencyTo());
+        exchangeResultInfos.setAmountFrom(amountFrom);
+        exchangeResultInfos.setExchangeRate(exchangeRate);
+        exchangeResultInfos.setPaymentType(paymentType);
+        exchangeResultInfos.setSituationType(situationType);
+
+
+
+    }
+
+    @Override
+    public void doCalculateCurrencyDetails(ExchangeInfos exchangeInfos)
+    {
+        double exchangeRate = exchangeInfos.getExchangeRate();
+        double amountFrom = exchangeInfos.getAmountFrom();
+        PaymentType paymentType = exchangeInfos.getPaymentType();
+        SituationType situationType = exchangeInfos.getSituationType();
+
+        amountFrom += this.calculateSituationType(amountFrom, situationType);
+        amountFrom += this.calculatePaymentType(amountFrom, paymentType);
 
         double amountTo = amountFrom * exchangeRate;
 
@@ -39,16 +68,17 @@ public class ProductCalcModelImpl implements ProductCalcModel
         this.sendOnCurrencyCalculatedEvent(calculatedCurrency);
     }
 
-    private double handleSituationType(double amountFrom, SituationType situationType)
+    private double calculateSituationType(final double amount, SituationType situationType)
     {
-        if (amountFrom > AMOUNT_LIMIT_BEFORE_NEEDS_PAY_TAXES) {
+        double situationTaxResult = 0.00d;
+        if (amount > AMOUNT_LIMIT_BEFORE_NEEDS_PAY_TAXES) {
             switch (situationType) {
                 case DECLARED: {
-                    amountFrom += this.calculatePlusOnDeclaredSituation(amountFrom);
+                    situationTaxResult = this.calculatePlusOnDeclaredSituation(amount);
                     break;
                 }
                 case FINED: {
-                    amountFrom += this.calculatePlusOnFinedSituation(amountFrom);
+                    situationTaxResult = this.calculatePlusOnFinedSituation(amount);
                     break;
                 }
                 case NOT_DECLARED: {}
@@ -56,25 +86,26 @@ public class ProductCalcModelImpl implements ProductCalcModel
                 default: {}
             }
         }
-        return amountFrom;
+        return situationTaxResult;
     }
 
-    private double handlePaymentType(double amountFrom, PaymentType paymentType)
+    private double calculatePaymentType(final double amount, PaymentType paymentType)
     {
+        double paymentTaxResult = 0.00d;
         switch (paymentType) {
             case MONEY: {
-                amountFrom += this.calculatePlusMoneyIof(amountFrom);
+                paymentTaxResult += this.calculatePlusMoneyIof(amount);
                 break;
             }
             case DEBIT_CREDIT_CARD: {
-                amountFrom += this.calculatePlusDebitCreditCardIof(amountFrom);
+                paymentTaxResult += this.calculatePlusDebitCreditCardIof(amount);
                 break;
             }
             case NONE: {
                 break;
             }
         }
-        return amountFrom;
+        return paymentTaxResult;
     }
 
     private double calculatePlusDebitCreditCardIof(double amountFrom)
@@ -100,5 +131,10 @@ public class ProductCalcModelImpl implements ProductCalcModel
     private void sendOnCurrencyCalculatedEvent(CalculatedCurrency calculatedCurrency)
     {
         EventBus.getDefault().post(new OnCurrencyCalculatedEvent(calculatedCurrency));
+    }
+
+    private void sendOnExchangeResultInfoCalculated(ExchangeResultInfos exchangeResultInfos)
+    {
+        EventBus.getDefault().post(new OnExchangeResultInfoCalculatedEvent(exchangeResultInfos));
     }
 }

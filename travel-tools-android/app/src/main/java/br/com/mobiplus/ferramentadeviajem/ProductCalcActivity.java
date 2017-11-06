@@ -34,7 +34,7 @@ import br.com.mobiplus.ferramentadeviajem.mvp.presenter.ProductCalcPresenter;
 import br.com.mobiplus.ferramentadeviajem.mvp.presenter.ProductCalcPresenterImpl;
 import br.com.mobiplus.ferramentadeviajem.mvp.repository.ExchangeRatesRepository;
 import br.com.mobiplus.ferramentadeviajem.mvp.repository.pojo.CalculatedCurrency;
-import br.com.mobiplus.ferramentadeviajem.mvp.repository.pojo.CurrencyDetails;
+import br.com.mobiplus.ferramentadeviajem.mvp.repository.pojo.ExchangeInfos;
 import br.com.mobiplus.ferramentadeviajem.mvp.repository.pojo.PaymentType;
 import br.com.mobiplus.ferramentadeviajem.mvp.repository.pojo.SituationType;
 import br.com.mobiplus.ferramentadeviajem.mvp.view.ProductCalcView;
@@ -348,16 +348,16 @@ public class ProductCalcActivity extends AppCompatActivity implements ProductCal
     }
 
     private void fireCurrencyDetailsUpdateEvent() {
-        CurrencyDetails currencyDetails = new CurrencyDetails();
+        ExchangeInfos exchangeInfos = new ExchangeInfos();
 
-        currencyDetails.setExchangeRate(this.moedaAPI.getRates().getBRL());
-        currencyDetails.setAmountFrom(this.getDoubleValueFrom(editAmount));
-        currencyDetails.setCurrencyFrom("USD");
-        currencyDetails.setCurrencyTo("BRL");
-        currencyDetails.setPaymentType(PaymentType.NONE);
-        currencyDetails.setSituationType(SituationType.NONE);
+        exchangeInfos.setExchangeRate(this.moedaAPI.getRates().getBRL());
+        exchangeInfos.setAmountFrom(this.getDoubleValueFrom(editAmount));
+        exchangeInfos.setCurrencyFrom("USD");
+        exchangeInfos.setCurrencyTo("BRL");
+        exchangeInfos.setPaymentType(PaymentType.NONE);
+        exchangeInfos.setSituationType(SituationType.NONE);
 
-        OnFireCurrencyDetailsUpdateEvent event = new OnFireCurrencyDetailsUpdateEvent(currencyDetails);
+        OnFireCurrencyDetailsUpdateEvent event = new OnFireCurrencyDetailsUpdateEvent(exchangeInfos);
         this.presenter.onFireCurrencyDetailsUpdate(event);
     }
 

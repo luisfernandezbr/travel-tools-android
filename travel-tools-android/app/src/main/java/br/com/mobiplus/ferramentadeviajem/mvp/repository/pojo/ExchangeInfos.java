@@ -4,7 +4,7 @@ package br.com.mobiplus.ferramentadeviajem.mvp.repository.pojo;
  * Created by luisfernandez on 03/11/17.
  */
 
-public class CurrencyDetails
+public class ExchangeInfos
 {
     private String currencyFrom;
     private String currencyTo;
