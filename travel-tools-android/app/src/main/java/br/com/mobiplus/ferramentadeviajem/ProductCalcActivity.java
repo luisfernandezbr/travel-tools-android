@@ -14,11 +14,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.androidannotations.annotations.AfterViews;
@@ -28,13 +25,11 @@ import org.androidannotations.annotations.ViewById;
 import java.text.DecimalFormat;
 
 import br.com.concretesolutions.canarinho.watcher.ValorMonetarioWatcher;
-import br.com.mobiplus.ferramentadeviajem.models.CustoViagem;
 import br.com.mobiplus.ferramentadeviajem.models.CurrencyExchange;
 import br.com.mobiplus.ferramentadeviajem.mvp.event.OnFireCurrencyDetailsUpdateEvent;
 import br.com.mobiplus.ferramentadeviajem.mvp.event.OnFireLoadExchangeRatesEvent;
 import br.com.mobiplus.ferramentadeviajem.mvp.presenter.ProductCalcPresenter;
 import br.com.mobiplus.ferramentadeviajem.mvp.presenter.ProductCalcPresenterImpl;
-import br.com.mobiplus.ferramentadeviajem.mvp.repository.ExchangeRatesRepository;
 import br.com.mobiplus.ferramentadeviajem.mvp.repository.pojo.CalculatedCurrency;
 import br.com.mobiplus.ferramentadeviajem.mvp.repository.pojo.ExchangeInfos;
 import br.com.mobiplus.ferramentadeviajem.mvp.repository.pojo.PaymentType;
@@ -47,12 +42,6 @@ public class ProductCalcActivity extends AppCompatActivity implements ProductCal
 {
     public static final String TAG = "ProductCalcActivity";
 
-    private String array_moeda[];
-    private ImageButton changeMoeda;
-    private ImageView imageSwap;
-    private CurrencyExchange moedaAPI;
-    private int idConvert = 1;
-    private Spinner spinnerMoedaConvert;
     private RadioGroup.OnCheckedChangeListener onCheckedChangeListener;
     private DecimalFormat decimalFormat = new DecimalFormat("0.00");
     private PaymentType paymentType = PaymentType.NONE;
@@ -60,7 +49,6 @@ public class ProductCalcActivity extends AppCompatActivity implements ProductCal
 
     private Typeface face;
 
-    private ExchangeRatesRepository exchangeRatesRepository;
 
     @ViewById(R.id.editAmout)
     ExtendedEditText editAmount;
@@ -101,37 +89,40 @@ public class ProductCalcActivity extends AppCompatActivity implements ProductCal
     private ProductCalcPresenter presenter;
 
     @AfterViews
-    public void afterViews() {
+    public void afterViews()
+    {
         this.configTypefaces();
 
-
-        array_moeda = new String[2];
-        array_moeda[0] = "USD $";
-        array_moeda[1] = "EUR €";
+        String array_rate_Symbol[] = new String[2];
+        array_rate_Symbol[0] = "USD $";
+        array_rate_Symbol[1] = "EUR €";
 
         AlertDialog.Builder dialogBuilderMoeda = new AlertDialog.Builder(ProductCalcActivity.this);
         dialogBuilderMoeda.setTitle("Moeda Local")
-                .setItems(array_moeda, new DialogInterface.OnClickListener()
+                .setItems(array_rate_Symbol, new DialogInterface.OnClickListener()
                 {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i)
                     {
                         if (i == 0)
                         {
+                            String currencyFrom = "USD";
+                            String[] currencyTo = new String[]{"BRL", "EUR"};
+
                             ProductCalcActivity.this.setSymbols("$");
-                            ProductCalcActivity.this.fireLoadExchangeRatesEvent();
+                            ProductCalcActivity.this.fireLoadExchangeRatesEvent(currencyFrom, currencyTo);
                         } else if (i == 1)
                         {
+                            String currencyFrom = "EUR";
+                            String[] currencyTo = new String[]{"BRL", "USD"};
+
                             ProductCalcActivity.this.setSymbols("€");
-                            ProductCalcActivity.this.fireLoadExchangeRatesEvent();
+                            ProductCalcActivity.this.fireLoadExchangeRatesEvent(currencyFrom, currencyTo);
                         }
                     }
                 });
 
-        textAmountFromValue.setText("0,00");
-        textAmountToValue.setText("0,00");
 
-        final CustoViagem custoViagem = new CustoViagem();
 
         textAmountToValue.addTextChangedListener(new ValorMonetarioWatcher());
         textAmountFromValue.addTextChangedListener(new ValorMonetarioWatcher());
@@ -186,20 +177,11 @@ public class ProductCalcActivity extends AppCompatActivity implements ProductCal
             public void onCheckedChanged(RadioGroup group, int checkedId)
             {
 
-                RadioButton button = (RadioButton) group.findViewById(checkedId);
+                RadioButton button = group.findViewById(checkedId);
                 if (button != null)
                 {
-                    String nomeBtn = button.getText().toString();
-
-                    if (nomeBtn.equals("Dinheiro"))
-                    {
-                        custoViagem.atualizaPagamento(1);
-                    } else
-                    {
-                        custoViagem.atualizaPagamento(2);
-                    }
-                    textAmountFromValue.setText(String.format("%.2f", custoViagem.getTotalLocal()));
-                    textAmountToValue.setText(String.format("%.2f", custoViagem.getTotalConvertido()));
+                    handlePaymentType(button.getId());
+                    fireCurrencyDetailsUpdateEvent();
                 }
             }
         });
@@ -209,33 +191,19 @@ public class ProductCalcActivity extends AppCompatActivity implements ProductCal
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId)
             {
-                RadioButton button = (RadioButton) group.findViewById(checkedId);
+                RadioButton button = group.findViewById(checkedId);
 
                 if (button != null)
                 {
-                    int nomeBtn = button.getId();
-                    boolean situacaoChecked = false;
-
-                    if (nomeBtn == R.id.declarado)
-                    {
-                        situacaoChecked = custoViagem.atualizaSituacao(1);
-                    } else if (nomeBtn == R.id.nDeclarado)
-                    {
-                        situacaoChecked = custoViagem.atualizaSituacao(2);
-                    } else if (nomeBtn == R.id.multado)
-                    {
-                        situacaoChecked = custoViagem.atualizaSituacao(3);
-                    }
-
-                    if (!situacaoChecked && button != null)
+                    if (getDoubleValueFrom(editAmount)<500.00D)
                     {
                         String dialogTitle = "Alerta";
                         String message = "Só há acréscimo se exceder em 500 o valor dos produtos.";
                         showDialog(dialogTitle, message);
-                    }
 
-                    textAmountFromValue.setText(String.format("%.2f", custoViagem.getTotalLocal()));
-                    textAmountToValue.setText(String.format("%.2f", custoViagem.getTotalConvertido()));
+                    }
+                    handleSituationType(button.getId());
+                    fireCurrencyDetailsUpdateEvent();
                 }
             }
         };
@@ -250,10 +218,10 @@ public class ProductCalcActivity extends AppCompatActivity implements ProductCal
             @Override
             public void onClick(View v)
             {
-                String moedaValorString = textCurrencySymbolFrom.getText().toString();
+/*                String moedaValorString = textCurrencySymbolFrom.getText().toString();
                 String moedaConvertidaString = textCurrencySymbolTo.getText().toString();
 
-                DetalhesActivity.start(ProductCalcActivity.this, custoViagem, moedaValorString, moedaConvertidaString);
+                DetalhesActivity.start(ProductCalcActivity.this, moedaValorString, moedaConvertidaString);*/
             }
         });
 
@@ -263,16 +231,18 @@ public class ProductCalcActivity extends AppCompatActivity implements ProductCal
             public void onClick(View v)
             {
 
-                custoViagem.limpaValores();
-
                 editAmount.setText("0,00");
                 textAmountToValue.setText("0,00");
                 textAmountFromValue.setText("0,00");
+                paymentType = PaymentType.NONE;
+                situationType = SituationType.NONE;
 
                 radioPaymentType.clearCheck();
                 radioSituationType.setOnCheckedChangeListener(null);
                 radioSituationType.clearCheck();
                 radioSituationType.setOnCheckedChangeListener(onCheckedChangeListener);
+
+                fireCurrencyDetailsUpdateEvent();
             }
         });
 
@@ -281,12 +251,29 @@ public class ProductCalcActivity extends AppCompatActivity implements ProductCal
         textCurrencySymbolFrom.setOnClickListener(onClickListener);
 
         this.presenter = new ProductCalcPresenterImpl(this);
-        this.fireLoadExchangeRatesEvent();
+        this.fireLoadExchangeRatesEvent("USD", new String[]{"BRL, EUR"});
     }
 
-    private void fireLoadExchangeRatesEvent()
+    private void handleSituationType(int id)
     {
-        this.presenter.onFireLoadExchangeRatesEvent(new OnFireLoadExchangeRatesEvent("USD", new String[]{"BRL","EUR"}));
+        if (id == R.id.declarado)
+        {
+            situationType = SituationType.DECLARED;
+        }
+        else if (id == R.id.nDeclarado)
+        {
+            situationType = SituationType.NOT_DECLARED;
+        }
+        else if (id == R.id.multado)
+        {
+            situationType = SituationType.FINED;
+        }
+
+    }
+
+    private void fireLoadExchangeRatesEvent(String currencyFrom, String[] currencyTo)
+    {
+        this.presenter.onFireLoadExchangeRatesEvent(new OnFireLoadExchangeRatesEvent(currencyFrom, currencyTo));
     }
 
     @Override
@@ -321,7 +308,8 @@ public class ProductCalcActivity extends AppCompatActivity implements ProductCal
         editCurrencyExchange.setText(decimalFormat.format(currencyExchange.getRates().getBRL()));
     }
 
-    private void fireCurrencyDetailsUpdateEvent() {
+    private void fireCurrencyDetailsUpdateEvent()
+    {
         ExchangeInfos exchangeInfos = new ExchangeInfos();
 
         exchangeInfos.setExchangeRate(this.getDoubleValueFrom(editCurrencyExchange));
@@ -405,10 +393,20 @@ public class ProductCalcActivity extends AppCompatActivity implements ProductCal
 
     private void setSymbols(String symbol)
     {
-
         textCurrencySymbolFrom.setText(symbol);
-        editAmount.setPrefix(symbol+" ");
-        textAmountFromLabel.setText("Total em "+symbol);
+        editAmount.setPrefix(symbol + " ");
+        textAmountFromLabel.setText("Total em " + symbol);
+    }
+
+    private void handlePaymentType(int id){
+
+        if (id == R.id.dinheiro)
+        {
+            paymentType = PaymentType.MONEY;
+        } else
+        {
+            paymentType = PaymentType.DEBIT_CREDIT_CARD;
+        }
 
     }
 
