@@ -25,6 +25,8 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
+import java.text.DecimalFormat;
+
 import br.com.concretesolutions.canarinho.watcher.ValorMonetarioWatcher;
 import br.com.mobiplus.ferramentadeviajem.models.CustoViagem;
 import br.com.mobiplus.ferramentadeviajem.models.CurrencyExchange;
@@ -49,10 +51,12 @@ public class ProductCalcActivity extends AppCompatActivity implements ProductCal
     private ImageButton changeMoeda;
     private ImageView imageSwap;
     private CurrencyExchange moedaAPI;
-    private int idLocal = 0;
     private int idConvert = 1;
     private Spinner spinnerMoedaConvert;
     private RadioGroup.OnCheckedChangeListener onCheckedChangeListener;
+    private DecimalFormat decimalFormat = new DecimalFormat("0.00");
+    private PaymentType paymentType = PaymentType.NONE;
+    private SituationType situationType = SituationType.NONE;
 
     private Typeface face;
 
@@ -100,8 +104,6 @@ public class ProductCalcActivity extends AppCompatActivity implements ProductCal
     public void afterViews() {
         this.configTypefaces();
 
-//        exchangeRatesRepository = new ExchangeRatesRepositoryImpl(this);
-//        exchangeRatesRepository.loadExchangeRates("USD", new String[]{"BRL","EUR"}, this);
 
         array_moeda = new String[2];
         array_moeda[0] = "USD $";
@@ -114,20 +116,13 @@ public class ProductCalcActivity extends AppCompatActivity implements ProductCal
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i)
                     {
-                        idLocal = i;
                         if (i == 0)
                         {
-                            textCurrencySymbolFrom.setText("U$");
-                            editAmount.setPrefix("U$ ");
-                            textAmountFromLabel.setText("Total em U$");
-
+                            ProductCalcActivity.this.setSymbols("$");
                             ProductCalcActivity.this.fireLoadExchangeRatesEvent();
                         } else if (i == 1)
                         {
-                            textCurrencySymbolFrom.setText("€");
-                            editAmount.setPrefix("€ ");
-                            textAmountFromLabel.setText("Total em €");
-
+                            ProductCalcActivity.this.setSymbols("€");
                             ProductCalcActivity.this.fireLoadExchangeRatesEvent();
                         }
                     }
@@ -153,13 +148,8 @@ public class ProductCalcActivity extends AppCompatActivity implements ProductCal
             public void onTextChanged(CharSequence s, int start, int before, int count)
             {
 
-                if (editCurrencyExchange.getText().length() > 0 && editAmount.getText().length() > 0)
-                    custoViagem.atualizaValorConvertido(getDoubleValueFrom(editAmount), getDoubleValueFrom(s.toString()));
-                else
-                {
-                    custoViagem.atualizaValorConvertido(0, 0);
-                }
-                textAmountToValue.setText(String.format("%.2f", custoViagem.getTotalConvertido()));
+                fireCurrencyDetailsUpdateEvent();
+
             }
 
             @Override
@@ -180,15 +170,6 @@ public class ProductCalcActivity extends AppCompatActivity implements ProductCal
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
             {
-                if (editAmount.getText().length() > 0 && editCurrencyExchange.getText().length() > 0)
-                {
-                    custoViagem.atualizaValorConvertido(getDoubleValueFrom(charSequence.toString()), getDoubleValueFrom(editCurrencyExchange));
-                } else
-                {
-                    custoViagem.atualizaValorConvertido(0, 0);
-                }
-                textAmountToValue.setText(String.format("%.2f", custoViagem.getTotalConvertido()));
-                textAmountFromValue.setText(String.format("%.2f", custoViagem.getTotalLocal()));
                 fireCurrencyDetailsUpdateEvent();
             }
 
@@ -325,37 +306,30 @@ public class ProductCalcActivity extends AppCompatActivity implements ProductCal
     @Override
     public void updateAmounts(CalculatedCurrency calculatedCurrency)
     {
+        String amountTo = decimalFormat.format(calculatedCurrency.getAmountTo());
+        String amountfrom = decimalFormat.format(calculatedCurrency.getAmountFrom());
+
+        textAmountToValue.setText(amountTo);
+        textAmountFromValue.setText(amountfrom);
+
         Log.d(TAG, String.format("USD: %f, BRL: %f", calculatedCurrency.getAmountFrom(), calculatedCurrency.getAmountTo()));
     }
 
     @Override
     public void onCurrencyExchangeLoaded(CurrencyExchange currencyExchange)
     {
-        this.moedaAPI = currencyExchange;
-
-        switch (idConvert)
-        {
-            case 0:
-                editCurrencyExchange.setText(String.format("%.2f", moedaAPI.getRates().getUSD()));
-                break;
-            case 1:
-                editCurrencyExchange.setText(String.format("%.2f", moedaAPI.getRates().getBRL()));
-                break;
-            case 2:
-                editCurrencyExchange.setText(String.format("%.2f", moedaAPI.getRates().getEur()));
-                break;
-        }
+        editCurrencyExchange.setText(decimalFormat.format(currencyExchange.getRates().getBRL()));
     }
 
     private void fireCurrencyDetailsUpdateEvent() {
         ExchangeInfos exchangeInfos = new ExchangeInfos();
 
-        exchangeInfos.setExchangeRate(this.moedaAPI.getRates().getBRL());
+        exchangeInfos.setExchangeRate(this.getDoubleValueFrom(editCurrencyExchange));
         exchangeInfos.setAmountFrom(this.getDoubleValueFrom(editAmount));
         exchangeInfos.setCurrencyFrom("USD");
         exchangeInfos.setCurrencyTo("BRL");
-        exchangeInfos.setPaymentType(PaymentType.NONE);
-        exchangeInfos.setSituationType(SituationType.NONE);
+        exchangeInfos.setPaymentType(paymentType);
+        exchangeInfos.setSituationType(situationType);
 
         OnFireCurrencyDetailsUpdateEvent event = new OnFireCurrencyDetailsUpdateEvent(exchangeInfos);
         this.presenter.onFireCurrencyDetailsUpdate(event);
@@ -428,4 +402,14 @@ public class ProductCalcActivity extends AppCompatActivity implements ProductCal
     {
         createDialog(dialogTitle, message).show();
     }
+
+    private void setSymbols(String symbol)
+    {
+
+        textCurrencySymbolFrom.setText(symbol);
+        editAmount.setPrefix(symbol+" ");
+        textAmountFromLabel.setText("Total em "+symbol);
+
+    }
+
 }
