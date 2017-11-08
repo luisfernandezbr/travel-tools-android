@@ -44,12 +44,6 @@ public class ProductCalcDetailsPresenterImpl implements ProductCalcDetailsPresen
         this.view.onExchangeResultLoaded(event.getExchangeResultInfos());
     }
 
-    @Subscribe
-    public void textMethodEvent(ExchangeResultInfos exchangeResultInfos)
-    {
-        Log.d("Test Method","testando");
-    }
-
     @Override
     public void onStart()
     {

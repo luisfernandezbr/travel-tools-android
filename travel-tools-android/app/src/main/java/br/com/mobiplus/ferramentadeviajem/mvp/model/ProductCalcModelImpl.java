@@ -2,6 +2,8 @@ package br.com.mobiplus.ferramentadeviajem.mvp.model;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.List;
+
 import br.com.mobiplus.ferramentadeviajem.mvp.event.OnCurrencyCalculatedEvent;
 import br.com.mobiplus.ferramentadeviajem.mvp.event.OnExchangeResultInfoCalculatedEvent;
 import br.com.mobiplus.ferramentadeviajem.mvp.repository.pojo.CalculatedCurrency;
@@ -25,17 +27,18 @@ public class ProductCalcModelImpl implements ProductCalcModel
     public void doCalculateExchangeInfos(ExchangeInfos exchangeInfos)
     {
         ExchangeResultInfos exchangeResultInfos = new ExchangeResultInfos();
-        exchangeResultInfos.setCalculatedCurrency(new CalculatedCurrency());
+        exchangeResultInfos.setCalculatedCurrency(handleCurrencyCalculated(exchangeInfos));
 
         double exchangeRate = exchangeInfos.getExchangeRate();
         double amountFrom = exchangeInfos.getAmountFrom();
         PaymentType paymentType = exchangeInfos.getPaymentType();
         SituationType situationType = exchangeInfos.getSituationType();
+
         double amountTo = amountFrom * exchangeRate;
         double situationTypeTaxFrom = this.calculateSituationType(amountFrom, situationType);
-        double situationTypeTaxTo = this.calculateSituationType(amountTo, situationType);
+        double situationTypeTaxTo = situationTypeTaxFrom * exchangeRate;
         double paymentTypeTaxFrom = this.calculatePaymentType(amountFrom, paymentType);
-        double paymentTypeTaxTo = this.calculatePaymentType(amountTo, paymentType);
+        double paymentTypeTaxTo = paymentTypeTaxFrom * exchangeRate;
 
         exchangeResultInfos.setPaymentTaxAmountFrom(paymentTypeTaxFrom);
         exchangeResultInfos.setPaymentTaxAmountTo(paymentTypeTaxTo);
@@ -49,8 +52,6 @@ public class ProductCalcModelImpl implements ProductCalcModel
         exchangeResultInfos.setExchangeRate(exchangeRate);
         exchangeResultInfos.setPaymentType(paymentType);
         exchangeResultInfos.setSituationType(situationType);
-        exchangeResultInfos.getCalculatedCurrency().setAmountFrom(amountFrom + situationTypeTaxFrom + paymentTypeTaxFrom);
-        exchangeResultInfos.getCalculatedCurrency().setAmountTo(amountTo + situationTypeTaxTo + paymentTypeTaxTo);
 
         this.sendOnExchangeResultInfoCalculatedEvent(exchangeResultInfos);
     }
@@ -58,21 +59,28 @@ public class ProductCalcModelImpl implements ProductCalcModel
     @Override
     public void doCalculateCurrencyDetails(ExchangeInfos exchangeInfos)
     {
+        CalculatedCurrency calculatedCurrency = handleCurrencyCalculated(exchangeInfos);
+
+        this.sendOnCurrencyCalculatedEvent(calculatedCurrency);
+    }
+
+    private CalculatedCurrency handleCurrencyCalculated(ExchangeInfos exchangeInfos){
+
         double exchangeRate = exchangeInfos.getExchangeRate();
         double amountFrom = exchangeInfos.getAmountFrom();
         PaymentType paymentType = exchangeInfos.getPaymentType();
         SituationType situationType = exchangeInfos.getSituationType();
 
-        amountFrom += this.calculateSituationType(amountFrom, situationType);
-        amountFrom += this.calculatePaymentType(amountFrom, paymentType);
+        amountFrom += (this.calculateSituationType(amountFrom, situationType) + this.calculatePaymentType(amountFrom, paymentType));
 
         double amountTo = amountFrom * exchangeRate;
 
         CalculatedCurrency calculatedCurrency = new CalculatedCurrency();
-        calculatedCurrency.setAmountTo(amountTo);
         calculatedCurrency.setAmountFrom(amountFrom);
+        calculatedCurrency.setAmountTo(amountTo);
 
-        this.sendOnCurrencyCalculatedEvent(calculatedCurrency);
+        return calculatedCurrency;
+
     }
 
     private double calculateSituationType(final double amount, SituationType situationType)
@@ -142,6 +150,6 @@ public class ProductCalcModelImpl implements ProductCalcModel
 
     private void sendOnExchangeResultInfoCalculatedEvent(ExchangeResultInfos exchangeResultInfos)
     {
-        EventBus.getDefault().post(exchangeResultInfos);
+        EventBus.getDefault().post(new OnExchangeResultInfoCalculatedEvent(exchangeResultInfos));
     }
 }

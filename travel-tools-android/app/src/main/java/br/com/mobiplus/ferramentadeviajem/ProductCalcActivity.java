@@ -138,9 +138,7 @@ public class ProductCalcActivity extends AppCompatActivity implements ProductCal
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count)
             {
-
                 fireCurrencyDetailsUpdateEvent();
-
             }
 
             @Override
@@ -295,10 +293,10 @@ public class ProductCalcActivity extends AppCompatActivity implements ProductCal
     public void updateAmounts(CalculatedCurrency calculatedCurrency)
     {
         String amountTo = decimalFormat.format(calculatedCurrency.getAmountTo());
-        String amountfrom = decimalFormat.format(calculatedCurrency.getAmountFrom());
+        String amountFrom = decimalFormat.format(calculatedCurrency.getAmountFrom());
 
         textAmountToValue.setText(amountTo);
-        textAmountFromValue.setText(amountfrom);
+        textAmountFromValue.setText(amountFrom);
 
         Log.d(TAG, String.format("USD: %f, BRL: %f", calculatedCurrency.getAmountFrom(), calculatedCurrency.getAmountTo()));
     }
@@ -315,8 +313,8 @@ public class ProductCalcActivity extends AppCompatActivity implements ProductCal
 
         exchangeInfos.setExchangeRate(this.getDoubleValueFrom(editCurrencyExchange));
         exchangeInfos.setAmountFrom(this.getDoubleValueFrom(editAmount));
-        exchangeInfos.setCurrencyFrom("USD");
-        exchangeInfos.setCurrencyTo("BRL");
+        exchangeInfos.setCurrencyFrom(this.textCurrencySymbolFrom.getText().toString());
+        exchangeInfos.setCurrencyTo(this.textCurrencySymbolTo.getText().toString());
         exchangeInfos.setPaymentType(paymentType);
         exchangeInfos.setSituationType(situationType);
 
