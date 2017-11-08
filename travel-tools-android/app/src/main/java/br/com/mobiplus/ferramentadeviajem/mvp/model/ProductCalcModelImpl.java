@@ -34,7 +34,6 @@ public class ProductCalcModelImpl implements ProductCalcModel
         PaymentType paymentType = exchangeInfos.getPaymentType();
         SituationType situationType = exchangeInfos.getSituationType();
 
-        double amountTo = amountFrom * exchangeRate;
         double situationTypeTaxFrom = this.calculateSituationType(amountFrom, situationType);
         double situationTypeTaxTo = situationTypeTaxFrom * exchangeRate;
         double paymentTypeTaxFrom = this.calculatePaymentType(amountFrom, paymentType);
@@ -48,8 +47,9 @@ public class ProductCalcModelImpl implements ProductCalcModel
 
         exchangeResultInfos.setCurrencyFrom(exchangeInfos.getCurrencyFrom());
         exchangeResultInfos.setCurrencyTo(exchangeInfos.getCurrencyTo());
-        exchangeResultInfos.setAmountFrom(amountFrom);
         exchangeResultInfos.setExchangeRate(exchangeRate);
+        exchangeResultInfos.setAmountTo(amountFrom * exchangeRate);
+        exchangeResultInfos.setAmountFrom(amountFrom);
         exchangeResultInfos.setPaymentType(paymentType);
         exchangeResultInfos.setSituationType(situationType);
 
@@ -64,7 +64,8 @@ public class ProductCalcModelImpl implements ProductCalcModel
         this.sendOnCurrencyCalculatedEvent(calculatedCurrency);
     }
 
-    private CalculatedCurrency handleCurrencyCalculated(ExchangeInfos exchangeInfos){
+    private CalculatedCurrency handleCurrencyCalculated(ExchangeInfos exchangeInfos)
+    {
 
         double exchangeRate = exchangeInfos.getExchangeRate();
         double amountFrom = exchangeInfos.getAmountFrom();
@@ -86,19 +87,29 @@ public class ProductCalcModelImpl implements ProductCalcModel
     private double calculateSituationType(final double amount, SituationType situationType)
     {
         double situationTaxResult = 0.00d;
-        if (amount > AMOUNT_LIMIT_BEFORE_NEEDS_PAY_TAXES) {
-            switch (situationType) {
-                case DECLARED: {
+        if (amount > AMOUNT_LIMIT_BEFORE_NEEDS_PAY_TAXES)
+        {
+            switch (situationType)
+            {
+                case DECLARED:
+                {
                     situationTaxResult = this.calculatePlusOnDeclaredSituation(amount);
                     break;
                 }
-                case FINED: {
+                case FINED:
+                {
                     situationTaxResult = this.calculatePlusOnFinedSituation(amount);
                     break;
                 }
-                case NOT_DECLARED: {}
-                case NONE: {}
-                default: {}
+                case NOT_DECLARED:
+                {
+                }
+                case NONE:
+                {
+                }
+                default:
+                {
+                }
             }
         }
         return situationTaxResult;
@@ -107,16 +118,20 @@ public class ProductCalcModelImpl implements ProductCalcModel
     private double calculatePaymentType(final double amount, PaymentType paymentType)
     {
         double paymentTaxResult = 0.00d;
-        switch (paymentType) {
-            case MONEY: {
+        switch (paymentType)
+        {
+            case MONEY:
+            {
                 paymentTaxResult += this.calculatePlusMoneyIof(amount);
                 break;
             }
-            case DEBIT_CREDIT_CARD: {
+            case DEBIT_CREDIT_CARD:
+            {
                 paymentTaxResult += this.calculatePlusDebitCreditCardIof(amount);
                 break;
             }
-            case NONE: {
+            case NONE:
+            {
                 break;
             }
         }

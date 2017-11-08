@@ -123,7 +123,6 @@ public class ProductCalcActivity extends AppCompatActivity implements ProductCal
                 });
 
 
-
         textAmountToValue.addTextChangedListener(new ValorMonetarioWatcher());
         textAmountFromValue.addTextChangedListener(new ValorMonetarioWatcher());
 
@@ -193,7 +192,7 @@ public class ProductCalcActivity extends AppCompatActivity implements ProductCal
 
                 if (button != null)
                 {
-                    if (getDoubleValueFrom(editAmount)<500.00D)
+                    if (getDoubleValueFrom(editAmount) < 500.00D)
                     {
                         String dialogTitle = "Alerta";
                         String message = "Só há acréscimo se exceder em 500 o valor dos produtos.";
@@ -258,12 +257,10 @@ public class ProductCalcActivity extends AppCompatActivity implements ProductCal
         if (id == R.id.declarado)
         {
             situationType = SituationType.DECLARED;
-        }
-        else if (id == R.id.nDeclarado)
+        } else if (id == R.id.nDeclarado)
         {
             situationType = SituationType.NOT_DECLARED;
-        }
-        else if (id == R.id.multado)
+        } else if (id == R.id.multado)
         {
             situationType = SituationType.FINED;
         }
@@ -307,7 +304,8 @@ public class ProductCalcActivity extends AppCompatActivity implements ProductCal
         editCurrencyExchange.setText(decimalFormat.format(currencyExchange.getRates().getBRL()));
     }
 
-    private ExchangeInfos getExchangeInfos(){
+    private ExchangeInfos getExchangeInfos()
+    {
 
         ExchangeInfos exchangeInfos = new ExchangeInfos();
 
@@ -405,7 +403,8 @@ public class ProductCalcActivity extends AppCompatActivity implements ProductCal
         textAmountFromLabel.setText("Total em " + symbol);
     }
 
-    private void handlePaymentType(int id){
+    private void handlePaymentType(int id)
+    {
 
         if (id == R.id.dinheiro)
         {

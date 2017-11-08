@@ -119,7 +119,7 @@ public class ProductCalcDetailsActivity extends AppCompatActivity implements Pro
         String situationTaxAmountFrom = format(exchangeResultInfos.getSituationTaxAmountFrom());
         String totalAmountFrom = format(exchangeResultInfos.getCalculatedCurrency().getAmountFrom());
 
-        String amountTo = format(exchangeResultInfos.getAmountFrom() * exchangeResultInfos.getExchangeRate());
+        String amountTo = format(exchangeResultInfos.getAmountTo());
         String paymentTaxAmountTo = format(exchangeResultInfos.getPaymentTaxAmountTo());
         String situationTaxAmountTo = format(exchangeResultInfos.getSituationTaxAmountTo());
         String totalAmountTo = format(exchangeResultInfos.getCalculatedCurrency().getAmountTo());
