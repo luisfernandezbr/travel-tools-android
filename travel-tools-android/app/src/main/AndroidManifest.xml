@@ -18,8 +18,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DetalhesActivity_" />
-        <activity android:name=".service.ProductCalcDetailsActivity"></activity>
+        <activity android:name=".ProductCalcDetailsActivity_"></activity>
     </application>
 
 </manifest>

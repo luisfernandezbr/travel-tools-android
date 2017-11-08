@@ -6,7 +6,8 @@ import br.com.mobiplus.ferramentadeviajem.mvp.repository.pojo.ExchangeResultInfo
  * Created by Develop on 03/11/2017.
  */
 
-public class OnExchangeResultInfoCalculatedEvent {
+public class OnExchangeResultInfoCalculatedEvent
+{
     private ExchangeResultInfos exchangeResultInfos;
 
     public OnExchangeResultInfoCalculatedEvent(ExchangeResultInfos exchangeResultInfos)
@@ -14,7 +15,8 @@ public class OnExchangeResultInfoCalculatedEvent {
         this.exchangeResultInfos = exchangeResultInfos;
     }
 
-    public ExchangeResultInfos getExchangeResultInfos() {
+    public ExchangeResultInfos getExchangeResultInfos()
+    {
         return exchangeResultInfos;
     }
 }

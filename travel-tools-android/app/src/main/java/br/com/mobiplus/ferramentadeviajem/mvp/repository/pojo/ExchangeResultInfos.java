@@ -1,15 +1,18 @@
 package br.com.mobiplus.ferramentadeviajem.mvp.repository.pojo;
 
+import java.io.Serializable;
+
 /**
  * Created by Develop on 03/11/2017.
  */
 
-public class ExchangeResultInfos extends ExchangeInfos {
+public class ExchangeResultInfos extends ExchangeInfos implements Serializable{
 
     private double paymentTaxAmountFrom;
     private double paymentTaxAmountTo;
     private double situationTaxAmountFrom;
     private double situationTaxAmountTo;
+    private CalculatedCurrency calculatedCurrency;
 
     public double getPaymentTaxAmountFrom() {
         return paymentTaxAmountFrom;
@@ -41,5 +44,15 @@ public class ExchangeResultInfos extends ExchangeInfos {
 
     public void setSituationTaxAmountTo(double situationTaxAmountTo) {
         this.situationTaxAmountTo = situationTaxAmountTo;
+    }
+
+    public CalculatedCurrency getCalculatedCurrency()
+    {
+        return calculatedCurrency;
+    }
+
+    public void setCalculatedCurrency(CalculatedCurrency calculatedCurrency)
+    {
+        this.calculatedCurrency = calculatedCurrency;
     }
 }

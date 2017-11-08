@@ -218,10 +218,11 @@ public class ProductCalcActivity extends AppCompatActivity implements ProductCal
             @Override
             public void onClick(View v)
             {
-/*                String moedaValorString = textCurrencySymbolFrom.getText().toString();
+
+                String moedaValorString = textCurrencySymbolFrom.getText().toString();
                 String moedaConvertidaString = textCurrencySymbolTo.getText().toString();
 
-                DetalhesActivity.start(ProductCalcActivity.this, moedaValorString, moedaConvertidaString);*/
+                ProductCalcDetailsActivity.start(ProductCalcActivity.this, moedaValorString, moedaConvertidaString, getExchangeInfos());
             }
         });
 
@@ -308,8 +309,8 @@ public class ProductCalcActivity extends AppCompatActivity implements ProductCal
         editCurrencyExchange.setText(decimalFormat.format(currencyExchange.getRates().getBRL()));
     }
 
-    private void fireCurrencyDetailsUpdateEvent()
-    {
+    private ExchangeInfos getExchangeInfos(){
+
         ExchangeInfos exchangeInfos = new ExchangeInfos();
 
         exchangeInfos.setExchangeRate(this.getDoubleValueFrom(editCurrencyExchange));
@@ -318,6 +319,14 @@ public class ProductCalcActivity extends AppCompatActivity implements ProductCal
         exchangeInfos.setCurrencyTo("BRL");
         exchangeInfos.setPaymentType(paymentType);
         exchangeInfos.setSituationType(situationType);
+
+        return exchangeInfos;
+
+    }
+
+    private void fireCurrencyDetailsUpdateEvent()
+    {
+        ExchangeInfos exchangeInfos = getExchangeInfos();
 
         OnFireCurrencyDetailsUpdateEvent event = new OnFireCurrencyDetailsUpdateEvent(exchangeInfos);
         this.presenter.onFireCurrencyDetailsUpdate(event);

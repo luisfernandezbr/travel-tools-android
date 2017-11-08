@@ -25,7 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toLeftOf="@+id/imageSwap"
-                android:text="U$"
+                android:text="$"
                 tools:fontFamily="@font/roboto_thin"
                 tools:ignore="RtlHardcoded"
                 android:clickable="true"
@@ -94,7 +94,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:selectAllOnFocus="true"
-
                     app:prefix="U$ "
                     style="@style/EditText" />
 
@@ -251,7 +250,7 @@
                     style="@style/AppThemeDark.Content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="U$ 3002.90"
+                    android:text="$ 0,00"
                     tools:fontFamily="@font/roboto_thin" />
 
             </LinearLayout>
@@ -280,7 +279,7 @@
                     style="@style/AppThemeDark.Content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="R$ 6.500,32"
+                    android:text="R$ 0,00"
                     tools:fontFamily="@font/roboto_thin" />
 
             </LinearLayout>
@@ -366,8 +365,10 @@
         <Button
             android:id="@+id/buttonGoToDetails"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#55678c"
+            android:layout_height="46dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:backgroundTint="@color/colorPrimaryDark"
             android:layout_marginTop="@dimen/margin_default"
             android:fontFamily="@font/roboto_medium"
             android:textSize="@dimen/font_size_xlarge"
@@ -376,8 +377,10 @@
         <Button
             android:id="@+id/buttonCleanForm"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#55678c"
+            android:layout_height="46dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:backgroundTint="@color/colorPrimaryDark"
             android:layout_marginTop="@dimen/margin_default"
             android:fontFamily="@font/roboto_medium"
             android:textSize="@dimen/font_size_xlarge"

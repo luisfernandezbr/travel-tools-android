@@ -20,8 +20,6 @@ import br.com.mobiplus.ferramentadeviajem.mvp.view.ProductCalcView;
 
 public class ProductCalcPresenterImpl implements ProductCalcPresenter
 {
-    private static final String TAG = "ProductCalcPresenterImpl";
-
     private ExchangeRatesRepository repository;
     private ProductCalcModel model;
     private ProductCalcView view;

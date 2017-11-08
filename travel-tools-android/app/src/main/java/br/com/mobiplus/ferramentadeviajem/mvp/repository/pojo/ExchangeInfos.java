@@ -1,10 +1,14 @@
 package br.com.mobiplus.ferramentadeviajem.mvp.repository.pojo;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+
 /**
  * Created by luisfernandez on 03/11/17.
  */
 
-public class ExchangeInfos
+public class ExchangeInfos implements Serializable
 {
     private String currencyFrom;
     private String currencyTo;

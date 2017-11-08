@@ -25,17 +25,23 @@ public class ProductCalcModelImpl implements ProductCalcModel
     public void doCalculateExchangeInfos(ExchangeInfos exchangeInfos)
     {
         ExchangeResultInfos exchangeResultInfos = new ExchangeResultInfos();
+        exchangeResultInfos.setCalculatedCurrency(new CalculatedCurrency());
+
         double exchangeRate = exchangeInfos.getExchangeRate();
         double amountFrom = exchangeInfos.getAmountFrom();
         PaymentType paymentType = exchangeInfos.getPaymentType();
         SituationType situationType = exchangeInfos.getSituationType();
         double amountTo = amountFrom * exchangeRate;
+        double situationTypeTaxFrom = this.calculateSituationType(amountFrom, situationType);
+        double situationTypeTaxTo = this.calculateSituationType(amountTo, situationType);
+        double paymentTypeTaxFrom = this.calculatePaymentType(amountFrom, paymentType);
+        double paymentTypeTaxTo = this.calculatePaymentType(amountTo, paymentType);
 
-        exchangeResultInfos.setPaymentTaxAmountFrom(this.calculatePaymentType(amountFrom, paymentType));
-        exchangeResultInfos.setPaymentTaxAmountTo(this.calculatePaymentType(amountTo, paymentType));
+        exchangeResultInfos.setPaymentTaxAmountFrom(paymentTypeTaxFrom);
+        exchangeResultInfos.setPaymentTaxAmountTo(paymentTypeTaxTo);
 
-        exchangeResultInfos.setSituationTaxAmountFrom(this.calculateSituationType(amountFrom, situationType));
-        exchangeResultInfos.setSituationTaxAmountTo(this.calculateSituationType(amountTo, situationType));
+        exchangeResultInfos.setSituationTaxAmountFrom(situationTypeTaxFrom);
+        exchangeResultInfos.setSituationTaxAmountTo(situationTypeTaxTo);
 
         exchangeResultInfos.setCurrencyFrom(exchangeInfos.getCurrencyFrom());
         exchangeResultInfos.setCurrencyTo(exchangeInfos.getCurrencyTo());
@@ -43,9 +49,10 @@ public class ProductCalcModelImpl implements ProductCalcModel
         exchangeResultInfos.setExchangeRate(exchangeRate);
         exchangeResultInfos.setPaymentType(paymentType);
         exchangeResultInfos.setSituationType(situationType);
+        exchangeResultInfos.getCalculatedCurrency().setAmountFrom(amountFrom + situationTypeTaxFrom + paymentTypeTaxFrom);
+        exchangeResultInfos.getCalculatedCurrency().setAmountTo(amountTo + situationTypeTaxTo + paymentTypeTaxTo);
 
-
-
+        this.sendOnExchangeResultInfoCalculatedEvent(exchangeResultInfos);
     }
 
     @Override
@@ -133,8 +140,8 @@ public class ProductCalcModelImpl implements ProductCalcModel
         EventBus.getDefault().post(new OnCurrencyCalculatedEvent(calculatedCurrency));
     }
 
-    private void sendOnExchangeResultInfoCalculated(ExchangeResultInfos exchangeResultInfos)
+    private void sendOnExchangeResultInfoCalculatedEvent(ExchangeResultInfos exchangeResultInfos)
     {
-        EventBus.getDefault().post(new OnExchangeResultInfoCalculatedEvent(exchangeResultInfos));
+        EventBus.getDefault().post(exchangeResultInfos);
     }
 }
