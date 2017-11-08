@@ -185,12 +185,12 @@ public class ProductCalcDetailsActivity extends AppCompatActivity implements Pro
     {
         if (paymentType == PaymentType.MONEY)
         {
-            this.labelPaymentTypeFrom.setText("Tipo de Pagamento (Dinheiro)");
-            this.labelPaymentTypeTo.setText("Tipo de Pagamento (Dinheiro)");
+            this.labelPaymentTypeFrom.setText("Tipo de Pagamento (Dinheiro) - 1,32%");
+            this.labelPaymentTypeTo.setText("Tipo de Pagamento (Dinheiro) - 1,32%");
         } else if (paymentType == PaymentType.DEBIT_CREDIT_CARD)
         {
-            this.labelPaymentTypeFrom.setText("Tipo de Pagamento (Cartão)");
-            this.labelPaymentTypeTo.setText("Tipo de Pagamento (Cartão)");
+            this.labelPaymentTypeFrom.setText("Tipo de Pagamento (Cartão) - 6,34%");
+            this.labelPaymentTypeTo.setText("Tipo de Pagamento (Cartão) - 6,34%");
         }
     }
 

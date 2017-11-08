@@ -29,7 +29,7 @@
                 <TableRow>
 
                     <TextView
-                        android:layout_marginLeft="@dimen/margin_middle"
+                        android:layout_marginLeft="@dimen/margin_default"
                         android:fontFamily="@font/roboto_medium"
                         android:padding="3dip"
                         android:text="Cotação"
@@ -66,14 +66,13 @@
             android:layout_marginTop="@dimen/margin_default"
             android:background="@drawable/bg_default"
             android:orientation="vertical"
-
             android:paddingTop="@dimen/margin_middle">
 
             <TextView
                 android:id="@+id/labelTitleDetailsFrom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_middle"
+                android:layout_marginLeft="@dimen/margin_default"
                 android:fontFamily="@font/roboto_medium"
                 android:text="Resumo dos Custos em"
                 android:textColor="@color/titleDetail"
@@ -81,10 +80,8 @@
 
             <View
                 android:layout_width="wrap_content"
-                android:layout_height="0.6dp"
+                android:layout_height="1px"
                 android:layout_marginTop="@dimen/margin_middle"
-                android:layout_marginLeft="@dimen/margin_middle"
-                android:layout_marginRight="@dimen/margin_middle"
                 android:background="#FF909090" />
 
             <TextView
@@ -108,10 +105,8 @@
 
             <View
                 android:layout_width="wrap_content"
-                android:layout_height="0.6dp"
+                android:layout_height="1px"
                 android:layout_marginTop="@dimen/margin_middle"
-                android:layout_marginLeft="@dimen/margin_middle"
-                android:layout_marginRight="@dimen/margin_middle"
                 android:background="#FF909090" />
 
             <TextView
@@ -136,10 +131,8 @@
 
             <View
                 android:layout_width="wrap_content"
-                android:layout_height="0.6dp"
+                android:layout_height="1px"
                 android:layout_marginTop="@dimen/margin_middle"
-                android:layout_marginLeft="@dimen/margin_middle"
-                android:layout_marginRight="@dimen/margin_middle"
                 android:background="#FF909090" />
 
             <TextView
@@ -164,10 +157,8 @@
 
             <View
                 android:layout_width="wrap_content"
-                android:layout_height="0.6dp"
+                android:layout_height="1px"
                 android:layout_marginTop="@dimen/margin_middle"
-                android:layout_marginLeft="@dimen/margin_middle"
-                android:layout_marginRight="@dimen/margin_middle"
                 android:background="#FF909090" />
 
             <TextView
@@ -207,7 +198,7 @@
                 android:id="@+id/labelTitleDetailsTo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_middle"
+                android:layout_marginLeft="@dimen/margin_default"
                 android:fontFamily="@font/roboto_medium"
                 android:text="Resumo dos Custos em"
                 android:textColor="@color/titleDetail"
@@ -215,10 +206,8 @@
 
             <View
                 android:layout_width="wrap_content"
-                android:layout_height="0.6dp"
+                android:layout_height="1px"
                 android:layout_marginTop="@dimen/margin_middle"
-                android:layout_marginLeft="@dimen/margin_middle"
-                android:layout_marginRight="@dimen/margin_middle"
                 android:background="#FF909090" />
 
             <TextView
@@ -243,10 +232,8 @@
 
             <View
                 android:layout_width="wrap_content"
-                android:layout_height="0.6dp"
+                android:layout_height="1px"
                 android:layout_marginTop="@dimen/margin_middle"
-                android:layout_marginLeft="@dimen/margin_middle"
-                android:layout_marginRight="@dimen/margin_middle"
                 android:background="#FF909090" />
 
             <TextView
@@ -272,10 +259,8 @@
 
             <View
                 android:layout_width="wrap_content"
-                android:layout_height="0.6dp"
+                android:layout_height="1px"
                 android:layout_marginTop="@dimen/margin_middle"
-                android:layout_marginLeft="@dimen/margin_middle"
-                android:layout_marginRight="@dimen/margin_middle"
                 android:background="#FF909090" />
 
             <TextView
@@ -286,7 +271,7 @@
                 android:layout_marginTop="@dimen/margin_middle"
                 android:fontFamily="@font/roboto_medium"
                 android:padding="3dip"
-                android:text="Situação () - 0%"
+                android:text="Situação de Declaração () - 0%"
                 android:textSize="@dimen/font_size_medium" />
 
             <TextView
@@ -301,10 +286,8 @@
 
             <View
                 android:layout_width="wrap_content"
-                android:layout_height="0.6dp"
+                android:layout_height="1px"
                 android:layout_marginTop="@dimen/margin_middle"
-                android:layout_marginLeft="@dimen/margin_middle"
-                android:layout_marginRight="@dimen/margin_middle"
                 android:background="#FF909090" />
 
             <TextView
