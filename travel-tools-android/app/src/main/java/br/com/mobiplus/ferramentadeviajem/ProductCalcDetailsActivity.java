@@ -19,7 +19,8 @@ import br.com.mobiplus.ferramentadeviajem.mvp.repository.pojo.SituationType;
 import br.com.mobiplus.ferramentadeviajem.mvp.view.ProductCalcDetailsView;
 
 @EActivity(R.layout.activity_product_calc_details)
-public class ProductCalcDetailsActivity extends AppCompatActivity implements ProductCalcDetailsView {
+public class ProductCalcDetailsActivity extends AppCompatActivity implements ProductCalcDetailsView
+{
 
     @Extra
     CustoViagem custoViagem;
@@ -98,15 +99,12 @@ public class ProductCalcDetailsActivity extends AppCompatActivity implements Pro
     {
 
         this.presenter = new ProductCalcDetailsPresenterImpl(this);
-        this.presenter.onLoadProductCalcValue(exchangeInfos);
     }
-
 
 
     @Override
     public void onExchangeResultLoaded(ExchangeResultInfos exchangeResultInfos)
     {
-
         String currencySymbolFrom = exchangeResultInfos.getCurrencyFrom();
         String currencySymbolTo = exchangeResultInfos.getCurrencyTo();
 
@@ -115,27 +113,32 @@ public class ProductCalcDetailsActivity extends AppCompatActivity implements Pro
         handleSituationType(exchangeResultInfos.getSituationType());
 
 
+        String amountFrom = format(exchangeResultInfos.getAmountFrom());
         String exchangeRate = format(exchangeResultInfos.getExchangeRate());
-        String amountFrom = format(exchangeResultInfos.getCalculatedCurrency().getAmountFrom());
         String paymentTaxAmountFrom = format(exchangeResultInfos.getPaymentTaxAmountFrom());
         String situationTaxAmountFrom = format(exchangeResultInfos.getSituationTaxAmountFrom());
-        String amountTo = format(exchangeResultInfos.getCalculatedCurrency().getAmountTo());
+        String totalAmountFrom = format(exchangeResultInfos.getCalculatedCurrency().getAmountFrom());
+
+        String amountTo = format(exchangeResultInfos.getAmountFrom() * exchangeResultInfos.getExchangeRate());
         String paymentTaxAmountTo = format(exchangeResultInfos.getPaymentTaxAmountTo());
         String situationTaxAmountTo = format(exchangeResultInfos.getSituationTaxAmountTo());
+        String totalAmountTo = format(exchangeResultInfos.getCalculatedCurrency().getAmountTo());
 
-        this.textExchangeRate.setText(exchangeRate);
-        this.textAmountFrom.setText(amountFrom);
-        this.textPaymentTypeFrom.setText(paymentTaxAmountFrom);
-        this.textSituationTypeFrom.setText(situationTaxAmountFrom);
-        this.textAmountTo.setText(amountTo);
-        this.textPaymentTypeTo.setText(paymentTaxAmountTo);
-        this.textSituationTypeTo.setText(situationTaxAmountTo);
+        this.textExchangeRate.setText(currencySymbolTo + " " + exchangeRate);
+        this.textAmountFrom.setText(currencySymbolFrom + " " + amountFrom);
+        this.textPaymentTypeFrom.setText(currencySymbolFrom + " " + paymentTaxAmountFrom);
+        this.textSituationTypeFrom.setText(currencySymbolFrom + " " + situationTaxAmountFrom);
+        this.textTotalAmountFrom.setText(currencySymbolFrom + " " + totalAmountFrom);
+        this.textAmountTo.setText(currencySymbolTo + " " + amountTo);
+        this.textPaymentTypeTo.setText(currencySymbolTo + " " + paymentTaxAmountTo);
+        this.textSituationTypeTo.setText(currencySymbolTo + " " + situationTaxAmountTo);
+        this.textTotalAmountTo.setText(currencySymbolTo + " " + totalAmountTo);
 
     }
 
     private String format(Double value)
     {
-        if (value!=null)
+        if (value != null)
         {
             String aux = String.format("%.2f", value);
 
@@ -156,9 +159,8 @@ public class ProductCalcDetailsActivity extends AppCompatActivity implements Pro
             }
 
             return stringBuilder.toString();
-            }
-            else
-                return "0,00";
+        } else
+            return "0,00";
     }
 
     private void handleSituationType(SituationType situationType)
@@ -194,9 +196,9 @@ public class ProductCalcDetailsActivity extends AppCompatActivity implements Pro
 
     private void setLabels(String currencySymbolFrom, String currencySymbolTo)
     {
-        this.labelExchangeRate.setText("De ("+currencySymbolFrom+") Para ("+currencySymbolTo+")");
-        this.labelTitleDetailsFrom.setText("Resumo do custo em "+currencySymbolFrom);
-        this.labelTitleDetailsTo.setText("Resumo do Custo em "+currencySymbolTo);
+        this.labelExchangeRate.setText("De (" + currencySymbolFrom + ") Para (" + currencySymbolTo + ")");
+        this.labelTitleDetailsFrom.setText("Resumo do custo em " + currencySymbolFrom);
+        this.labelTitleDetailsTo.setText("Resumo do Custo em " + currencySymbolTo);
     }
 
     @Override
@@ -204,6 +206,13 @@ public class ProductCalcDetailsActivity extends AppCompatActivity implements Pro
     {
         super.onStart();
         this.presenter.onStart();
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        this.presenter.onLoadProductCalcValue(exchangeInfos);
     }
 
     @Override
