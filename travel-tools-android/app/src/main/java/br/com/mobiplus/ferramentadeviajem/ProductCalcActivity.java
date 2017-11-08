@@ -1,6 +1,7 @@
 package br.com.mobiplus.ferramentadeviajem;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.support.annotation.IdRes;
@@ -12,6 +13,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -215,7 +217,6 @@ public class ProductCalcActivity extends AppCompatActivity implements ProductCal
             @Override
             public void onClick(View v)
             {
-
                 String moedaValorString = textCurrencySymbolFrom.getText().toString();
                 String moedaConvertidaString = textCurrencySymbolTo.getText().toString();
 
@@ -416,4 +417,8 @@ public class ProductCalcActivity extends AppCompatActivity implements ProductCal
 
     }
 
+    public void hideKeyboard(View view){
+        InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(),0);
+    }
 }
