@@ -3,12 +3,13 @@
 
     <color name="A400red">#ff1744</color>
 
-    <!--Light Theme-->
+    <!--Dark Theme-->
     <color name="per54black">#72000000</color>
     <color name="per42black">#2a000000</color>
     <color name="per06black">#06000000</color>
+    <color name="per60black">#384257</color>
 
-    <!--Dark Theme-->
+    <!--Light Theme-->
     <color name="per70white">#46ffffff</color>
     <color name="per50white">#32ffffff</color>
     <color name="per10white">#0affffff</color>
