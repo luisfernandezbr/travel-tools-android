@@ -419,8 +419,9 @@ public class ProductCalcActivity extends BaseActivity implements ProductCalcView
 
     }
 
-    public void hideKeyboard(View view){
-        InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(),0);
+    public void hideKeyboard(View view)
+    {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

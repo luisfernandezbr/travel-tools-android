@@ -2,7 +2,6 @@ package br.com.mobiplus.ferramentadeviajem;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import org.androidannotations.annotations.AfterViews;
