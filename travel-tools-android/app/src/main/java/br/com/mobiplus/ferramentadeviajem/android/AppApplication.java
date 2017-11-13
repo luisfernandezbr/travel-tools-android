@@ -3,6 +3,7 @@ package br.com.mobiplus.ferramentadeviajem.android;
 import android.app.Application;
 
 import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.Answers;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -16,6 +17,6 @@ public class AppApplication extends Application
     public void onCreate()
     {
         super.onCreate();
-        Fabric.with(this, new Crashlytics());
+        Fabric.with(this, new Crashlytics(), new Answers());
     }
 }

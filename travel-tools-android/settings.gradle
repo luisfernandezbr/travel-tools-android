@@ -1,2 +1,2 @@
-include ':app', ':textfieldboxe'
+include ':app', ':textfieldboxe', ':analytics-event-sender'
 project(':textfieldboxe').projectDir = new File('textfieldboxes')
