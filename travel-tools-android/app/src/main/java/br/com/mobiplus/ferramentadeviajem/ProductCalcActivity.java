@@ -83,7 +83,7 @@ public class ProductCalcActivity extends BaseActivity implements ProductCalcView
     Button buttonCleanForm;
 
     @ViewById
-    Button buttonInfoPayment;
+    TextView textTitlePaymentTypeLabel;
 
     @ViewById
     RadioGroup radioPaymentType;
@@ -215,7 +215,7 @@ public class ProductCalcActivity extends BaseActivity implements ProductCalcView
         radioSituationType.setOnCheckedChangeListener(onCheckedChangeListener);
 
 
-        buttonInfoPayment.setOnClickListener(getOnClickListener(createDialog("Informação", "Opções relacionadas ao pagamento realizado na casa de câmbio.\n Dinheiro : %\n Débito/Crédito: %")));
+        textTitlePaymentTypeLabel.setOnClickListener(getOnClickListener(createDialog("Informação", "Opções relacionadas ao pagamento realizado na casa de câmbio.\n Dinheiro : %\n Débito/Crédito: %")));
 
         buttonGoToDetails.setOnClickListener(new View.OnClickListener()
         {
