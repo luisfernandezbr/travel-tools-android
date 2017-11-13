@@ -27,6 +27,7 @@ import org.androidannotations.annotations.ViewById;
 import java.text.DecimalFormat;
 
 import br.com.concretesolutions.canarinho.watcher.ValorMonetarioWatcher;
+import br.com.mobiplus.eventsender.EventSender;
 import br.com.mobiplus.ferramentadeviajem.android.BaseActivity;
 import br.com.mobiplus.ferramentadeviajem.models.CurrencyExchange;
 import br.com.mobiplus.ferramentadeviajem.mvp.event.OnFireCurrencyDetailsUpdateEvent;
@@ -95,6 +96,8 @@ public class ProductCalcActivity extends BaseActivity implements ProductCalcView
     @AfterViews
     public void afterViews()
     {
+        EventSender.sendViewProductCalcScreenEvent();
+
         this.configTypefaces();
 
         String array_rate_Symbol[] = new String[2];

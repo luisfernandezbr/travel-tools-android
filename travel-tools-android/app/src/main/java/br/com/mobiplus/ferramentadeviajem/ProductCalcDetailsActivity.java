@@ -9,6 +9,7 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 
+import br.com.mobiplus.eventsender.EventSender;
 import br.com.mobiplus.ferramentadeviajem.android.BaseActivity;
 import br.com.mobiplus.ferramentadeviajem.models.CustoViagem;
 import br.com.mobiplus.ferramentadeviajem.mvp.presenter.ProductCalcDetailsPresenter;
@@ -99,7 +100,7 @@ public class ProductCalcDetailsActivity extends BaseActivity implements ProductC
     @AfterViews
     public void afterViews()
     {
-
+        EventSender.sendViewProductCalcDetailsScreenEvent();
         this.presenter = new ProductCalcDetailsPresenterImpl(this);
     }
 
