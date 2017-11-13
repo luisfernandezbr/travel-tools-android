@@ -1,5 +1,6 @@
 package br.com.mobiplus.ferramentadeviajem;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -7,7 +8,6 @@ import android.graphics.Typeface;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -27,6 +27,7 @@ import org.androidannotations.annotations.ViewById;
 import java.text.DecimalFormat;
 
 import br.com.concretesolutions.canarinho.watcher.ValorMonetarioWatcher;
+import br.com.mobiplus.ferramentadeviajem.android.BaseActivity;
 import br.com.mobiplus.ferramentadeviajem.models.CurrencyExchange;
 import br.com.mobiplus.ferramentadeviajem.mvp.event.OnFireCurrencyDetailsUpdateEvent;
 import br.com.mobiplus.ferramentadeviajem.mvp.event.OnFireLoadExchangeRatesEvent;
@@ -39,8 +40,9 @@ import br.com.mobiplus.ferramentadeviajem.mvp.repository.pojo.SituationType;
 import br.com.mobiplus.ferramentadeviajem.mvp.view.ProductCalcView;
 import studio.carbonylgroup.textfieldboxes.ExtendedEditText;
 
+@SuppressLint("Registered")
 @EActivity(R.layout.activity_main)
-public class ProductCalcActivity extends AppCompatActivity implements ProductCalcView
+public class ProductCalcActivity extends BaseActivity implements ProductCalcView
 {
     public static final String TAG = "ProductCalcActivity";
 

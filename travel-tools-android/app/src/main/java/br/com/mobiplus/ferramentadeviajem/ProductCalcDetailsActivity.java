@@ -1,5 +1,6 @@
 package br.com.mobiplus.ferramentadeviajem;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
@@ -9,6 +10,7 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 
+import br.com.mobiplus.ferramentadeviajem.android.BaseActivity;
 import br.com.mobiplus.ferramentadeviajem.models.CustoViagem;
 import br.com.mobiplus.ferramentadeviajem.mvp.presenter.ProductCalcDetailsPresenter;
 import br.com.mobiplus.ferramentadeviajem.mvp.presenter.ProductCalcDetailsPresenterImpl;
@@ -18,8 +20,9 @@ import br.com.mobiplus.ferramentadeviajem.mvp.repository.pojo.PaymentType;
 import br.com.mobiplus.ferramentadeviajem.mvp.repository.pojo.SituationType;
 import br.com.mobiplus.ferramentadeviajem.mvp.view.ProductCalcDetailsView;
 
+@SuppressLint("Registered")
 @EActivity(R.layout.activity_product_calc_details)
-public class ProductCalcDetailsActivity extends AppCompatActivity implements ProductCalcDetailsView
+public class ProductCalcDetailsActivity extends BaseActivity implements ProductCalcDetailsView
 {
 
     @Extra
