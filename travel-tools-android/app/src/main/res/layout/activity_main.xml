@@ -5,16 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scrollbarStyle="outsideOverlay">
-<!--tools:context=".MainActivity"> -->
-
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
+        android:onClick="hideKeyboard"
         android:orientation="vertical"
-        android:padding="@dimen/margin_default"
-        android:onClick="hideKeyboard">
+        android:padding="@dimen/margin_default">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -26,10 +24,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toLeftOf="@+id/imageSwap"
+                android:clickable="true"
                 android:text="$"
                 tools:fontFamily="@font/roboto_thin"
-                tools:ignore="RtlHardcoded"
-                android:clickable="true" />
+                tools:ignore="RtlHardcoded" />
 
             <ImageView
                 android:id="@+id/imageSwap"
@@ -50,7 +48,6 @@
                 tools:fontFamily="@font/roboto_thin"
                 tools:ignore="RtlHardcoded" />
 
-
         </RelativeLayout>
 
         <LinearLayout
@@ -65,19 +62,19 @@
                 android:layout_marginRight="@dimen/margin_middle"
                 android:layout_marginTop="@dimen/margin_default"
                 android:layout_weight="1"
+                android:onClick="hideKeyboard"
                 app:labelText="Taxa de câmbio"
-                tools:ignore="RtlHardcoded"
-                android:onClick="hideKeyboard">
+                tools:ignore="RtlHardcoded">
 
                 <studio.carbonylgroup.textfieldboxes.ExtendedEditText
                     android:id="@+id/editCurrencyExchange"
+                    style="@style/EditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:onClick="hideKeyboard"
                     android:selectAllOnFocus="true"
                     android:text=""
-                    app:prefix="R$ "
-                    style="@style/EditText"
-                    android:onClick="hideKeyboard"/>
+                    app:prefix="R$ " />
 
             </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
 
@@ -93,11 +90,11 @@
 
                 <studio.carbonylgroup.textfieldboxes.ExtendedEditText
                     android:id="@+id/editAmout"
+                    style="@style/EditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:selectAllOnFocus="true"
-                    app:prefix="U$ "
-                    style="@style/EditText" />
+                    app:prefix="U$ " />
 
             </studio.carbonylgroup.textfieldboxes.TextFieldBoxes>
 
@@ -109,13 +106,7 @@
             android:layout_marginTop="@dimen/margin_default"
             android:background="@drawable/bg_default"
             android:orientation="vertical"
-            android:paddingTop="@dimen/margin_middle"
             android:visibility="visible">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/LabelPagamento"
@@ -125,26 +116,26 @@
                 android:text="Tipo de pagamento"
                 tools:fontFamily="@font/roboto_medium" />
 
-                <Button
-                    android:id="@+id/buttonInfoPayment"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:layout_marginRight="@dimen/margin_middle"
-                    android:background="@drawable/bg_info"
-                    android:fontFamily="@font/antic_slab"
-                    android:stateListAnimator="@null"
-                    android:textAllCaps="false"
-                    android:text="i"
-                    android:clickable="true"
-                    android:textColor="#ffffff"
-                    android:textSize="10sp" />
+            <Button
+                android:id="@+id/buttonInfoPayment"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginRight="@dimen/margin_middle"
+                android:background="@drawable/bg_info"
+                android:clickable="true"
+                android:fontFamily="@font/antic_slab"
+                android:stateListAnimator="@null"
+                android:text="i"
+                android:textAllCaps="false"
+                android:textColor="#ffffff"
+                android:textSize="10sp"
+                android:visibility="gone" />
 
-            </LinearLayout>
             <RadioGroup
                 android:id="@+id/radioPaymentType"
+                style="@style/AppThemeDark.RadioGroup"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/margin_middle">
+                android:layout_height="wrap_content">
 
                 <RadioButton
                     android:id="@+id/dinheiro"
@@ -152,8 +143,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_thin"
-                    android:text="Dinheiro"
-                    android:onClick="hideKeyboard"/>
+                    android:onClick="hideKeyboard"
+                    android:text="Dinheiro" />
 
                 <RadioButton
                     android:id="@+id/cartao"
@@ -161,13 +152,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_thin"
-                    android:text="Débito/Crédito"
-                    android:onClick="hideKeyboard"/>
+                    android:onClick="hideKeyboard"
+                    android:text="Débito/Crédito" />
 
             </RadioGroup>
 
         </LinearLayout>
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -175,8 +165,6 @@
             android:layout_marginTop="@dimen/margin_default"
             android:background="@drawable/bg_default"
             android:orientation="vertical"
-            android:paddingTop="@dimen/margin_middle"
-
             android:visibility="visible">
 
             <TextView
@@ -188,9 +176,9 @@
 
             <RadioGroup
                 android:id="@+id/radioSituationType"
+                style="@style/AppThemeDark.RadioGroup"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/margin_middle">
+                android:layout_height="wrap_content">
 
                 <RadioButton
                     android:id="@+id/declarado"
@@ -198,9 +186,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_thin"
-                    tools:fontFamily="@font/roboto_thin"
+                    android:onClick="hideKeyboard"
                     android:text="Declarado"
-                    android:onClick="hideKeyboard"/>
+                    tools:fontFamily="@font/roboto_thin" />
 
                 <RadioButton
                     android:id="@+id/nDeclarado"
@@ -208,8 +196,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_thin"
-                    android:text="Não declarado"
-                    android:onClick="hideKeyboard"/>
+                    android:onClick="hideKeyboard"
+                    android:text="Não declarado" />
 
                 <RadioButton
                     android:id="@+id/multado"
@@ -217,8 +205,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_thin"
-                    android:text="Multado"
-                    android:onClick="hideKeyboard"/>
+                    android:onClick="hideKeyboard"
+                    android:text="Multado" />
 
             </RadioGroup>
 
@@ -246,10 +234,7 @@
                     style="@style/AppThemeDark.Title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/margin_middle"
-                    android:layout_marginTop="@dimen/margin_middle"
                     android:text="Total em U$"
-
                     tools:fontFamily="@font/roboto_medium" />
 
                 <TextView
@@ -276,8 +261,6 @@
                     style="@style/AppThemeDark.Title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/margin_middle"
-                    android:layout_marginTop="@dimen/margin_middle"
                     android:text="Total em R$"
                     tools:fontFamily="@font/roboto_medium" />
 
@@ -293,105 +276,35 @@
 
         </LinearLayout>
 
-        <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginTop="@dimen/margin_default"-->
-            <!--android:background="@drawable/bg_default"-->
-            <!--android:orientation="vertical"-->
-            <!--android:paddingBottom="@dimen/margin_middle"-->
-            <!--android:paddingLeft="@dimen/margin_default"-->
-            <!--android:paddingRight="@dimen/margin_default"-->
-            <!--android:paddingTop="@dimen/margin_middle">-->
-
-            <!--<TextView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginBottom="@dimen/margin_default"-->
-                <!--android:text="Detalhamento de valores em R$"-->
-                <!--android:textSize="@dimen/font_size_small"-->
-                <!--tools:fontFamily="@font/roboto_medium" />-->
-
-            <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content">-->
-
-                <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginBottom="@dimen/margin_middle"-->
-                    <!--android:maxLines="1"-->
-                    <!--android:text="Valor inicial.........................."-->
-                    <!--android:textSize="@dimen/font_size_large" />-->
-
-                <!--<TextView-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginBottom="@dimen/margin_middle"-->
-                    <!--android:gravity="end|right"-->
-                    <!--android:maxLines="1"-->
-                    <!--android:text="R$ 2.345,90"-->
-                    <!--android:textSize="@dimen/font_size_large"-->
-                    <!--tools:ignore="RtlHardcoded" />-->
-
-            <!--</LinearLayout>-->
-
-            <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content">-->
-
-                <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginBottom="@dimen/margin_middle"-->
-                    <!--android:maxLines="1"-->
-                    <!--android:text="Situação - Multado (100%).."-->
-                    <!--android:textSize="@dimen/font_size_large" />-->
-
-                <!--<TextView-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginBottom="@dimen/margin_middle"-->
-                    <!--android:gravity="end|right"-->
-                    <!--android:maxLines="1"-->
-                    <!--android:text="R$ 2.345,90"-->
-                    <!--android:textSize="@dimen/font_size_large"-->
-                    <!--tools:ignore="RtlHardcoded" />-->
-
-            <!--</LinearLayout>-->
-
-
-        <!--</LinearLayout>-->
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right"
             android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/buttonGoToDetails"
-            android:layout_width="wrap_content"
-            android:layout_height="46dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:backgroundTint="@color/colorPrimaryDark"
-            android:layout_marginTop="@dimen/margin_default"
-            android:fontFamily="@font/roboto_medium"
-            android:textSize="@dimen/font_size_xlarge"
-            android:text="Resumo" />
+            <Button
+                android:id="@+id/buttonGoToDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="46dp"
+                android:layout_marginTop="@dimen/margin_default"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:fontFamily="@font/roboto_medium"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:text="Resumo"
+                android:textSize="@dimen/font_size_xlarge" />
 
-        <Button
-            android:id="@+id/buttonCleanForm"
-            android:layout_width="wrap_content"
-            android:layout_height="46dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:backgroundTint="@color/colorPrimaryDark"
-            android:layout_marginTop="@dimen/margin_default"
-            android:fontFamily="@font/roboto_medium"
-            android:textSize="@dimen/font_size_xlarge"
-            android:text="Limpar" />
+            <Button
+                android:id="@+id/buttonCleanForm"
+                android:layout_width="wrap_content"
+                android:layout_height="46dp"
+                android:layout_marginTop="@dimen/margin_default"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:fontFamily="@font/roboto_medium"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:text="Limpar"
+                android:textSize="@dimen/font_size_xlarge" />
 
         </LinearLayout>
 

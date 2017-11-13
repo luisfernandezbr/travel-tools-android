@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scrollbarStyle="outsideOverlay">
@@ -13,175 +11,146 @@
         android:orientation="vertical"
         android:padding="@dimen/margin_default">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_default"
-            android:background="@drawable/bg_default"
-            android:orientation="vertical"
-            android:paddingTop="@dimen/margin_middle">
+            android:background="@drawable/bg_default">
 
-            <TableLayout
-                android:stretchColumns="1"
+            <TextView
+                style="@style/AppThemeDark.Title.Color"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="Cotação" />
+
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
 
-                <TableRow>
+                <TextView
+                    android:id="@+id/labelExchangeRate"
+                    style="@style/AppThemeDark.Title.Large"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_medium"
+                    android:gravity="end|right"
+                    android:text="DE () para ()" />
 
-                    <TextView
-                        android:layout_marginLeft="@dimen/margin_default"
-                        android:fontFamily="@font/roboto_medium"
-                        android:padding="3dip"
-                        android:text="Cotação"
-                        android:textColor="@color/titleDetail"
-                        android:textSize="@dimen/font_size_large" />
+                <TextView
+                    android:id="@+id/textExchangeRate"
+                    style="@style/AppThemeDark.Content.Large"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_thin"
+                    android:gravity="end|right"
+                    android:text="0" />
 
-                    <TextView
-                        android:id="@+id/labelExchangeRate"
-                        android:text="DE () para ()"
-                        android:fontFamily="@font/roboto_medium"
-                        android:textSize="@dimen/font_size_medium"
-                        android:layout_marginRight="@dimen/margin_middle"
-                        android:gravity="right"/>
-                </TableRow>
-                <TableRow>
-                    <TextView android:text=""/>
-                    <TextView
-                        android:id="@+id/textExchangeRate"
-                        android:text="0"
-                        android:textSize="15sp"
-                        android:gravity="right"
-                        android:layout_marginRight="@dimen/margin_middle"
-                        android:padding="3dip" />
-                </TableRow>
+            </LinearLayout>
 
-            </TableLayout>
-
-
-        </LinearLayout>
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_default"
             android:background="@drawable/bg_default"
-            android:orientation="vertical"
-            android:paddingTop="@dimen/margin_middle">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/labelTitleDetailsFrom"
+                style="@style/AppThemeDark.Title.Color"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_default"
-                android:fontFamily="@font/roboto_medium"
-                android:text="Resumo dos Custos em"
-                android:textColor="@color/titleDetail"
-                android:textSize="@dimen/font_size_large" />
+                android:text="Resumo dos Custos em" />
 
             <View
                 android:layout_width="wrap_content"
                 android:layout_height="1px"
-                android:layout_marginTop="@dimen/margin_middle"
                 android:background="#FF909090" />
 
             <TextView
+                style="@style/AppThemeDark.Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_default"
-                android:layout_marginTop="@dimen/margin_middle"
                 android:fontFamily="@font/roboto_medium"
-                android:padding="3dip"
                 android:text="Valor Inicial" />
 
             <TextView
                 android:id="@+id/textAmountFrom"
+                style="@style/AppThemeDark.Content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_default"
-                android:gravity="right"
-                android:padding="3dip"
-                android:text="0"
-                android:textSize="@dimen/font_size_xlarge" />
+                android:fontFamily="@font/roboto_thin"
+                android:text="0" />
 
             <View
                 android:layout_width="wrap_content"
                 android:layout_height="1px"
-                android:layout_marginTop="@dimen/margin_middle"
                 android:background="#FF909090" />
 
             <TextView
                 android:id="@+id/labelPaymentTypeFrom"
+                style="@style/AppThemeDark.Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_default"
-                android:layout_marginTop="@dimen/margin_middle"
                 android:fontFamily="@font/roboto_medium"
-                android:padding="3dip"
-                android:text="Tipo de Pagamento ()"/>
+                android:text="Tipo de Pagamento ()" />
 
             <TextView
                 android:id="@+id/textPaymentTypeFrom"
+                style="@style/AppThemeDark.Content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_default"
-                android:gravity="right"
-                android:padding="3dip"
-                android:text="0"
-                android:textSize="@dimen/font_size_xlarge" />
+                android:fontFamily="@font/roboto_thin"
+                android:text="0" />
 
             <View
                 android:layout_width="wrap_content"
                 android:layout_height="1px"
-                android:layout_marginTop="@dimen/margin_middle"
                 android:background="#FF909090" />
 
             <TextView
                 android:id="@+id/labelSituationTypeFrom"
+                style="@style/AppThemeDark.Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_default"
-                android:layout_marginTop="@dimen/margin_middle"
                 android:fontFamily="@font/roboto_medium"
-                android:padding="3dip"
-                android:text="Situação de declaração () - 0%"/>
+                android:text="Situação de declaração () - 0%" />
 
             <TextView
                 android:id="@+id/textSituationTypeFrom"
+                style="@style/AppThemeDark.Content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_default"
-                android:gravity="right"
-                android:padding="3dip"
-                android:text="0,00"
-                android:textSize="@dimen/font_size_xlarge" />
+                android:fontFamily="@font/roboto_thin"
+                android:text="0,00" />
 
             <View
                 android:layout_width="wrap_content"
                 android:layout_height="1px"
-                android:layout_marginTop="@dimen/margin_middle"
                 android:background="#FF909090" />
 
             <TextView
+                style="@style/AppThemeDark.Title.Large"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginRight="@dimen/margin_default"
-                android:layout_marginTop="@dimen/margin_middle"
+                android:layout_gravity="end|right"
                 android:fontFamily="@font/roboto_medium"
-                android:padding="3dip"
-                android:text="Custo Total"
-                android:textSize="@dimen/font_size_medium" />
+                android:text="Custo Total" />
 
             <TextView
                 android:id="@+id/textTotalAmountFrom"
+                style="@style/AppThemeDark.Content.Large"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginRight="@dimen/margin_default"
-                android:gravity="right"
-                android:padding="3dip"
-                android:text="0"
-                android:textSize="@dimen/font_size_xlarge" />
+                android:layout_gravity="end|right"
+                android:fontFamily="@font/roboto_thin"
+                android:text="0" />
 
         </LinearLayout>
 
@@ -190,127 +159,99 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_default"
             android:background="@drawable/bg_default"
-            android:orientation="vertical"
-
-            android:paddingTop="@dimen/margin_middle">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/labelTitleDetailsTo"
+                style="@style/AppThemeDark.Title.Color"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_default"
-                android:fontFamily="@font/roboto_medium"
-                android:text="Resumo dos Custos em"
-                android:textColor="@color/titleDetail"
-                android:textSize="@dimen/font_size_large" />
+                android:text="Resumo dos Custos em" />
 
             <View
                 android:layout_width="wrap_content"
                 android:layout_height="1px"
-                android:layout_marginTop="@dimen/margin_middle"
                 android:background="#FF909090" />
 
             <TextView
+                style="@style/AppThemeDark.Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_default"
-                android:layout_marginTop="@dimen/margin_middle"
                 android:fontFamily="@font/roboto_medium"
-                android:padding="3dip"
-                android:text="Valor Inicial"
-                android:textSize="@dimen/font_size_medium" />
+                android:text="Valor Inicial" />
 
             <TextView
                 android:id="@+id/textAmountTo"
+                style="@style/AppThemeDark.Content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_default"
-                android:gravity="right"
-                android:padding="3dip"
-                android:text="0"
-                android:textSize="@dimen/font_size_xlarge" />
+
+                android:fontFamily="@font/roboto_thin"
+                android:text="0" />
 
             <View
                 android:layout_width="wrap_content"
                 android:layout_height="1px"
-                android:layout_marginTop="@dimen/margin_middle"
                 android:background="#FF909090" />
 
             <TextView
                 android:id="@+id/labelPaymentTypeTo"
+                style="@style/AppThemeDark.Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_default"
-                android:layout_marginTop="@dimen/margin_middle"
                 android:fontFamily="@font/roboto_medium"
-                android:padding="3dip"
-                android:text="Tipo de Pagamento ()"
-                android:textSize="@dimen/font_size_medium" />
+                android:text="Tipo de Pagamento ()" />
 
             <TextView
                 android:id="@+id/textPaymentTypeTo"
+                style="@style/AppThemeDark.Content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_default"
-                android:gravity="right"
-                android:padding="3dip"
-                android:text="0"
-                android:textSize="@dimen/font_size_xlarge" />
+                android:fontFamily="@font/roboto_thin"
+                android:text="0" />
 
             <View
                 android:layout_width="wrap_content"
                 android:layout_height="1px"
-                android:layout_marginTop="@dimen/margin_middle"
                 android:background="#FF909090" />
 
             <TextView
                 android:id="@+id/labelSituationTypeTo"
+                style="@style/AppThemeDark.Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_default"
-                android:layout_marginTop="@dimen/margin_middle"
                 android:fontFamily="@font/roboto_medium"
-                android:padding="3dip"
-                android:text="Situação de Declaração () - 0%"
-                android:textSize="@dimen/font_size_medium" />
+                android:text="Situação de Declaração () - 0%" />
 
             <TextView
                 android:id="@+id/textSituationTypeTo"
+                style="@style/AppThemeDark.Content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_default"
-                android:gravity="right"
-                android:padding="3dip"
-                android:text="0"
-                android:textSize="@dimen/font_size_xlarge" />
+                android:fontFamily="@font/roboto_thin"
+                android:text="0" />
 
             <View
                 android:layout_width="wrap_content"
                 android:layout_height="1px"
-                android:layout_marginTop="@dimen/margin_middle"
                 android:background="#FF909090" />
 
             <TextView
+                style="@style/AppThemeDark.Title.Large"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginRight="@dimen/margin_default"
-                android:layout_marginTop="@dimen/margin_middle"
+                android:layout_gravity="end|right"
                 android:fontFamily="@font/roboto_medium"
-                android:padding="3dip"
-                android:text="Custo Total"
-                android:textSize="@dimen/font_size_medium" />
+                android:text="Custo Total" />
 
             <TextView
                 android:id="@+id/textTotalAmountTo"
+                style="@style/AppThemeDark.Content.Large"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginRight="@dimen/margin_default"
-                android:gravity="right"
-                android:padding="3dip"
-                android:text="0"
-                android:textSize="@dimen/font_size_xlarge" />
+                android:layout_gravity="end|right"
+                android:fontFamily="@font/roboto_thin"
+                android:text="0" />
 
         </LinearLayout>
     </LinearLayout>

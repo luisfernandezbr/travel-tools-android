@@ -22,21 +22,38 @@
         <item name="android:textSize">@dimen/font_size_large</item>
     </style>
 
+    <style name="AppThemeDark.Title.Color">
+        <item name="android:layout_margin">@dimen/margin_default</item>
+        <item name="fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">@dimen/font_size_large</item>
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
     <style name="AppThemeDark.Title">
         <item name="android:layout_marginLeft">@dimen/margin_default</item>
         <item name="android:layout_marginRight">@dimen/margin_default</item>
+        <item name="android:layout_marginBottom">@dimen/margin_middle</item>
+        <item name="android:layout_marginTop">@dimen/margin_default</item>
         <item name="fontFamily">@font/roboto_medium</item>
         <item name="android:textSize">@dimen/font_size_small</item>
         <item name="android:textColor">#C4C7CC</item>
     </style>
 
+    <style name="AppThemeDark.Title.Large" parent="AppThemeDark.Title">
+        <item name="android:textSize">@dimen/font_size_medium</item>
+    </style>
+
     <style name="AppThemeDark.Content">
-        <item name="android:layout_marginBottom">@dimen/margin_middle</item>
+        <item name="android:layout_marginBottom">@dimen/margin_default</item>
         <item name="android:layout_marginLeft">@dimen/margin_default</item>
         <item name="android:layout_marginRight">@dimen/margin_default</item>
         <item name="android:gravity">left</item>
         <item name="fontFamily">@font/roboto_thin</item>
         <item name="android:textSize">@dimen/font_size_large</item>
+    </style>
+
+    <style name="AppThemeDark.Content.Large" parent="AppThemeDark.Content">
+        <item name="android:textSize">@dimen/font_size_xlarge</item>
     </style>
 
     <style name="AppThemeDark.Currency">
@@ -54,6 +71,12 @@
         <item name="android:inputType">numberDecimal</item>
         <item name="android:maxLines">1</item>
         <item name="android:textSize">@dimen/font_size_large</item>
+    </style>
+
+    <style name="AppThemeDark.RadioGroup">
+        <item name="android:paddingLeft">@dimen/margin_middle</item>
+        <item name="android:paddingRight">@dimen/margin_middle</item>
+        <item name="android:paddingBottom">@dimen/margin_middle</item>
     </style>
 
 
