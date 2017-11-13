@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:onClick="hideKeyboard"
+        android:onClick="onClickHideKeyboard"
         android:orientation="vertical"
         android:padding="@dimen/margin_default">
 
@@ -62,7 +62,7 @@
                 android:layout_marginRight="@dimen/margin_middle"
                 android:layout_marginTop="@dimen/margin_default"
                 android:layout_weight="1"
-                android:onClick="hideKeyboard"
+                android:onClick="onClickHideKeyboard"
                 app:labelText="Taxa de câmbio"
                 tools:ignore="RtlHardcoded">
 
@@ -71,7 +71,7 @@
                     style="@style/EditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:onClick="hideKeyboard"
+                    android:onClick="onClickHideKeyboard"
                     android:selectAllOnFocus="true"
                     android:text=""
                     app:prefix="R$ " />
@@ -136,7 +136,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_thin"
-                    android:onClick="hideKeyboard"
+                    android:onClick="onClickHideKeyboard"
                     android:text="Dinheiro" />
 
                 <RadioButton
@@ -145,7 +145,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_thin"
-                    android:onClick="hideKeyboard"
+                    android:onClick="onClickHideKeyboard"
                     android:text="Débito/Crédito" />
 
             </RadioGroup>
@@ -181,7 +181,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_thin"
-                    android:onClick="hideKeyboard"
+                    android:onClick="onClickHideKeyboard"
                     android:text="Declarado"
                     tools:fontFamily="@font/roboto_thin" />
 
@@ -191,7 +191,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_thin"
-                    android:onClick="hideKeyboard"
+                    android:onClick="onClickHideKeyboard"
                     android:text="Não declarado" />
 
                 <RadioButton
@@ -200,7 +200,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_thin"
-                    android:onClick="hideKeyboard"
+                    android:onClick="onClickHideKeyboard"
                     android:text="Multado" />
 
             </RadioGroup>
