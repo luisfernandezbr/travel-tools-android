@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "452168516359",
+    "firebase_url": "https://travel-tools-9ba47.firebaseio.com",
+    "project_id": "travel-tools-9ba47",
+    "storage_bucket": "travel-tools-9ba47.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:452168516359:android:cbf60db6f5ae5748",
+        "android_client_info": {
+          "package_name": "br.com.mobiplus.ferramentadeviajem"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "452168516359-6mf488klrvfnv70harofj8snspnjcujh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.mobiplus.ferramentadeviajem",
+            "certificate_hash": "b1a8fb923588d77acbfdf05697af8d73a7ef16be"
+          }
+        },
+        {
+          "client_id": "452168516359-psa6avgb8fbo9irdcailktf89334snqd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdKuxWmF80NYyZeH6wMu0Nkw1Cke6w1ZY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "452168516359-psa6avgb8fbo9irdcailktf89334snqd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
