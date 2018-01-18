@@ -48,10 +48,15 @@ dependencies {
 
     compile project(':textfieldboxe')
     compile project(':analytics-event-sender')
+
     testCompile 'junit:junit:4.12'
+    testCompile "org.mockito:mockito-all:$rootProject.ext.mockitoVersion"
+
     compile('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
         transitive = true
     }
+
+
     compile 'com.google.firebase:firebase-core:11.6.0'
 }
 

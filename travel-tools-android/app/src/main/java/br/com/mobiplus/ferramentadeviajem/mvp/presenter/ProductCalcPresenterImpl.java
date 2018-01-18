@@ -24,11 +24,11 @@ public class ProductCalcPresenterImpl implements ProductCalcPresenter
     private ProductCalcModel model;
     private ProductCalcView view;
 
-    public ProductCalcPresenterImpl(ProductCalcView productCalcView)
+    public ProductCalcPresenterImpl(ProductCalcView view, ExchangeRatesRepository repository, ProductCalcModel model)
     {
-        this.model = new ProductCalcModelImpl();
-        this.repository = new ExchangeRatesRepositoryImpl();
-        this.view = productCalcView;
+        this.view = view;
+        this.model = model;
+        this.repository = repository;
     }
 
     @Override

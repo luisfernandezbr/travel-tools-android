@@ -32,8 +32,10 @@ import br.com.mobiplus.ferramentadeviajem.android.BaseActivity;
 import br.com.mobiplus.ferramentadeviajem.models.CurrencyExchange;
 import br.com.mobiplus.ferramentadeviajem.mvp.event.OnFireCurrencyDetailsUpdateEvent;
 import br.com.mobiplus.ferramentadeviajem.mvp.event.OnFireLoadExchangeRatesEvent;
+import br.com.mobiplus.ferramentadeviajem.mvp.model.ProductCalcModelImpl;
 import br.com.mobiplus.ferramentadeviajem.mvp.presenter.ProductCalcPresenter;
 import br.com.mobiplus.ferramentadeviajem.mvp.presenter.ProductCalcPresenterImpl;
+import br.com.mobiplus.ferramentadeviajem.mvp.repository.ExchangeRatesRepositoryImpl;
 import br.com.mobiplus.ferramentadeviajem.mvp.repository.pojo.CalculatedCurrency;
 import br.com.mobiplus.ferramentadeviajem.mvp.repository.pojo.ExchangeInfos;
 import br.com.mobiplus.ferramentadeviajem.mvp.repository.pojo.PaymentType;
@@ -254,7 +256,7 @@ public class ProductCalcActivity extends BaseActivity implements ProductCalcView
         View.OnClickListener onClickListener = this.getOnClickListener(alertDialog);
         textCurrencySymbolFrom.setOnClickListener(onClickListener);
 
-        this.presenter = new ProductCalcPresenterImpl(this);
+        this.presenter = new ProductCalcPresenterImpl(this, new ExchangeRatesRepositoryImpl(), new ProductCalcModelImpl());
         this.fireLoadExchangeRatesEvent("USD", new String[]{"BRL, EUR"});
     }
 
